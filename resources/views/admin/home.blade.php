@@ -78,7 +78,7 @@
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Total Profit</span>
-                                <span class="info-box-number">{{$profit[0]['total_paidback']??0-$profit[0]['total_amount']??0}}</span>
+                                <span class="info-box-number">{{($profit[0]['total_paidback']??0)-($profit[0]['total_amount']??0)}}</span>
                             </div>
                             <!-- /.info-box-content -->
                         </div>
