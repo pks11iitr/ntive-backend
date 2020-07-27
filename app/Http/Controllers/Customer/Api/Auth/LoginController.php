@@ -37,7 +37,7 @@ class LoginController extends Controller
     protected function validateLogin(Request $request)
     {
         $request->validate([
-            'user_id' => $this->userId($request)=='email'?'required|email|string|exists:customers,email':'required|digits:10|string|exists:customers,mobile',
+            'user_id' => $this->userId($request)=='email'?('required|email|exists:customers,email'):('required|digits:10|exists:customers,mobile'),
             'password' => 'required|string',
         ], ['user_id.exists'=>'This account is not registered with us. Please signup to continue']);
     }
