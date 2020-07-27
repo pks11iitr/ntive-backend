@@ -33,7 +33,7 @@
                             <div class="info-box-content">
                                 <span class="info-box-text">Loan Applications</span>
                                 <span class="info-box-number">
-                  {{$applications['total']}}
+                  {{$applications['total']??0}}
                   <small></small>
                 </span>
                             </div>
