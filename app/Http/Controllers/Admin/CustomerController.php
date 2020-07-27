@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
-use App\Models\CustomerPhoneContact;
-use App\Models\Document;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -104,84 +102,5 @@ class CustomerController extends Controller
 
         }
 
-
-        public function uploadDocuments(Request $request, $id){
-
-            $customer=Customer::findOrFail($id);
-
-            $request->validate([
-                'pancard'=>'mimes:jpeg,bmp,png,gif,svg,pdf,webp',
-                'adhaarfront'=>'mimes:jpeg,bmp,png,gif,svg,pdf,webp',
-                'adhaarback'=>'mimes:jpeg,bmp,png,gif,svg,pdf,webp',
-                'incomedoc.*'=>'mimes:jpeg,bmp,png,gif,svg,pdf,webp',
-                'addressdoc.*'=>'mimes:jpeg,bmp,png,gif,svg,pdf,webp',
-            ]);
-
-            if($request->pancard){
-                Document::where('document_name', 'Pancard')->where('entity_id', $customer->id)->delete();
-                $customer->saveDocument($request->pancard, 'user-docs', ['name'=>'Pancard']);
-            }
-
-            if($request->adhaarfront){
-                Document::where('document_name', 'Adhaar Front')->where('entity_id', $customer->id)->delete();
-                $customer->saveDocument($request->adhaarfront, 'user-docs', ['name'=>'Adhaar Front']);
-            }
-
-            if($request->adhaarback){
-                Document::where('document_name', 'Adhaar Back')->where('entity_id', $customer->id)->delete();
-                $customer->saveDocument($request->adhaarback, 'user-docs', ['name'=>'Adhaar Back']);
-            }
-
-            if($request->incomedoc){
-                foreach($request->incomedoc as $file){
-                    $customer->saveDocument($file, 'user-docs', ['name'=>'Income Document']);
-                }
-            }
-
-            if($request->addressdoc){
-                foreach($request->incomedoc as $file){
-                    $customer->saveDocument($file, 'user-docs', ['name'=>'Address Document']);
-                }
-            }
-
-            return redirect()->back()->with('success', 'Documents have been updated');
-
-        }
-
-
-        public function downloadZip(Request $request, $id){
-            $zip_file = storage_path('app/temp/'.$id.'_documents.zip');//die;
-            $zip = new \ZipArchive();
-            $zip->open($zip_file, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
-
-            $path = storage_path('app/documents/user-docs/'.$id);
-            if(file_exists($path)){
-                $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
-                foreach ($files as $name => $file)
-                {
-                    // We're skipping all subfolders
-                    if (!$file->isDir()) {
-                        $filePath     = $file->getRealPath();
-
-                        // extracting filename with substr/strlen
-                        $relativePath = substr($filePath, strlen($path) + 1);
-
-                        $zip->addFile($filePath, $relativePath);
-                    }
-                }
-                $zip->close();
-                return response()->download($zip_file);
-            }
-
-            return redirect()->back()->with('error', 'No documents attached');
-
-        }
-
-
-        public function contacts(Request $request, $id){
-            $contacts=CustomerPhoneContact::where('user_id', $id)->get();
-
-            return view('admin.customer.contacts', compact('contacts'));
-        }
 
   }

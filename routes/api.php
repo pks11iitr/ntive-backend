@@ -21,26 +21,14 @@ use Illuminate\Http\Request;
 $api = app('Dingo\Api\Routing\Router');
 
 $api->group(['namespace' => 'Customer\Api\Auth'], function ($api) {
-    $api->post('login', ['as' => 'api.login', 'uses' => 'LoginController@login']);
-
-    $api->post('verify-otp', ['as' => 'api.otp.verify', 'uses' => 'LoginController@verifyOTP']);
-
-    $api->post('resend-otp', ['as' => 'api.otp.resend', 'uses' => 'LoginController@resendOTP']);
+    $api->post('login', 'Customer\Auth\LoginController@login');
+    $api->post('login-with-otp', 'LoginController@loginWithOtp');
+    $api->post('register', 'RegisterController@register');
+    $api->post('forgot', 'ForgotPasswordController@forgot');
+    $api->post('verify-otp', 'OtpController@verify');
+    $api->post('resend-otp', 'OtpController@resend');
 });
 
 $api->group(['namespace' => 'Customer\Api'], function ($api) {
-    $api->get('home', ['as' => 'api.home', 'uses' => 'HomeController@home']);
-    $api->get('offers', ['as' => 'api.offers', 'uses' => 'OffersController@index']);
-    $api->get('notifications', ['as' => 'api.notifications', 'uses' => 'NotificationController@index']);
-    $api->get('my-applications', ['as' => 'api.applications', 'uses' => 'OrderController@history']);
-    $api->post('verify-step1', ['as' => 'api.verify.step1', 'uses' => 'VerificationController@step1']);
-    $api->post('verify-step2', ['as' => 'api.verify.step2', 'uses' => 'VerificationController@step2']);
-
-    $api->get('start-loan-application/{id}', ['as' => 'api.start.applications', 'uses' => 'ApplicationController@start_application']);
-
-    $api->post('apply-loan', ['as' => 'api.apply.loan', 'uses' => 'ApplicationController@apply']);
-    $api->get('application-details/{id}', ['as' => 'api.apply.loan', 'uses' => 'OrderController@details']);
-
-    $api->get('send-contacts', ['as' => 'api.apply.loan', 'uses' => 'ContactController@store']);
-
+    // all logged in apis will go here
 });

@@ -1,281 +1,128 @@
 <?php
 
 namespace App\Http\Controllers\Customer\Api\Auth;
-use App\Http\Controllers\Controller;
+
+use App\Events\SendOtp;
 use App\Models\Customer;
 use App\Models\OTPModel;
-use App\Models\User;
 use App\Services\SMS\Msg91;
-use Illuminate\Contracts\Auth\Factory as Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Tymon\JWTAuth\JWTAuth;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
 
     /**
-     * Where to redirect users after registration.
+     * Get the login username to be used by the controller.
      *
-     * @var string
+     * @return string
      */
-    protected $redirectTo = '/home';
+    public function userId(Request $request, $type='password')
+    {
+        if(filter_var($request->user_id, FILTER_VALIDATE_EMAIL))
+            return 'email';
+        else
+            return 'mobile';
+    }
 
     /**
-     * Create a new controller instance.
+     * Validate the user login request.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function __construct(Auth $auth, JWTAuth $jwt)
+    protected function validateLogin(Request $request)
     {
-        $this->auth=$auth;
-        $this->jwt=$jwt;
+        $request->validate([
+            'user_id' => $this->userId($request)=='email'?'required|email|string|exists:customers,email':'required|digits:10|string|exists:customers,mobile',
+            'password' => 'required|string',
+        ], ['user_id.exists'=>'This account is not registered with us. Please signup to continue']);
     }
 
     /**
-     * Get a validator for an incoming registration request.
+     * Handle a login request to the application.
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'mobile' => ['required', 'integer', 'digits:10'],
-        ]);
-    }
-
-    /**
-     * Create a new user instance after a valid registration.
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      *
-     * @param  array  $data
-     * @return \App\User
+     * @throws \Illuminate\Validation\ValidationException
      */
-    protected function create(array $data)
+    public function login(Request $request)
     {
-        return Customer::create([
-            'mobile' => $data['mobile'],
-            'password' => Hash::make($data['mobile']),
-            //'referral_code'=>User::generateReferralCode()
-        ]);
-    }
+        $this->validateLogin($request);
 
-
-    public function login(Request $request){
-        $this->validator($request->toArray())->validate();
-        $user=$this->ifUserExists($request->mobile);
-        if(!$user){
-            if($user = $this->create($request->all())){
-                //event(new Registered($user));
-                //sendotp
-                if ($otp = OTPModel::createOTP($user->id, 'login')) {
-                    $msg = config('sms-templates.login-otp');
-                    $msg = str_replace('{{otp}}', $otp, $msg);
-                    if (Msg91::send($request->mobile, $msg)) {
-
-                    }
-
-                    return [
-                        'status'=>'success',
-                        'message'=>'Please Verify OTP Sent On Your Mobile',
-                        'newuser'=>1,
-                        'data'=>[],
-                        'errors'=>[]
-                    ];
-
-                }
-            }
-        }else if(!in_array($user->status, [0 , 1])){
-            //send OTP
-            return response()->json([
-                'status'=>'failed',
-                'message'=>'Invalid Login Attempt',
-                'data'=>[],
-                'errors'=>[
-
-                ]],200);
-        }else {
-            if ($otp = OTPModel::createOTP($user->id, 'login')) {
-                $msg = config('sms-templates.login-otp');
-                $msg = str_replace('{{otp}}', $otp, $msg);
-                if (Msg91::send($request->mobile, $msg)) {
-
-                }
-
-                return [
-                    'status'=>'success',
-                    'message'=>'Please Verify OTP Sent On Your Mobile',
-                    'newuser'=>0,
-                    'data'=>[],
-                    'errors'=>[]
-                ];
-
-            }
+        if ($token=$this->attemptLogin($request)) {
+            return $this->sendLoginResponse($this->getCustomer($request), $token);
         }
-
-        return response()->json([
+        return [
             'status'=>'failed',
-            'message'=>'Something Went Wrong.Please Try Again',
-            'data'=>[],
-            'errors'=>[
+            'token'=>'',
+            'message'=>'Credentials are not correct'
+        ];
 
-            ]],200);
-    }
-
-    protected function ifUserExists($mobile){
-        return (Customer::where('mobile', $mobile)->first())??false;
     }
 
 
-    //verify OTP for authentication
-    public function verifyOTP(Request $request){
-        $this->validate($request, [
-            'mobile' => ['required', 'integer', 'digits:10'],
-            'otp' => ['required', 'integer'],
-        ]);
+    protected function attemptLogin(Request $request)
+    {
+        return Auth::guard('customerapi')->attempt(
+            [$this->userId($request)=>$request->user_id, 'password'=>$request->password]
+        );
+    }
+
+    protected function getCustomer(Request $request){
+        return Customer::where($this->userId($request),$request->user_id)->first();
+    }
+
+    protected function sendLoginResponse($user, $token){
+        if($user->status==0){
+            $otp=OTPModel::createOTP('customer', $user->id, 'login');
+            $msg=str_replace('{{otp}}', $otp, config('sms-templates.login'));
+            Msg91::send($user->mobile,$msg);
+            return ['status'=>'success', 'message'=>'otp verify', 'token'=>''];
+        }
+        else if($user->status==1)
+            return ['status'=>'success', 'message'=>'Login Successfull', 'token'=>$token];
+        else
+            return ['status'=>'failed', 'message'=>'This account has been blocked', 'token'=>''];
+    }
+
+
+    /**
+     * Handle a login request to the application with otp.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+
+    public function loginWithOtp(Request $request){
+        $this->validateOTPLogin($request);
 
         $user=Customer::where('mobile', $request->mobile)->first();
+        if(!$user)
+            return ['status'=>'failed', 'message'=>'This account is not registered with us. Please signup to continue'];
 
-        if(!$user){
-            return response()->json([
-                'status'=>'failed',
-                'message'=>'Invalid Login Attempt',
-                'data'=>[],
-                'errors'=>[
-                ],
-            ], 200);
-        }else if(!($user->status==0 || $user->status==1)){
-            return response()->json([
-                'status'=>'failed',
-                'message'=>'Account Is Not Active',
-                'data'=>[],
-                'errors'=>[
+        if(!in_array($user->status, [0,1]))
+            return ['status'=>'failed', 'message'=>'This account has been blocked'];
 
-                ],
-            ], 200);
-        }
+        $otp=OTPModel::createOTP('customer', $user->id, 'login');
+        $msg=str_replace('{{otp}}', $otp, config('sms-templates.login'));
+        event(new SendOtp($user->mobile, $msg));
 
-        if(!OTPModel::verifyOTP($user->id, $request->otptype??'login', $request->otp)){
-            return response()->json([
-                'status'=>'failed',
-                'message'=>'OTP Is Not Correct',
-                'data'=>[],
-                'errors'=>[
-
-                ],
-            ], 200);
-        }
-
-        //activate user if not activated
-        if($user->status==0){
-            $user->status=1;
-            $user->save();
-        }
-
-        return [
-            'status'=>'success',
-            'message'=>'Login Successfull',
-            'data'=>[
-                'token'=>$this->jwt->fromUser($user),
-            ],
-            'errors'=>[]
-
-        ];
+        return ['status'=>'success', 'message'=>'Please verify OTP to continue'];
     }
 
-    public function resendOTP(Request $request){
-        $this->validate($request, [
-            'mobile' => ['required', 'integer', 'digits:10'],
+
+    protected function validateOTPLogin(Request $request)
+    {
+        $request->validate([
+            'mobile' => 'required|digits:10|string|exists:customers',
         ]);
-
-        $user=$this->ifUserExists($request->mobile);
-        if(!$user){
-            return response()->json([
-                'status'=>'failed',
-                'message'=>'Invalid Login Attempt',
-                'data'=>[],
-                'errors'=>[
-
-                ],
-            ], 200);
-        }else if(!in_array($user->status, [0 , 1])){
-            //send OTP
-            return response()->json([
-                'status'=>'failed',
-                'message'=>'Invalid Login Attempt',
-                'data'=>[],
-                'errors'=>[
-
-                ]],200);
-        }else{
-
-            if($otp=OTPModel::createOTP($user->id, 'login')){
-                $msg=config('sms-templates.'.($request->otptype??'login').'-otp');
-                $msg=str_replace('{{otp}}', $otp, $msg);
-                if(Msg91::send($request->mobile, $msg)){
-
-                }
-            }
-
-            return [
-                'status'=>'success',
-                'message'=>'Please verify OTP to continue',
-                'data'=>[],
-                'errors'=>[
-
-                ],
-            ];
-        }
     }
-
-//    public function completeProfile(Request $request){
-//        $request->validate([
-//            'code'=>'required|string|max:10',
-//            'address'=>'required|string|max:150',
-//            'name'=>'required|string|max:100',
-//            'email'=>'required|email|max:60',
-//            'gender'=>'required|in:male,female,others',
-//            'city'=>'required|string|max:50',
-//            'pincode'=>'required|string|max:10',
-//            'qualification'=>'required|string|max:50',
-//            'dob'=>'required|date_format:Y-m-d'
-//        ]);
-//
-//        $user=User::where('referral_code', $request->code)->first();
-//        if($user->signup_complete==0){
-//            $user->update(
-//                array_merge($request->only('name','email','address','city','gender','pincode','qualification','dob','referred_by'))
-//            );
-//
-//            if($otp=OTPModel::createOTP($user->id, 'login')){
-//                $msg=config('sms-templates.login-otp');
-//                $msg=str_replace('{{otp}}', $otp, $msg);
-//                if(Nimbusit::send($user->mobile, $msg)){
-//
-//                }
-//            }
-//
-//            return [
-//                'status'=>'success',
-//                'message'=>'Please verify OTP to continue'
-//            ];
-//        }
-//
-//        return [
-//            'status'=>'failed',
-//            'message'=>'Invalid Request'
-//        ];
-//    }
 
 }
