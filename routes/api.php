@@ -21,7 +21,7 @@ use Illuminate\Http\Request;
 $api = app('Dingo\Api\Routing\Router');
 
 $api->group(['namespace' => 'Customer\Api\Auth'], function ($api) {
-    $api->post('login', 'Customer\Auth\LoginController@login');
+    $api->post('login', 'LoginController@login');
     $api->post('login-with-otp', 'LoginController@loginWithOtp');
     $api->post('register', 'RegisterController@register');
     $api->post('forgot', 'ForgotPasswordController@forgot');
