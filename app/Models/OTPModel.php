@@ -8,7 +8,7 @@ class OTPModel extends Model
 {
     protected $table='otps';
 
-    protected $fillable=['user_id', 'otp', 'type', 'expiry'];
+    protected $fillable=['user_id', 'otp', 'type', 'expiry', 'entity'];
 
     public static function createOTP($userid, $type){
         if(env('APP_ENV')=='production'){
