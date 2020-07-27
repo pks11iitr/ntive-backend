@@ -3,20 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class OTPModel extends Model
 {
     protected $table='otps';
 
-    protected $fillable=['user_id', 'otp', 'type', 'expiry', 'entity'];
+    protected $fillable=['entity', 'user_id', 'otp', 'type', 'expiry'];
 
-    public static function createOTP($userid, $type){
-        if(env('APP_ENV')=='production'){
-            $rand=rand(1, 9).''.rand(1, 9).''.rand(1, 9).''.rand(1, 9).''.rand(1, 9);
-        }else{
-            $rand='111111';
-        }
-        $otp=self::where('user_id', $userid)
+    public static function createOTP($entity,$userid, $type){
+        $rand=rand(1, 9).''.rand(1, 9).''.rand(1, 9).''.rand(1, 9).''.rand(1, 9).''.rand(1, 9);
+        $otp=self::where('entity', $entity)
+                        ->where('user_id', $userid)
                         ->where('isverified', false)
                         ->where('type', $type)
                         ->orderBy('id', 'desc')
@@ -24,15 +22,20 @@ class OTPModel extends Model
         if($otp){
             return $otp->otp;
         }
-        $otp=self::create(['user_id'=>$userid, 'otp'=>$rand, 'type'=>$type??'login', 'expiry'=>date('Y-m-d H:i:s')]);
+        $otp=self::create(['entity'=>$entity, 'user_id'=>$userid, 'otp'=>111111, 'type'=>$type, 'expiry'=>date('Y-m-d H:i:s')]);
         if($otp)
             return $otp->otp;
 
         return false;
     }
 
-    public static function verifyOTP($userid, $type, $otp){
-        $otpobj=self::where('user_id', $userid)->where('isverified', false)->where('type', $type)->orderBy('id', 'desc')->first();
+    public static function verifyOTP($entity, $userid, $type, $otp){
+        $otpobj=self::where('entity', $entity)
+            ->where('user_id', $userid)
+            ->where('isverified', false)
+            ->where('type', $type)
+            ->orderBy('id', 'desc')
+            ->first();
 
         if(!$otpobj || $otpobj->otp!=$otp){
             return false;
