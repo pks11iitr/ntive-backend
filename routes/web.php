@@ -56,4 +56,28 @@ Route::group(['middle'=>['auth', 'acl'], 'is'=>'admin'], function(){
         Route::get('delete/{id}','Admin\DocumentController@delete')->name('document.delete');
     });
 
+    Route::group(['prefix'=>'homecategory'], function(){
+        Route::get('/','Admin\HomeCategoryController@index')->name('homecategory.list');
+        Route::get('create','Admin\HomeCategoryController@create')->name('homecategory.create');
+        Route::post('store','Admin\HomeCategoryController@store')->name('homecategory.store');
+        Route::get('edit/{id}','Admin\HomeCategoryController@edit')->name('homecategory.edit');
+        Route::post('update/{id}','Admin\HomeCategoryController@update')->name('homecategory.update');
+    });
+
+    Route::group(['prefix'=>'subcategory'], function(){
+        Route::get('/','Admin\SubCategoryController@index')->name('subcategory.list');
+        Route::get('create','Admin\SubCategoryController@create')->name('subcategory.create');
+        Route::post('store','Admin\SubCategoryController@store')->name('subcategory.store');
+        Route::get('edit/{id}','Admin\SubCategoryController@edit')->name('subcategory.edit');
+        Route::post('update/{id}','Admin\SubCategoryController@update')->name('subcategory.update');
+    });
+
+    Route::group(['prefix'=>'product'], function(){
+        Route::get('/','Admin\ProductController@index')->name('product.list');
+        Route::get('create','Admin\ProductController@create')->name('product.create');
+        Route::post('store','Admin\ProductController@store')->name('product.store');
+        Route::get('edit/{id}','Admin\ProductController@edit')->name('product.edit');
+        Route::post('update/{id}','Admin\ProductController@update')->name('product.update');
+    });
+
 });
