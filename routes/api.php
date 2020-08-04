@@ -57,3 +57,5 @@ $api->get('order-details/{id}', ['as'=>'order.details', 'uses'=>'Customer\Api\Or
 $api->get('order-history', ['as'=>'order.history', 'uses'=>'Customer\Api\OrderController@index']);
 
 $api->get('cancel-order/{id}', ['as'=>'order.cancel', 'uses'=>'Customer\Api\OrderController@cancelOrder']);
+
+$api->post('update-contact/{id}', ['as'=>'order.contact.update', 'uses'=>'Customer\Api\OrderController@addContactDetails']);
