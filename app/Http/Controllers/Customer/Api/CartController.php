@@ -25,7 +25,7 @@ class CartController extends Controller
               if($request->quantity>0){
                 Cart::create([
                     'product_id'=>$request->product_id,
-                    'qty'=>$request->quantity,
+                    'quantity'=>$request->quantity,
                     'user_id'=>auth()->guard('customerapi')->user()->id
                 ]);
               }
