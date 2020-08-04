@@ -39,3 +39,6 @@ $api->get('sub-category/{catid}/category', ['as'=>'api.sub-category', 'uses'=>'C
 $api->post('add-cart', ['as'=>'api.cart', 'uses'=>'Customer\Api\CartController@store']);
 $api->post('add-cart', ['as'=>'api.cart', 'uses'=>'Customer\Api\CartController@store']);
 $api->get('product-details/{id}', ['as'=>'api.get.product', 'uses'=>'Customer\Api\ProductController@details']);
+
+//notifications api
+$api->get('notifications', ['as'=>'notifications.list', 'uses'=>'Customer\Api\NotificationController@index']);
