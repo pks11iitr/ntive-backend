@@ -127,5 +127,25 @@ class ProductController extends Controller
                           }
 
 
+        public function uploadImages(Request $request, $id){
+
+
+            $request->validate([
+                'images'=>'required|array',
+                'images.*'=>'image'
+            ]);
+
+
+            $product=Product::find($id);
+
+
+            foreach($request->images as $image)
+                $product->saveDocument($image, 'products');
+
+            return redirect()->back()->with('success', 'Images has been uploaded');
+
+
+        }
+
   }
 

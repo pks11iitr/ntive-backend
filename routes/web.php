@@ -78,6 +78,7 @@ Route::group(['middle'=>['auth', 'acl'], 'is'=>'admin'], function(){
         Route::post('store','Admin\ProductController@store')->name('product.store');
         Route::get('edit/{id}','Admin\ProductController@edit')->name('product.edit');
         Route::post('update/{id}','Admin\ProductController@update')->name('product.update');
+        Route::post('upload-images/{id}','Admin\ProductController@uploadImages')->name('product.upload.image');
     });
 
 });
