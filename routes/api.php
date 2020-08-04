@@ -36,9 +36,24 @@ $api->get('home', ['as'=>'api.home', 'uses'=>'Customer\Api\HomeController@index'
 $api->get('special-product/{type}/product', ['as'=>'api.special-product', 'uses'=>'Customer\Api\ProductController@special_product']);
 $api->get('category-product/{type}/{subcatid}/product', ['as'=>'api.category-product', 'uses'=>'Customer\Api\ProductController@category_product']);
 $api->get('sub-category/{catid}/category', ['as'=>'api.sub-category', 'uses'=>'Customer\Api\SubCategoryController@subcategory']);
+
+//cart apis
 $api->post('add-cart', ['as'=>'api.cart', 'uses'=>'Customer\Api\CartController@store']);
-$api->post('add-cart', ['as'=>'api.cart', 'uses'=>'Customer\Api\CartController@store']);
+$api->get('get-cart', ['as'=>'api.cart', 'uses'=>'Customer\Api\CartController@getCart']);
+
+
+//product details
 $api->get('product-details/{id}', ['as'=>'api.get.product', 'uses'=>'Customer\Api\ProductController@details']);
 
 //notifications api
 $api->get('notifications', ['as'=>'notifications.list', 'uses'=>'Customer\Api\NotificationController@index']);
+
+
+//Order apis
+$api->post('initiate-order', ['as'=>'initiate.order', 'uses'=>'Customer\Api\OrderController@initiateOrder']);
+
+$api->get('order-details/{id}', ['as'=>'order.details', 'uses'=>'Customer\Api\OrderController@orderdetails']);
+
+$api->get('order-history', ['as'=>'order.history', 'uses'=>'Customer\Api\OrderController@index']);
+
+$api->get('cancel-order/{id}', ['as'=>'order.cancel', 'uses'=>'Customer\Api\OrderController@cancelOrder']);

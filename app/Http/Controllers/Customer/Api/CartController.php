@@ -56,17 +56,24 @@ class CartController extends Controller
       public function getCart(Request $request){
         $data=[];
        $user= auth()->guard('customerapi')->user();
-          $cart = Cart::where('user_id', auth()->guard('customerapi')->user()->id??'')->get();
-           
+
+       if(!$user)
+           return [
+               'status'=>'User is not logged in',
+               'code'=>'401'
+           ];
+
+       $cart = Cart::with(['product'=>function($product){
+           $product->where('isactive', 1);
+       }])->where('user_id', $user->id??'')->get();
+
           $price_total=0;
-          foreach($cart as $i=>$c){
-            $cart[$i]['product_name']=$c->product->name;
-            $price_total=$price_total + $c->product->actual_price*$c->qty;
+          foreach($cart as $item){
+            $price_total=$price_total + $item->product->actual_price*$item->qty;
           }
           return [
               'data'=>$cart,
               'total'=>$price_total
-
           ];
 
       }
