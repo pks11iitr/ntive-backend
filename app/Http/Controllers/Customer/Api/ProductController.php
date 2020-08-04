@@ -16,14 +16,14 @@ class ProductController extends Controller
 
         $user=auth()->guard('customerapi')->user();
         if($user) {
-            if($type=='featured'){       
-            $products=Product::active()->where('is_featured',1)->get();    
+            if($type=='featured'){
+            $products=Product::active()->where('is_featured',1)->get();
             }elseif($type=='discount'){
                 $products=Product::active()->where('is_discount',1)->get();
             }else{
                 $products=Product::active()->where('is_newarrivel',1)->get();
             }
-           
+
         if(count($products)>0){
              foreach($products as $i=>$r)
                        {
@@ -41,7 +41,7 @@ class ProductController extends Controller
                  'status'=>'No Record Found',
                   'code'=>'402'
             ];
-       } 
+       }
 
     }else{
 
@@ -59,12 +59,12 @@ public function category_product(Request $request,$type,$subcatid){
 
         $user=auth()->guard('customerapi')->user();
         if($user) {
-            if($type=='all'){       
-            $products=Product::active()->where('cat_id',$subcatid)->get();    
+            if($type=='all'){
+            $products=Product::active()->where('cat_id',$subcatid)->get();
             }else{
                 $products=Product::active()->where('subcat_id',$subcatid)->get();
             }
-           
+
         if(count($products)>0){
              foreach($products as $i=>$r)
                        {
@@ -82,7 +82,7 @@ public function category_product(Request $request,$type,$subcatid){
                  'status'=>'No Record Found',
                   'code'=>'402'
             ];
-       } 
+       }
 
     }else{
 
@@ -93,5 +93,26 @@ public function category_product(Request $request,$type,$subcatid){
 
     }
 }
+
+
+    public function details(Request $request, $id){
+
+        $product=Product::with('gallery')->active()->find($id);
+
+        if(!$product)
+            return [
+                'status'=>'No Record Found',
+                'code'=>'402'
+            ];
+
+        return [
+            'status'=>'success',
+            'data'=>compact('product')
+        ];
+
+
+
+    }
+
 
 }

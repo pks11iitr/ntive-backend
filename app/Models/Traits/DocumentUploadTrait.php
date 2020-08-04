@@ -9,8 +9,8 @@ trait DocumentUploadTrait {
         $name = $file->getClientOriginalName();
         $contents = file_get_contents($file);
         $path = $urlprefix.'/' . $this->id . '/' . rand(111, 999) . '_' . str_replace(' ','_', $name);
-        \Storage::disk('documents')->put($path, $contents, 'public');
-        $document=new Document(['file_path'=>$path, 'document_name'=>$data['name']??null]);
+        \Storage::put($path, $contents, 'public');
+        $document=new Document(['file_path'=>$path]);
         $this->gallery()->save($document);
     }
 
