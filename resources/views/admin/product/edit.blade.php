@@ -50,7 +50,7 @@
                                                 <option value="{{$subcat->id}}" {{$product->subcat_id==$subcat->id?'selected':''}}>{{$subcat->name}}</option>
                                             @endforeach
                                         </select>
-                                    </div>                             
+                                    </div>
                                 <div class="form-group">
                                     <label for="exampleInputimage">Name</label>
                                     <input type="text" name="name" class="form-control" id="exampleInputimage"
@@ -116,6 +116,37 @@
                     </div>
                     <!-- /.card -->
                 </div>
+
+
+                <div class="col-md-12">
+                    <!-- jquery validation -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Add Images</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form role="form" method="post" enctype="multipart/form-data" action="{{route('product.upload.image',['id'=>$product->id])}}">
+                            @csrf
+                            <div class="card-body">
+
+                                <div class="form-group">
+                                    <label for="exampleInputimage">Product Image</label>
+                                    <input type="file" name="images[]" class="form-control" id="exampleInputimage"
+                                           placeholder="" multiple>
+
+                                </div>
+
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                        </form>
+                    </div>
+                    <!-- /.card -->
+                </div>
+
+
               </div>
                 <!--/.col (left) -->
                 <!-- right column -->
