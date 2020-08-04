@@ -97,7 +97,7 @@ public function category_product(Request $request,$type,$subcatid){
 
     public function details(Request $request, $id){
 
-        $product=Product::with('gallery')->active()->find($id);
+        $product=Product::active()->with('gallery')->find($id);
 
         if(!$product)
             return [
