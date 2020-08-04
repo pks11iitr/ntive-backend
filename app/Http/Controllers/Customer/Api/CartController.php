@@ -32,7 +32,7 @@ class CartController extends Controller
 
           }else{
             if($request->quantity>0){
-              $cart->qty=$request->quantity;
+              $cart->quantity=$request->quantity;
               $cart->save();
             }else{
 
