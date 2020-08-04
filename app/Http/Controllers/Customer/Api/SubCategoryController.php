@@ -9,17 +9,20 @@ use App\Http\Controllers\Controller;
 class SubCategoryController extends Controller
 {
 
+
     public function subcategory(Request $request,$catid){
 
         $data=[];
-      
-            $subcategory=SubCategory::active()->where('category_id', $catid)->get();    
-          // var_dump($subcategory); die();
-           if(count($subcategory)>0){
+
+          $data=SubCategory::active()->where('category_id', $catid)->get();    
+          // $data[]=(object) ['id' => '0','name'=>'all','isactive'=>'1']; 
+          
+          $data = array_add($data, 'key', 'value');
+           if(count($data)>0){
             return [
                 'status'=>'success',
                 'code'=>'200',
-                'data'=>$subcategory
+                'data'=>$data
             ];
         }else{
             return [
