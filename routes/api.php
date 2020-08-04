@@ -59,3 +59,10 @@ $api->get('order-history', ['as'=>'order.history', 'uses'=>'Customer\Api\OrderCo
 $api->get('cancel-order/{id}', ['as'=>'order.cancel', 'uses'=>'Customer\Api\OrderController@cancelOrder']);
 
 $api->post('update-contact/{id}', ['as'=>'order.contact.update', 'uses'=>'Customer\Api\OrderController@addContactDetails']);
+
+$api->get('get-contact', ['as'=>'order.contact', 'uses'=>'Customer\Api\OrderController@getContactDetails']);
+
+
+//payment apis
+$api->post('initiate-payment/{id}', ['as'=>'order.payment', 'uses'=>'Customer\Api\PaymentController@initiatePayment']);
+$api->post('verify-payment', ['as'=>'order.payment.verify', 'uses'=>'Customer\Api\PaymentController@verifyPayment']);

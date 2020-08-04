@@ -156,6 +156,33 @@ class OrderController extends Controller
 
     }
 
+    public function getContactDetails(Request $request){
+        $user=auth()->guard('customerapi')->user();
+        if(!$user)
+            return [
+                'status'=>'failed',
+                'message'=>'Please login to continue'
+            ];
+
+        $order=Order::where('user_id', $user->id)
+            ->where('status', 'completed')
+            ->orderBy('id', 'desc')
+            ->first();
+
+        $contact=[
+            'name'=>$order->name??'',
+            'email'=>$order->email??'',
+            'mobile'=>$order->mobile??'',
+            'address'=>$order->address??'',
+        ];
+
+        return [
+            'status'=>'success',
+            'data'=>compact('contact')
+        ];
+
+    }
+
     public function orderdetails(Request $request, $id){
         $user=auth()->guard('customerapi')->user();
         if(!$user)
