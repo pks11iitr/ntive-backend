@@ -233,7 +233,7 @@ class OrderController extends Controller
                 //'points'=>Wallet::points($user->id),
                 //'show_cancel'=>$show_cancel??0,
                 //'show_reschedule'=>$show_reschedule??0,
-                'show_cancel_product'=>$show_cancel_product??0,
+                //'show_cancel_product'=>$show_cancel_product??0,
                 //'dates'=>$dates,
                 //'timings'=>$timings
                 'display_cancel_button'=>$display_cancel_button,
