@@ -22,7 +22,7 @@ class OrderController extends Controller
                 'status'=>'failed',
                 'message'=>'Please login to continue'
             ];
-        $orders=Order::with(['details.entity','details.clinic'])
+        $orders=Order::with(['details.entity'])
             ->where('status', '!=','pending')
             ->where('user_id', $user->id)
             ->orderBy('created_at', 'desc')
