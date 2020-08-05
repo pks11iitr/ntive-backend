@@ -292,7 +292,24 @@ class OrderController extends Controller
 
     }
 
-    public function returnProductsBooking($order){
+    public function returnProductsBooking(Request $request, $id){
+
+
+        $user=auth()->guard('customerapi')->user();
+        if(!$user)
+            return [
+                'status'=>'failed',
+                'message'=>'Please login to continue'
+            ];
+
+        $order=Order::with(['details.entity'])->where('user_id', $user->id)->find($id);
+
+        if(!$order)
+            return [
+                'status'=>'failed',
+                'message'=>'Invalid Operation Performed'
+            ];
+
 
         $product_return_status=[
             'delivered',
