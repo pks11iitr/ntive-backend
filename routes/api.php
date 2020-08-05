@@ -58,6 +58,8 @@ $api->get('order-history', ['as'=>'order.history', 'uses'=>'Customer\Api\OrderCo
 
 $api->get('cancel-order/{id}', ['as'=>'order.cancel', 'uses'=>'Customer\Api\OrderController@cancelOrder']);
 
+$api->get('return-order/{id}', ['as'=>'order.return', 'uses'=>'Customer\Api\OrderController@returnProductsBooking']);
+
 $api->post('update-contact/{id}', ['as'=>'order.contact.update', 'uses'=>'Customer\Api\OrderController@addContactDetails']);
 
 $api->get('get-contact', ['as'=>'order.contact', 'uses'=>'Customer\Api\OrderController@getContactDetails']);

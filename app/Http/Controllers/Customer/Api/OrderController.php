@@ -213,37 +213,16 @@ class OrderController extends Controller
         }
 
         // options to be displayed
-        if($order->status=='confirmed'){
-            if($order->details[0]->entity instanceof Product){
-                $show_cancel_product=1;
-            }else{
-                $show_cancel=1;
-            }
-            if($order->details[0]->entity instanceof Therapy  && $order->is_instant!=1){
-                $show_reschedule=1;
-            }
-
+        $display_cancel_button=0;
+        $display_return_button=0;
+        $display_pay_button=0;
+        if($order->status=='pending'){
+            $display_pay_button=1;
+        }else if(in_array($order->status, ['pending', 'confirmed'])){
+            $display_cancel_button=1;
+        }elseif(in_array($order->status, ['delivered'])){
+            $display_return_button=0;
         }
-
-
-        $date=date('Y-m-d');
-        for($i=1; $i<=7;$i++){
-            $dates[]=[
-                'text'=>($i==1)?'Today':($i==2?'Tomorrow':date('d F', strtotime($date))),
-                'text2'=>($i==1)?'':($i==2?'':date('D', strtotime($date))),
-                'value'=>$date
-            ];
-            $date=date('Y-m-d', strtotime('+'.$i.' days', strtotime($date)));
-        }
-        $date=date('Y-m-d h:i:s');
-        for($i=9; $i<=17;$i++){
-            $timings[]=[
-                'text'=>date('h:i A', strtotime($date)),
-                'value'=>date('H:i', strtotime($date))
-            ];
-            $date=date('Y-m-d H:i:s', strtotime('+1 hours', strtotime($date)));
-        }
-
 
         return [
             'status'=>'success',
@@ -257,6 +236,9 @@ class OrderController extends Controller
                 'show_cancel_product'=>$show_cancel_product??0,
                 //'dates'=>$dates,
                 //'timings'=>$timings
+                'display_cancel_button'=>$display_cancel_button,
+                'display_return_button'=>$display_return_button,
+                'display_pay_button'=>$display_pay_button
             ]
         ];
     }
@@ -269,7 +251,7 @@ class OrderController extends Controller
                 'message'=>'Please login to continue'
             ];
 
-        $order=Order::with(['details.entity', 'details.clinic'])->where('user_id', $user->id)->find($id);
+        $order=Order::with(['details.entity'])->where('user_id', $user->id)->find($id);
 
         if(!$order)
             return [
@@ -285,7 +267,7 @@ class OrderController extends Controller
     public function cancelProductsBooking($order){
 
         $product_cancellation_status=[
-            'confirmed'
+            'confirmed','pending'
         ];
 
         if(!in_array($order->status, $product_cancellation_status)){
@@ -297,6 +279,12 @@ class OrderController extends Controller
 
         $order->status='cancelled';
         $order->save();
+
+        OrderStatus::create([
+            'order_id'=>$order->id,
+            'current_status'=>$order->status
+        ]);
+
         return [
             'status'=>'success',
             'message'=>'Order has been cancelled. Refund process will be initiated shortly'
@@ -304,24 +292,30 @@ class OrderController extends Controller
 
     }
 
+    public function returnProductsBooking($order){
 
-    private function cancelTherapyBooking($order){
-        $therapy_cancellation_status=[
-            'confirmed'
+        $product_return_status=[
+            'delivered',
         ];
 
-        if(!in_array($order->status, $therapy_cancellation_status)){
+        if(!in_array($order->status, $product_return_status)){
             return [
                 'status'=>'failed',
-                'message'=>'Order cannot be cancelled now'
+                'message'=>'Order cannot be returned now'
             ];
         }
 
-        $order->status='cancelled';
+        $order->status='return-requested';
         $order->save();
+
+        OrderStatus::create([
+            'order_id'=>$order->id,
+            'current_status'=>$order->status
+        ]);
+
         return [
             'status'=>'success',
-            'message'=>'Your booking has been cancelled. Refund process will be initiated shortly'
+            'message'=>'We have received your refund request. We will process this shortly'
         ];
 
     }
