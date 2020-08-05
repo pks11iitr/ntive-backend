@@ -9,7 +9,7 @@ class Cart extends Model
     //public $timestamps=false;
     protected $table='cart';
 
-    protected $fillable=['qty','product_id', 'user_id'];
+    protected $fillable=['qty','product_id', 'user_id','quantity'];
 
     protected $hidden =['created_at','updated_at','deleted_at'];
 
