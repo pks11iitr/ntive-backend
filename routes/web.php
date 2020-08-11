@@ -29,14 +29,11 @@ Route::group(['middle'=>['auth', 'acl'], 'is'=>'admin'], function(){
         Route::get('delete/{id}','Admin\BannerController@delete')->name('banners.delete');
     });
 
-
-
     Route::group(['prefix'=>'notification'], function(){
         Route::get('create','Admin\NotificationController@create')->name('notification.create');
         Route::post('store','Admin\NotificationController@store')->name('notification.store');
 
     });
-
 
     Route::group(['prefix'=>'customer'], function(){
         Route::get('/','Admin\CustomerController@index')->name('customer.list');
@@ -47,9 +44,6 @@ Route::group(['middle'=>['auth', 'acl'], 'is'=>'admin'], function(){
         Route::get('download-documents/{id}','Admin\CustomerController@downloadZip')->name('customer.download');
         Route::get('contacts/{id}','Admin\CustomerController@contacts')->name('customer.contacts');
     });
-
-
-
 
     Route::group(['prefix'=>'documents'], function(){
         Route::get('view/{id}','Admin\DocumentController@view')->name('document.view');
@@ -79,6 +73,12 @@ Route::group(['middle'=>['auth', 'acl'], 'is'=>'admin'], function(){
         Route::get('edit/{id}','Admin\ProductController@edit')->name('product.edit');
         Route::post('update/{id}','Admin\ProductController@update')->name('product.update');
         Route::post('upload-images/{id}','Admin\ProductController@uploadImages')->name('product.upload.image');
+    });
+
+    Route::group(['prefix'=>'order'], function(){
+        Route::get('/','Admin\OrderController@index')->name('order.list');
+        Route::get('orderview/{id}','Admin\OrderController@orderview')->name('order.orderview');
+
     });
 
 });

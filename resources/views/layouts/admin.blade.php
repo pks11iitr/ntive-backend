@@ -249,7 +249,17 @@
                         </a>
                     </li>
 
-{{--                    <li class="nav-item">--}}
+                    <li class="nav-item">
+                        <a href="{{route('order.list')}}" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                Order
+                            </p>
+                        </a>
+                    </li>
+
+
+                    {{--                    <li class="nav-item">--}}
 {{--                        <a href="pages/widgets.html" class="nav-link">--}}
 {{--                            <i class="nav-icon fas fa-th"></i>--}}
 {{--                            <p>--}}
