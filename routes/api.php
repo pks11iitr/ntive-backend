@@ -65,7 +65,13 @@ $api->post('update-contact/{id}', ['as'=>'order.contact.update', 'uses'=>'Custom
 
 $api->get('get-contact', ['as'=>'order.contact', 'uses'=>'Customer\Api\OrderController@getContactDetails']);
 
+$api->get('profile', ['as'=>'user.profile', 'uses'=>'Customer\Api\ProfileController@view']);
+
+$api->post('update-profile', ['as'=>'user.profile.update', 'uses'=>'Customer\Api\ProfileController@update']);
+
+
 
 //payment apis
 $api->post('initiate-payment/{id}', ['as'=>'order.payment', 'uses'=>'Customer\Api\PaymentController@initiatePayment']);
 $api->post('verify-payment', ['as'=>'order.payment.verify', 'uses'=>'Customer\Api\PaymentController@verifyPayment']);
+
