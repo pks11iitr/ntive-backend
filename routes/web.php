@@ -81,4 +81,16 @@ Route::group(['middle'=>['auth', 'acl'], 'is'=>'admin'], function(){
 
     });
 
+    Route::group(['prefix'=>'contact'], function(){
+        Route::get('/','Admin\ContactController@index')->name('contact.list');
+
+    });
+
+    Route::group(['prefix'=>'pincode'], function(){
+        Route::get('/','Admin\PinCodeController@index')->name('pincode.list');
+        Route::get('create','Admin\PinCodeController@create')->name('pincode.create');
+        Route::post('store','Admin\PinCodeController@store')->name('pincode.store');
+
+    });
+
 });

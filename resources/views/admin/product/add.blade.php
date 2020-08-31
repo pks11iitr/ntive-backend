@@ -107,6 +107,16 @@
                                     </select>
                                 </div>
 
+                                    <div class="form-group">
+
+                                        <label for="exampleInputistop">Out Of Stock</label><br>
+                                        <input type="checkbox" name="out_of_stock" value="0">
+                                        <label for="exampleInputistop">Yes</label><br>
+                                        <input type="checkbox" name="out_of_stock" value="1">
+                                        <label for="exampleInputistop">No</label>
+
+                                    </div>
+
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">Submit</button>
