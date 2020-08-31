@@ -157,7 +157,7 @@
 {{--                    <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">--}}
 {{--                </div>--}}
                 <div class="info">
-                    <span style="color:white">{{auth()->user()->name}}</span>
+                    <span style="color:white">{{auth()->user()->name??''}}</span>
                 </div>
             </div>
 
@@ -249,7 +249,35 @@
                         </a>
                     </li>
 
-{{--                    <li class="nav-item">--}}
+                    <li class="nav-item">
+                        <a href="{{route('order.list')}}" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                Order
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{route('contact.list')}}" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                Contact
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{route('pincode.list')}}" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                Pin Code
+                            </p>
+                        </a>
+                    </li>
+
+
+                    {{--                    <li class="nav-item">--}}
 {{--                        <a href="pages/widgets.html" class="nav-link">--}}
 {{--                            <i class="nav-icon fas fa-th"></i>--}}
 {{--                            <p>--}}

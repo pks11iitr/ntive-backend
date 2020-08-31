@@ -41,6 +41,7 @@ class ProductController extends Controller
                     'is_discount'=>'required',
                     'is_newarrivel'=>'required',
                     'isactive'=>'required',
+                    'out_of_stock'=>'required',
                     'image'=>'required|image'
 
                     ]);
@@ -56,6 +57,7 @@ class ProductController extends Controller
                             'is_discount'=>$request->is_discount,
                             'is_newarrivel'=>$request->is_newarrivel,
                             'isactive'=>$request->isactive,
+                            'out_of_stock'=>$request->out_of_stock,
                             'image'=>'a',
 
                             ])){
