@@ -20,13 +20,14 @@ class PinCodeController extends Controller
     public function store(Request $request){
 
         $pincodes=explode(',', $request->pin_code);
-        foreach($pincodes as $pincode)
+        foreach($pincodes as $pincode){
             $pincode=trim($pincode);
             if(!empty($pincode)){
                 PinCode::create([
                     'pin_code'=>trim($pincode)
                 ]);
             }
+        }
         return redirect(route('pincode.list'))->with('success','PinCode has been created');
     }
 
