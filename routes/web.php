@@ -90,6 +90,7 @@ Route::group(['middle'=>['auth', 'acl'], 'is'=>'admin'], function(){
         Route::get('/','Admin\PinCodeController@index')->name('pincode.list');
         Route::get('create','Admin\PinCodeController@create')->name('pincode.create');
         Route::post('store','Admin\PinCodeController@store')->name('pincode.store');
+        Route::get('delete/{id}','Admin\PinCodeController@delete')->name('pincode.delete');
 
     });
 

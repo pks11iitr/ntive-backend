@@ -9,7 +9,8 @@ use App\Http\Controllers\Controller;
 class PinCodeController extends Controller
 {
     public function index(Request $request){
-        return view('admin.pincode.view');
+        $pincodes=PinCode::paginate(100);
+        return view('admin.pincode.view', compact('pincodes'));
     }
 
     public function create(Request $request){
@@ -17,8 +18,20 @@ class PinCodeController extends Controller
     }
 
     public function store(Request $request){
-        PinCode::create($request->only(['pin_code']));
+
+        $pincodes=explode(',', $request->pin_code);
+        foreach($pincodes as $pincode)
+            PinCode::create([
+                'pin_code'=>trim($pincode)
+            ]);
 
         return redirect(route('pincode.list'))->with('success','PinCode has been created');
+    }
+
+    public function delete(Request $request, $id){
+        $pincode=PinCode::find($id);
+        $pincode->delete();
+        return redirect(route('pincode.list'))->with('success','PinCode has been deleted');
+
     }
 }

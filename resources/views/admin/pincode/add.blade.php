@@ -38,7 +38,7 @@
 
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Pin Code</label><br>
-                                        <textarea id="w3review" name="pin_code" rows="6" cols="80"> </textarea>
+                                        <textarea name="pin_code" rows="6" cols="80" placeholder="For Example: 201001,201301"></textarea>
                                     </div>
 
                                 </div>

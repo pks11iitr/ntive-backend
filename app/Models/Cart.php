@@ -13,7 +13,7 @@ class Cart extends Model
 
     protected $hidden =['created_at','updated_at','deleted_at'];
 
-public function product(){
+    public function product(){
         return $this->belongsTo('App\Models\Product', 'product_id');
     }
 
