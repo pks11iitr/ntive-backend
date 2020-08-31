@@ -33,6 +33,7 @@ $api->group(['namespace' => 'Customer\Api'], function ($api) {
     // all logged in apis will go here
 });
 $api->get('home', ['as'=>'api.home', 'uses'=>'Customer\Api\HomeController@index']);
+$api->post('search', ['as'=>'api.search', 'uses'=>'Customer\Api\SearchController@index']);
 $api->get('special-product/{type}/product', ['as'=>'api.special-product', 'uses'=>'Customer\Api\ProductController@special_product']);
 $api->get('category-product/{type}/{subcatid}/product', ['as'=>'api.category-product', 'uses'=>'Customer\Api\ProductController@category_product']);
 $api->get('sub-category/{catid}/category', ['as'=>'api.sub-category', 'uses'=>'Customer\Api\SubCategoryController@subcategory']);
