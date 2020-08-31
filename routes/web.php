@@ -40,15 +40,9 @@ Route::group(['middle'=>['auth', 'acl'], 'is'=>'admin'], function(){
         Route::get('edit/{id}','Admin\CustomerController@edit')->name('customer.edit');
         Route::post('update/{id}','Admin\CustomerController@update')->name('customer.update');
         Route::post('send_message','Admin\CustomerController@send_message')->name('customer.send_message');
-        Route::post('documents/{id}','Admin\CustomerController@uploadDocuments')->name('customer.documents');
-        Route::get('download-documents/{id}','Admin\CustomerController@downloadZip')->name('customer.download');
         Route::get('contacts/{id}','Admin\CustomerController@contacts')->name('customer.contacts');
     });
 
-    Route::group(['prefix'=>'documents'], function(){
-        Route::get('view/{id}','Admin\DocumentController@view')->name('document.view');
-        Route::get('delete/{id}','Admin\DocumentController@delete')->name('document.delete');
-    });
 
     Route::group(['prefix'=>'homecategory'], function(){
         Route::get('/','Admin\HomeCategoryController@index')->name('homecategory.list');

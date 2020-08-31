@@ -69,6 +69,8 @@ $api->get('profile', ['as'=>'user.profile', 'uses'=>'Customer\Api\ProfileControl
 
 $api->post('update-profile', ['as'=>'user.profile.update', 'uses'=>'Customer\Api\ProfileController@update']);
 
+$api->get('notify-me/{id}', ['as'=>'user.notify.me', 'uses'=>'Customer\Api\NotifyController@update']);
+
 
 
 //payment apis
