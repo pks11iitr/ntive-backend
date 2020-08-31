@@ -49,6 +49,7 @@
                                     @endforeach
                                     </tbody>
                                 </table>
+                                {{$pincodes->links()}}
                             </div>
                             <!-- /.card-body -->
                         </div>

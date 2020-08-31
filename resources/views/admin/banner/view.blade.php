@@ -35,7 +35,7 @@
                   <thead>
                   <tr>
                     <th>Image</th>
-
+                      <th>Category</th>
                     <th>Isactive</th>
                    <th>Action</th>
                   </tr>
@@ -44,7 +44,7 @@
 				@foreach($banners as $bann)
                   <tr>
                       <td><img src="{{$bann->image}}" height="80px" width="80px"/></td>
-
+                      <td>{{!empty($bann->category)?($bann->category['cat_name']??''):''}}</td>
                        <td>
                         @if($bann->isactive==1){{'Yes'}}
                              @else{{'No'}}
@@ -55,13 +55,7 @@
                  </tr>
                  @endforeach
                   </tbody>
-                  <tfoot>
-                  <tr>
-                    <th>Image</th>
-                    <th>Isactive</th>
-                    <th>Action</th>
-                  </tr>
-                  </tfoot>
+
                 </table>
               </div>
               <!-- /.card-body -->

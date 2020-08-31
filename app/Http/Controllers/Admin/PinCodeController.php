@@ -21,10 +21,12 @@ class PinCodeController extends Controller
 
         $pincodes=explode(',', $request->pin_code);
         foreach($pincodes as $pincode)
-            PinCode::create([
-                'pin_code'=>trim($pincode)
-            ]);
-
+            $pincode=trim($pincode);
+            if(!empty($pincode)){
+                PinCode::create([
+                    'pin_code'=>trim($pincode)
+                ]);
+            }
         return redirect(route('pincode.list'))->with('success','PinCode has been created');
     }
 

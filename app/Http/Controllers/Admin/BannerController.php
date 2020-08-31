@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
+use App\Models\HomeCategory;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Storage;
@@ -18,7 +20,10 @@ class BannerController extends Controller
             }
 
         public function create(Request $request){
-            return view('admin.banner.add');
+
+            $category=HomeCategory::get();
+            $subcategory=SubCategory::get();
+            return view('admin.banner.add', compact('category', 'subcategory'));
 
         }
 
@@ -33,7 +38,7 @@ class BannerController extends Controller
                if($banner=Banner::create([
                             'isactive'=>$request->isactive,
                             'image'=>'a',
-
+                            'category_id'=>$request->category_id
                             ])){
                    $banner->saveImage($request->image, 'banners');
 
@@ -45,8 +50,11 @@ class BannerController extends Controller
 
           }
           public function edit(Request $request,$id){
-            $banner = Banner::findOrFail($id);
-              return view('admin.banner.edit',['banner'=>$banner]);
+              $category=HomeCategory::get();
+              $subcategory=SubCategory::get();
+
+              $banner = Banner::findOrFail($id);
+              return view('admin.banner.edit',compact('banner','category','subcategory'));
             }
 
 
@@ -57,12 +65,11 @@ class BannerController extends Controller
                          'isactive'=>'required',
                          'image'=>'image',
 
-
                        ]);
              $banner = Banner::findOrFail($id);
 
             if($banner->update([
-
+                'category_id'=>$request->category_id,
                 'isactive'=>$request->isactive,
             ])){
 
