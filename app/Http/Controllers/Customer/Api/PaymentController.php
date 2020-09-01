@@ -113,7 +113,7 @@ class PaymentController extends Controller
 //            }
 //
 //        }
-        if($request->payment_mode=='cod'){
+        if($request->payment_mode!='cod'){
             $result=$this->initiateGatewayPayment($order);
             return $result;
         }else{
