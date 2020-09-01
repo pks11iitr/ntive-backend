@@ -17,4 +17,18 @@ class OrderController extends Controller
         $order =Order::with(['details.entity'])->where('id',$id)->first();
         return view('admin.order.orderview',['order'=>$order]);
     }
+
+    public function changeStatus(Request $request, $id){
+
+        $status=$request->status;
+        $order=Order::find($id);
+
+        $order->status=$status;
+        $order->save();
+
+
+
+
+    }
+
 }
