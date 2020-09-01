@@ -33,6 +33,7 @@ $api->group(['namespace' => 'Customer\Api'], function ($api) {
     // all logged in apis will go here
 });
 $api->get('home', ['as'=>'api.home', 'uses'=>'Customer\Api\HomeController@index']);
+$api->post('search', ['as'=>'api.search', 'uses'=>'Customer\Api\SearchController@index']);
 $api->get('special-product/{type}/product', ['as'=>'api.special-product', 'uses'=>'Customer\Api\ProductController@special_product']);
 $api->get('category-product/{type}/{subcatid}/product', ['as'=>'api.category-product', 'uses'=>'Customer\Api\ProductController@category_product']);
 $api->get('sub-category/{catid}/category', ['as'=>'api.sub-category', 'uses'=>'Customer\Api\SubCategoryController@subcategory']);
@@ -64,7 +65,15 @@ $api->post('update-contact/{id}', ['as'=>'order.contact.update', 'uses'=>'Custom
 
 $api->get('get-contact', ['as'=>'order.contact', 'uses'=>'Customer\Api\OrderController@getContactDetails']);
 
+$api->get('profile', ['as'=>'user.profile', 'uses'=>'Customer\Api\ProfileController@view']);
+
+$api->post('update-profile', ['as'=>'user.profile.update', 'uses'=>'Customer\Api\ProfileController@update']);
+
+$api->get('notify-me/{id}', ['as'=>'user.notify.me', 'uses'=>'Customer\Api\NotifyController@update']);
+
+
 
 //payment apis
 $api->post('initiate-payment/{id}', ['as'=>'order.payment', 'uses'=>'Customer\Api\PaymentController@initiatePayment']);
 $api->post('verify-payment', ['as'=>'order.payment.verify', 'uses'=>'Customer\Api\PaymentController@verifyPayment']);
+

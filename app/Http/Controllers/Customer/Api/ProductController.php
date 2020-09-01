@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Customer\Api;
 
+use App\Models\NotifyMe;
 use App\Models\Product;
 use App\Models\Cart;
 use Illuminate\Http\Request;
@@ -97,7 +98,14 @@ public function category_product(Request $request,$type,$subcatid){
 
     public function details(Request $request, $id){
 
+        $user=auth()->guard('customerapi')->user();
         $product=Product::active()->with('gallery')->find($id);
+
+        $notify=NotifyMe::where('user_id', $user->id)
+            ->where('product_id', $product->id)
+            ->first();
+
+        $is_notified=$notify?1:0;
 
         if(!$product)
             return [
@@ -107,7 +115,7 @@ public function category_product(Request $request,$type,$subcatid){
 
         return [
             'status'=>'success',
-            'data'=>compact('product')
+            'data'=>compact('product', 'is_notified')
         ];
 
 

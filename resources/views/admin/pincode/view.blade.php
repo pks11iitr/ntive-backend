@@ -39,16 +39,17 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {{--@foreach($banners as $bann)--}}
+                                    @foreach($pincodes as $pin)
                                         <tr>
-                                            <td></td>
+                                            <td>{{$pin->pin_code}}</td>
                                             <td>
-                                                <a href="{{--{{route('banners.edit')}}--}}" class="btn btn-primary">Edit</a>
+                                                <a href="{{route('pincode.delete', ['id'=>$pin->id])}}" class="btn btn-primary">Delete</a>
                                             </td>
                                         </tr>
-                                    {{--@endforeach--}}
+                                    @endforeach
                                     </tbody>
                                 </table>
+                                {{$pincodes->links()}}
                             </div>
                             <!-- /.card-body -->
                         </div>

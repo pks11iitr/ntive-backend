@@ -52,6 +52,18 @@
                                     </select>
                                 </div>
 
+                                    <div class="form-group">
+                                        <label for="exampleInputistop">Category(which will be opened in on click of banner)</label>
+                                        <select name="category_id" class="form-control" id="exampleInputistop" placeholder="">
+                                            @foreach($category as $c)
+                                                <option value="main_{{$c->id}}" @if($banner->category_id=='main_'.$c->id){{'selected'}}@endif>{{$c->title}}</option>
+                                            @endforeach
+                                            @foreach($subcategory as $c)
+                                                <option value="sub_{{$c->id}}" @if($banner->category_id=='sub_'.$c->id){{'selected'}}@endif>{{$c->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">Submit</button>
