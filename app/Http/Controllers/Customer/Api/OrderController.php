@@ -234,6 +234,21 @@ class OrderController extends Controller
             $display_return_button=0;
         }
 
+        if(in_array($order->status, ['pending','confirmed','processing', 'dispatched'])){
+            $date=date('Y-m-d H:i', strtotime($order->created_at));
+            $dateslot=date('Y-m-d', strtotime($order->created_at)).' 15:00';
+            if($date>$dateslot){
+                $delivery_date=date('d/m/Y', strtotime('+1 days'));
+                $delivery_text='Your Order Will Be Delivered on '.$delivery_date;
+            }else{
+                $delivery_text='Your Order Will Be Delivered on '.date('d/m/Y');
+            }
+
+
+        }else{
+            $delivery_text='';
+        }
+
         return [
             'status'=>'success',
             'data'=>[
