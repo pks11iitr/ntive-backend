@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer\Api;
 use App\Events\OrderConfirmed;
 use App\Events\OrderSuccessfull;
 use App\Models\Cart;
+use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\Therapy;
@@ -21,6 +22,7 @@ class PaymentController extends Controller
     }
 
     public function initiatePayment(Request $request, $id){
+
         $user=auth()->guard('customerapi')->user();
         if(!$user)
             return [
@@ -34,6 +36,36 @@ class PaymentController extends Controller
                 'status'=>'failed',
                 'message'=>'Invalid Operation Performed'
             ];
+
+
+        $coupon=$request->coupon;
+        if(!empty($coupon)){
+            $coupon=Coupon::active()->where('code', $coupon)->first();
+            if($coupon){
+                $discount=$coupon->getDiscount($order->total_cost+$order->coupon_discount);
+
+                if($discount > $order->total_cost+$order->coupon_discount){
+                    return [
+                        'status'=>'failed',
+                        'message'=>'Coupon Cannot Be Applied'
+                    ];
+                }
+
+                $order->total_cost=$order->total_cost+$order->coupon_discount-$discount;
+                $order->coupon_applied=$coupon->code;
+                $order->save();
+            }else{
+                $order->total_cost=$order->total_cost+$order->coupon_discount;
+                $order->coupon_applied=null;
+                $order->save();
+            }
+        }else{
+            $order->total_cost=$order->total_cost+$order->coupon_discount;
+            $order->coupon_applied=null;
+            $order->save();
+        }
+
+
 
         // set to initial state
         $order->update([

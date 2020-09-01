@@ -71,6 +71,8 @@ $api->post('update-profile', ['as'=>'user.profile.update', 'uses'=>'Customer\Api
 
 $api->get('notify-me/{id}', ['as'=>'user.notify.me', 'uses'=>'Customer\Api\NotifyController@update']);
 
+$api->post('apply-coupon/{id}', ['as'=>'user.notify.me', 'uses'=>'Customer\Api\CouponController@applyCoupon']);
+
 
 
 //payment apis
