@@ -135,7 +135,7 @@ class OrderController extends Controller
         ]);
 
 
-        $pin=PinCode::where('pin_code')->first();
+        $pin=PinCode::where('pin_code', $request->pincode)->first();
         if(!$pin)
             return [
                 'status'=>'failed',
