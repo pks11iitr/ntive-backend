@@ -7,6 +7,7 @@ use App\Models\Clinic;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\OrderStatus;
+use App\Models\PinCode;
 use App\Models\Product;
 use App\Models\Therapy;
 use App\Models\Wallet;
@@ -130,7 +131,16 @@ class OrderController extends Controller
             'address'=>'string|max:100|nullable',
             //'lat'=>'numeric',
             //'lang'=>'numeric'
+            'pincode'=>'required|integer'
         ]);
+
+
+        $pin=PinCode::where('pin_code')->first();
+        if(!$pin)
+            return [
+                'status'=>'failed',
+                'message'=>'Delivery is not available for this pincode'
+            ];
 
         $user=auth()->guard('customerapi')->user();
 
