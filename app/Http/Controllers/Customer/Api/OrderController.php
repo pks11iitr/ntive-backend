@@ -157,7 +157,7 @@ class OrderController extends Controller
                 'message'=>'Invalid Operation Performed'
             ];
         $request->merge(['order_details_completed'=>true]);
-        if($order->update($request->only('name','email','address', 'mobile','lat', 'lang'))){
+        if($order->update($request->only('name','email','address', 'mobile','lat', 'lang', 'pincode'))){
             return [
                 'status'=>'success',
                 'message'=>'Address has been updated'
