@@ -113,11 +113,27 @@ class PaymentController extends Controller
 //            }
 //
 //        }
+        if($request->payment_mode=='cod'){
+            $result=$this->initiateGatewayPayment($order);
+            return $result;
+        }else{
+            return $this->initiateCodPayment($order);
+        }
 
-        $result=$this->initiateGatewayPayment($order);
+    }
 
-        return $result;
-
+    private function initiateCodPayment($order){
+        $order->payment_mode='Cash On Delivery';
+        $order->status='confirmed';
+        $order->save();
+        return [
+            'status'=>'success',
+            'message'=>'success',
+            'data'=>[
+                'payment_done'=>'yes',
+                'refid'=>$order->refid
+            ],
+        ];
     }
 
     private function initiateGatewayPayment($order){
