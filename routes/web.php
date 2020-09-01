@@ -72,6 +72,8 @@ Route::group(['middle'=>['auth', 'acl'], 'is'=>'admin'], function(){
     Route::group(['prefix'=>'order'], function(){
         Route::get('/','Admin\OrderController@index')->name('order.list');
         Route::get('orderview/{id}','Admin\OrderController@orderview')->name('order.orderview');
+        Route::get('change-status/{id}','Admin\OrderController@changeStatus')->name('order.status.change');
+
 
     });
 

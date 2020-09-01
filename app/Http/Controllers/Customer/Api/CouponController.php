@@ -12,7 +12,7 @@ class CouponController extends Controller
     public function applyCoupon(Request $request, $order_id){
 
 
-        $coupon=Coupon::where('code', $request->code??null)->first();
+        $coupon=Coupon::where('code', $request->coupon??null)->first();
         if(!$coupon){
             return [
                 'status'=>'failed',
@@ -30,7 +30,7 @@ class CouponController extends Controller
 
         $order=Order::find($order_id);
 
-        $discount=$coupon->getDiscount($order->total_cost);
+        $discount=$coupon->calculateDiscount($order->total_cost);
 
         if($discount > $order->total_cost)
         {

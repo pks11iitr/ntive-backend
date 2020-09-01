@@ -42,7 +42,7 @@ class PaymentController extends Controller
         if(!empty($coupon)){
             $coupon=Coupon::active()->where('code', $coupon)->first();
             if($coupon){
-                $discount=$coupon->getDiscount($order->total_cost+$order->coupon_discount);
+                $discount=$coupon->calculateDiscount($order->total_cost+$order->coupon_discount);
 
                 if($discount > $order->total_cost+$order->coupon_discount){
                     return [
@@ -113,11 +113,27 @@ class PaymentController extends Controller
 //            }
 //
 //        }
+        if($request->payment_mode!='cod'){
+            $result=$this->initiateGatewayPayment($order);
+            return $result;
+        }else{
+            return $this->initiateCodPayment($order);
+        }
 
-        $result=$this->initiateGatewayPayment($order);
+    }
 
-        return $result;
-
+    private function initiateCodPayment($order){
+        $order->payment_mode='Cash On Delivery';
+        $order->status='confirmed';
+        $order->save();
+        return [
+            'status'=>'success',
+            'message'=>'success',
+            'data'=>[
+                'payment_done'=>'yes',
+                'refid'=>$order->refid
+            ],
+        ];
     }
 
     private function initiateGatewayPayment($order){

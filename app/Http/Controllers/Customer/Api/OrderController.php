@@ -7,6 +7,7 @@ use App\Models\Clinic;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\OrderStatus;
+use App\Models\PinCode;
 use App\Models\Product;
 use App\Models\Therapy;
 use App\Models\Wallet;
@@ -130,7 +131,16 @@ class OrderController extends Controller
             'address'=>'string|max:100|nullable',
             //'lat'=>'numeric',
             //'lang'=>'numeric'
+            'pincode'=>'required|integer'
         ]);
+
+
+        $pin=PinCode::where('pin_code', $request->pincode)->first();
+        if(!$pin)
+            return [
+                'status'=>'failed',
+                'message'=>'Delivery is not available for this pincode'
+            ];
 
         $user=auth()->guard('customerapi')->user();
 
@@ -147,7 +157,7 @@ class OrderController extends Controller
                 'message'=>'Invalid Operation Performed'
             ];
         $request->merge(['order_details_completed'=>true]);
-        if($order->update($request->only('name','email','address', 'mobile','lat', 'lang'))){
+        if($order->update($request->only('name','email','address', 'mobile','lat', 'lang', 'pincode'))){
             return [
                 'status'=>'success',
                 'message'=>'Address has been updated'
@@ -165,8 +175,8 @@ class OrderController extends Controller
             ];
 
         $order=Order::where('user_id', $user->id)
-            ->where('status', 'completed')
             ->orderBy('id', 'desc')
+            ->where('email', '!=', null)
             ->first();
 
         $contact=[
@@ -174,6 +184,7 @@ class OrderController extends Controller
             'email'=>$order->email??'',
             'mobile'=>$order->mobile??'',
             'address'=>$order->address??'',
+            'pincode'=>$order->pincode??''
         ];
 
         return [
@@ -224,6 +235,21 @@ class OrderController extends Controller
             $display_return_button=0;
         }
 
+        if(in_array($order->status, ['pending','confirmed','processing', 'dispatched'])){
+            $date=date('Y-m-d H:i', strtotime($order->created_at));
+            $dateslot=date('Y-m-d', strtotime($order->created_at)).' 15:00';
+            if($date>$dateslot){
+                $delivery_date=date('d/m/Y', strtotime('+1 days'));
+                $delivery_text='Your Order Will Be Delivered on '.$delivery_date;
+            }else{
+                $delivery_text='Your Order Will Be Delivered on '.date('d/m/Y');
+            }
+
+
+        }else{
+            $delivery_text='';
+        }
+
         return [
             'status'=>'success',
             'data'=>[
@@ -238,7 +264,8 @@ class OrderController extends Controller
                 //'timings'=>$timings
                 'display_cancel_button'=>$display_cancel_button,
                 'display_return_button'=>$display_return_button,
-                'display_pay_button'=>$display_pay_button
+                'display_pay_button'=>$display_pay_button,
+                'delivery_text'=>$delivery_text
             ]
         ];
     }

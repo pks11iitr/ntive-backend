@@ -54,17 +54,27 @@
                                     <tr>
                                         <td>Status</td>
                                         <td>{{$order->status}}<br><br>
-
-                                            <a href="" name='status' class="btn btn-primary">Pending</a>
-                                            <a href="" name='status' class="btn btn-primary">Confirmed</a>
-                                            <a href="" name='status' class="btn btn-primary">Processing</a>
-                                            <a href="" name='status' class="btn btn-primary">Dispatched</a>
-                                            <a href="" name='status' class="btn btn-primary">Delivered</a><br><br>
-                                            <a href="" name='status' class="btn btn-primary">Cancelled</a>
-                                            <a href="" name='status' class="btn btn-primary">Return-request</a>
-                                            <a href="" name='status' class="btn btn-primary">Return-accepted</a>
-                                            <a href="" name='status' class="btn btn-primary">Refunded</a>
-                                            <a href="" name='status' class="btn btn-primary">Completed</a>
+                                            @if(in_array($order->status, ['confirmed']))
+                                            <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'processing'])}}" name='status' class="btn btn-primary">Processing</a>
+                                            @endif
+                                            @if(in_array($order->status, ['processing']))
+                                            <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'dispatched'])}}" name='status' class="btn btn-primary">Dispatched</a>
+                                            @endif
+                                            @if(in_array($order->status, ['dispatched']))
+                                            <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'delivered'])}}" name='status' class="btn btn-primary">Delivered</a><br><br>
+                                            @endif
+                                            @if(in_array($order->status, ['confirmed', 'pending']))
+                                            <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'cancelled'])}}" name='status' class="btn btn-primary">Cancelled</a>
+                                            @endif
+                                            @if(in_array($order->status, ['return-request']))
+                                            <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'return-accepted'])}}" name='status' class="btn btn-primary">Return-accepted</a>
+                                            @endif
+                                            @if(in_array($order->status, ['return-accepted', 'cancelled']))
+                                            <a href="{{route('order.status.change', ['id'=>$order->id, 'status'=>'refunded'])}}" name='status' class="btn btn-primary">Refunded</a>
+                                            @endif
+                                            @if(in_array($order->status, ['delivered']))
+                                            <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'completed'])}}" name='status' class="btn btn-primary">Completed</a>
+                                            @endif
                                         </td>
                                     </tr>
 
