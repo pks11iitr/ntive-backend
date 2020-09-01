@@ -42,7 +42,7 @@ class PaymentController extends Controller
         if(!empty($coupon)){
             $coupon=Coupon::active()->where('code', $coupon)->first();
             if($coupon){
-                $discount=$coupon->getDiscount($order->total_cost+$order->coupon_discount);
+                $discount=$coupon->calculateDiscount($order->total_cost+$order->coupon_discount);
 
                 if($discount > $order->total_cost+$order->coupon_discount){
                     return [

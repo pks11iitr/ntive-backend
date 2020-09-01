@@ -30,7 +30,7 @@ class CouponController extends Controller
 
         $order=Order::find($order_id);
 
-        $discount=$coupon->getDiscount($order->total_cost);
+        $discount=$coupon->calculateDiscount($order->total_cost);
 
         if($discount > $order->total_cost)
         {
