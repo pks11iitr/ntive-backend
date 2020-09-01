@@ -73,6 +73,8 @@ $api->get('notify-me/{id}', ['as'=>'user.notify.me', 'uses'=>'Customer\Api\Notif
 
 $api->post('apply-coupon/{id}', ['as'=>'user.notify.me', 'uses'=>'Customer\Api\CouponController@applyCoupon']);
 
+$api->post('contact', ['as'=>'user.contact', 'uses'=>'Customer\Api\ContactController@store']);
+
 
 
 //payment apis
