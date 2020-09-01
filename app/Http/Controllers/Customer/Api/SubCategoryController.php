@@ -11,7 +11,7 @@ class SubCategoryController extends Controller
     public function subcategory(Request $request,$catid){
 
           $data=SubCategory::active()->where('category_id', $catid)->get();
-           $datas=(object) ['id' => '0','name'=>'all','isactive'=>'1'];
+           $datas=(object) ['id' => '0','name'=>'All','isactive'=>'1'];
             $data->prepend($datas);
            if(count($data)>0){
             return [
