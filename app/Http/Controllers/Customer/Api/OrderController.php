@@ -175,7 +175,6 @@ class OrderController extends Controller
             ];
 
         $order=Order::where('user_id', $user->id)
-            ->where('status', 'completed')
             ->orderBy('id', 'desc')
             ->first();
 
@@ -184,6 +183,7 @@ class OrderController extends Controller
             'email'=>$order->email??'',
             'mobile'=>$order->mobile??'',
             'address'=>$order->address??'',
+            'pincode'=>$order->pincode??''
         ];
 
         return [
