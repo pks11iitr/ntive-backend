@@ -26,11 +26,12 @@ class ProductController extends Controller
             }
 
         if(count($products)>0){
+
+             $product_cart=Cart::getUserCart($user);
+
              foreach($products as $i=>$r)
                        {
-
-                       $cart=Cart::where('user_id', auth()->guard('customerapi')->user()->id??'')->where('product_id',$r['id'])->get();
-                       $products[$i]['qty']=isset($cart[0]->qty)?$cart[0]->qty:0;
+                       $products[$i]['qty']=$product_cart[$r->id]??0;
                      }
             return [
                 'status'=>'success',
@@ -67,11 +68,13 @@ public function category_product(Request $request,$type,$subcatid){
             }
 
         if(count($products)>0){
+
+            $product_cart=Cart::getUserCart($user);
              foreach($products as $i=>$r)
                        {
 
-                       $cart=Cart::where('user_id', auth()->guard('customerapi')->user()->id??'')->where('product_id',$r['id'])->get();
-                       $products[$i]['qty']=isset($cart[0]->qty)?$cart[0]->qty:0;
+                       //$cart=Cart::where('user_id', auth()->guard('customerapi')->user()->id??'')->where('product_id',$r['id'])->get();
+                       $products[$i]['qty']=$product_cart[$r->id]??0;
                      }
             return [
                 'status'=>'success',

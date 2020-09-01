@@ -17,5 +17,18 @@ class Cart extends Model
         return $this->belongsTo('App\Models\Product', 'product_id');
     }
 
+    public static function getUserCart($user){
+
+        $items=Cart::where('user_id', $user->id)->get();
+
+        $products=[];
+
+        foreach($items as $item){
+            $products[$item->product_id]=$item->quantity;
+        }
+
+        return $products;
+    }
+
 
 }
