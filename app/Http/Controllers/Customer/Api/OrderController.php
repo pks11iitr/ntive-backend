@@ -176,6 +176,7 @@ class OrderController extends Controller
 
         $order=Order::where('user_id', $user->id)
             ->orderBy('id', 'desc')
+            ->where('email', '!=', null)
             ->first();
 
         $contact=[
