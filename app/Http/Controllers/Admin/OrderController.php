@@ -26,6 +26,8 @@ class OrderController extends Controller
         $order->status=$status;
         $order->save();
 
+        return redirect()->back()->with('success', 'Order has been updated');
+
 
 
 
