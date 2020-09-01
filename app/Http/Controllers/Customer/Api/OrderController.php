@@ -263,7 +263,8 @@ class OrderController extends Controller
                 //'timings'=>$timings
                 'display_cancel_button'=>$display_cancel_button,
                 'display_return_button'=>$display_return_button,
-                'display_pay_button'=>$display_pay_button
+                'display_pay_button'=>$display_pay_button,
+                'delivery_text'=>$delivery_text
             ]
         ];
     }
