@@ -19,7 +19,7 @@ class Cart extends Model
 
     public static function getUserCart($user){
 
-        $items=Cart::where('user_id', $user->id)->get();
+        $items=Cart::where('user_id', $user->id??null)->get();
 
         $products=[];
 
