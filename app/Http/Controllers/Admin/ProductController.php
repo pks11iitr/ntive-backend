@@ -13,9 +13,25 @@ use Storage;
 class ProductController extends Controller
 {
         public function index(Request $request){
+            $products =Product::orderBy('cat_id','asc')->orderBy('subcat_id','asc');
 
-            $products=Product::paginate(10);
-            return view('admin.product.view',['products'=>$products]);
+            if(isset($request->category))//die;
+                $products=$products->where('cat_id', $request->category);
+
+            if(isset($request->subcategory))//die;
+                $products=$products->where('subcat_id', $request->subcategory);
+
+            if($request->ordertype)
+                $products=$products->orderBy('created_at', $request->ordertype);
+
+            if(isset($request->search))
+                $products=$products->where('name', 'like', "%".$request->search."%");
+
+            $products=$products->paginate(20);
+            $homecategorys=HomeCategory::active()->get();
+            $subcategorys=SubCategory::active()->get();
+
+            return view('admin.product.view',['products'=>$products,'homecategorys'=>$homecategorys,'subcategorys'=>$subcategorys]);
 
             }
 
