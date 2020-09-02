@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('contents')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -27,8 +28,46 @@
             <div class="card">
               <div class="card-header">
                 <a href="{{route('product.create')}}" class="btn btn-primary">Add Product</a>
-
               </div>
+                <div class="card-header">
+                    <form class="form-validate form-horizontal"  method="get" action="" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-4">
+                                <select name="subcategory" class="form-control">
+                                    <option value="">Select Sub Category:</option>
+                                    @foreach($subcategorys as $subcategory)
+                                        <option value="{{$subcategory->id}}" @if(request('subcategory')== $subcategory->id){{'selected'}}@endif>{{$subcategory->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-4">
+                        <select name="category" class="form-control">
+                            <option value="">Select Category:</option>
+                            @foreach($homecategorys as $homecategory)
+                                <option value="{{$homecategory->id}}" @if(request('category')== $homecategory->id){{'selected'}}@endif>{{$homecategory->title}}</option>
+                            @endforeach
+                        </select>
+                            </div>
+
+                        <div class="col-4">
+                            <select id="ordertype" name="ordertype" class="form-control" >
+                                <option value="">Please Select Order</option>
+                                <option value="DESC" {{ request('ordertype')=='DESC'?'selected':''}}>DESC</option>
+                                <option value="ASC" {{ request('ordertype')=='ASC'?'selected':''}}>ASC</option>
+                            </select>
+                        </div><br><br>
+
+                            <div class="col-4">
+                                <input  class="form-control" name="search" placeholder=" Search by Product" value="{{request('search')}}"  type="text" />
+                            </div><br><br>
+
+                        <div class="col-4">
+                            <button type="submit" name="save" class="btn btn-primary">Submit</button>
+                        </div>
+                        </div>
+                    </form>
+                </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example2" class="table table-bordered table-hover">
@@ -60,7 +99,7 @@
                              @else{{'No'}}
                              @endif
                         </td>
-                      <td><a href="{{route('product.edit',['id'=>$product->id])}}" class="btn btn-success">Edit</a></td>
+                      <td><a href="{{route('product.edit',['id'=>$product->id])}}" class="btn btn-primary">Edit</a></td>
                  </tr>
                  @endforeach
                   </tbody>

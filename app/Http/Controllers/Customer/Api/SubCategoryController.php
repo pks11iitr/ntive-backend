@@ -8,16 +8,11 @@ use App\Http\Controllers\Controller;
 
 class SubCategoryController extends Controller
 {
-
-
     public function subcategory(Request $request,$catid){
 
-        $data=[];
-
-          $data=SubCategory::active()->where('category_id', $catid)->get();    
-          // $data[]=(object) ['id' => '0','name'=>'all','isactive'=>'1']; 
-          
-          $data = array_add($data, 'key', 'value');
+          $data=SubCategory::active()->where('category_id', $catid)->get();
+           $datas=(object) ['id' => '0','name'=>'All','isactive'=>'1'];
+            $data->prepend($datas);
            if(count($data)>0){
             return [
                 'status'=>'success',
@@ -29,7 +24,7 @@ class SubCategoryController extends Controller
                  'status'=>'No Record Found',
                   'code'=>'402'
             ];
-       } 
+       }
    }
 
 }
