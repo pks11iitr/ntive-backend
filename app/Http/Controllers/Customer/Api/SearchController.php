@@ -28,7 +28,8 @@ class SearchController extends Controller
 
         return [
             'status'=>'success',
-            'data'=>compact('products')
+            'code'=>'200',
+            'data'=>$products
         ];
     }
 }
