@@ -13,13 +13,19 @@ class OrderController extends Controller
 
         if(isset($request->search)){
             $orders=Order::where(function($orders) use ($request){
+
                 $orders->where('name', 'like', "%".$request->search."%")
                     ->orWhere('email', 'like', "%".$request->search."%")
-                    ->orWhere('mobile', 'like', "%".$request->search."%");
+                    ->orWhere('mobile', 'like', "%".$request->search."%")
+                    ->orWhereHas('customer', function($customer)use( $request){
+                        $customer->where('name', 'like', "%".$request->search."%")
+                            ->orWhere('email', 'like', "%".$request->search."%")
+                            ->orWhere('mobile', 'like', "%".$request->search."%");
+                });
             });
 
         }else{
-            $orders =Order::where('id', '>=', 1);
+            $orders =Order::where('id', '>=', 0);
         }
         if($request->ordertype)
             $orders=$orders->orderBy('created_at', $request->ordertype);
