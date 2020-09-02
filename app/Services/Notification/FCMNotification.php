@@ -9,7 +9,7 @@ use LaravelFCM\Facades\FCM;
 
 class FCMNotification
 {
-    public function sendNotification($token, $title,$body){
+    public static function sendNotification($token, $title,$body){
         $optionBuilder = new OptionsBuilder();
         $optionBuilder->setTimeToLive(60*20);
 
