@@ -3,7 +3,9 @@
 namespace App\Listeners;
 
 use App\Events\OrderConfirmed;
+use App\Models\Customer;
 use App\Models\Notification;
+use App\Services\Notification\FCMNotification;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -44,6 +46,8 @@ class OrderConfirmListner
 
         }
 
+        $user=Customer::find($order->user_id);
+
         Notification::create([
             'user_id'=>$order->user_id,
             'title'=>'Order Confirmed',
@@ -51,5 +55,7 @@ class OrderConfirmListner
             'data'=>null,
             'type'=>'individual'
         ]);
+
+        FCMNotification::sendNotification($user->notification_token, 'Order Confirmed', $message);
     }
 }
