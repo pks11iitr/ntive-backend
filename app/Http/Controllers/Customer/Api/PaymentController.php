@@ -126,6 +126,7 @@ class PaymentController extends Controller
         $order->payment_mode='Cash On Delivery';
         $order->status='confirmed';
         $order->save();
+        event(new OrderConfirmed($order));
         return [
             'status'=>'success',
             'message'=>'success',
