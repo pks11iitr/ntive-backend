@@ -64,6 +64,13 @@
                                         </select>
                                     </div>
 
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="exampleInputimage">Title</label>
+                                            <input type="text" name="title" class="form-control" id="exampleInputimage" placeholder="" value="{{$banner->title}}">
+                                        </div>
+                                    </div>
+
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">Submit</button>
