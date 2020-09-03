@@ -45,7 +45,14 @@
                                         <td>Date & Time</td><td>{{$order->created_at}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Total</td><td>{{$order->total_cost}}</td>
+                                        <td>Total</td>
+                                        <td>{{$order->total_cost+$order->coupon_discount}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Coupon Discount</td><td>{{$order->coupon_discount }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Coupon Applied</td><td>{{$order->coupon_applied}}</td>
                                     </tr>
                                     <tr>
                                         <td>Payment Status</td><td>{{$order->payment_status}}</td>

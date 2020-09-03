@@ -31,6 +31,7 @@ class OrderController extends Controller
             $orders=$orders->orderBy('created_at', $request->ordertype);
 
         if($request->status)
+            //var_dump($request->status);die();
             $orders=$orders->where('status', $request->status);
 
         if(isset($request->datefrom))
