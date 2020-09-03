@@ -55,10 +55,10 @@
                                         <select name="category_id" class="form-control" id="exampleInputistop" placeholder="">
                                             @foreach($category as $c)
                                             <option value="main_{{$c->id}}">{{$c->title}}</option>
-                                            @endforeach
-                                                @foreach($subcategory as $c)
-                                                    <option value="sub_{{$c->id}}">{{$c->name}}</option>
-                                                @endforeach
+{{--                                            @endforeach--}}
+{{--                                                @foreach($subcategory as $c)--}}
+{{--                                                    <option value="sub_{{$c->id}}">{{$c->name}}</option>--}}
+{{--                                                @endforeach--}}
                                         </select>
                                     </div>
 

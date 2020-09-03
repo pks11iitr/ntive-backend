@@ -8,6 +8,7 @@ use App\Models\OTPModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class OtpController extends Controller
 {
@@ -31,6 +32,7 @@ class OtpController extends Controller
         switch($request->type){
             case 'register': return $this->verifyRegister($request);
             case 'login': return $this->verifyLogin($request);
+            case 'reset': return $this->verifyResetPassword($request);
         }
 
         return [
@@ -98,6 +100,36 @@ class OtpController extends Controller
         ];
     }
 
+
+    protected function verifyResetPassword(Request $request){
+        $user=Customer::where('mobile', $request->mobile)->first();
+        if(in_array($user->status, [0,1])){
+            if(OTPModel::verifyOTP('customer',$user->id,$request->type,$request->otp)){
+
+                $user->status=1;
+                $user->password=Hash::make($request->password);
+                $user->save();
+
+                return [
+                    'status'=>'success',
+                    'message'=>'Your password has been updated',
+                    'token'=>''
+                ];
+            }
+
+            return [
+                'status'=>'failed',
+                'message'=>'OTP is not correct',
+                'token'=>''
+            ];
+
+        }
+        return [
+            'status'=>'failed',
+            'message'=>'Account has been blocked',
+            'token'=>''
+        ];
+    }
 
     public function resend(Request $request){
         $request->validate([

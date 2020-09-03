@@ -24,7 +24,7 @@ $api->group(['namespace' => 'Customer\Api\Auth'], function ($api) {
     $api->post('login', 'LoginController@login');
     $api->post('login-with-otp', 'LoginController@loginWithOtp');
     $api->post('register', 'RegisterController@register');
-    $api->post('forgot', 'ForgotPasswordController@forgot');
+    $api->post('forgot', 'ForgotPasswordController@sendResetOTP');
     $api->post('verify-otp', 'OtpController@verify');
     $api->post('resend-otp', 'OtpController@resend');
 });
