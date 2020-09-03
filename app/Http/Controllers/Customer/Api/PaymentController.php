@@ -159,7 +159,7 @@ class PaymentController extends Controller
                     'id'=>$order->id,
                     'email'=>$order->email,
                     'mobile'=>$order->mobile,
-                    'description'=>'Product Purchase at Ntive',
+                    'description'=>'Product Purchase at Nitve',
                     'name'=>$order->name,
                     'currency'=>'INR',
                     'merchantid'=>$this->pay->merchantkey,
@@ -296,7 +296,7 @@ class PaymentController extends Controller
             event(new OrderConfirmed($order));
             return [
                 'status'=>'success',
-                'message'=> 'Congratulations! Your order at Ntive is successful',
+                'message'=> 'Congratulations! Your order at Nitve is successful',
                 'data'=>[
                     'ref_id'=>$order->refid,
                     'order_id'=>$order->id
