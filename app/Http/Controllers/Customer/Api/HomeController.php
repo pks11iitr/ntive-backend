@@ -22,7 +22,7 @@ class HomeController extends Controller
 
 
 
-        $banners=Banner::active()->select('image','category_id', 'main_category_id')->get();
+        $banners=Banner::active()->select('image','category_id', 'main_category_id','title')->get();
         $homecategory=HomeCategory::active()->get();
         if(count($banners)>0 or count($homecategory)>0){
 

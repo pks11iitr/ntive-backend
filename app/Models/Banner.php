@@ -12,7 +12,7 @@ class Banner extends Model
     protected $table='banners';
     //protected $appends=['category'];
 
-    protected $fillable=['image','type','isactive', 'category_id','main_category_id'];
+    protected $fillable=['image','type','isactive', 'category_id','main_category_id', 'title'];
 
     protected $hidden = ['created_at','deleted_at','updated_at'];
 

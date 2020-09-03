@@ -48,7 +48,8 @@ class BannerController extends Controller
                             'isactive'=>$request->isactive,
                             'image'=>'a',
                             'category_id'=>$request->category_id,
-                            'main_category_id'=>$main_id
+                            'main_category_id'=>$main_id,
+                            'title'=>$request->title
                             ])){
                    $banner->saveImage($request->image, 'banners');
 
@@ -90,7 +91,8 @@ class BannerController extends Controller
             if($banner->update([
                 'category_id'=>$request->category_id,
                 'isactive'=>$request->isactive,
-                'main_category_id'=>$main_id
+                'main_category_id'=>$main_id,
+                'title'=>$request->title
             ])){
 
                 if($request->image){
