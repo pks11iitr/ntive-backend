@@ -7,7 +7,7 @@ namespace App\Services\SMS;
 class Msg91
 {
 
-    protected static $authkey='308501AiM8VCGp6w4I5df71314';
+    protected static $authkey='339824A0e0OGXV5f44a80fP1';
 
     public static function send($mobile, $message){
 
