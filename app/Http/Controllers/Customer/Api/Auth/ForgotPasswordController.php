@@ -7,6 +7,7 @@ use App\Models\OTPModel;
 use App\Services\SMS\Msg91;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class ForgotPasswordController extends Controller
 {
@@ -44,5 +45,25 @@ class ForgotPasswordController extends Controller
             return 'email';
         else
             return 'mobile';
+    }
+
+    public function updatePassword(Request $request){
+
+        $user=auth()->guard('customerapi')->user();
+        if(!$user){
+            return [
+                    'status'=>'success',
+                    'message'=>'Invalid Request'
+            ];
+        }
+
+        $user->password=Hash::make($request->password);
+        $user->save();
+
+        return [
+            'status'=>'success',
+            'message'=>'Password Has Been Updated Successfully. Please log in to continue.'
+        ];
+
     }
 }

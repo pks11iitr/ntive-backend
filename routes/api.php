@@ -27,6 +27,7 @@ $api->group(['namespace' => 'Customer\Api\Auth'], function ($api) {
     $api->post('forgot', 'ForgotPasswordController@sendResetOTP');
     $api->post('verify-otp', 'OtpController@verify');
     $api->post('resend-otp', 'OtpController@resend');
+    $api->post('update-password', 'ForgotPasswordController@updatePassword');
 });
 
 $api->group(['namespace' => 'Customer\Api'], function ($api) {

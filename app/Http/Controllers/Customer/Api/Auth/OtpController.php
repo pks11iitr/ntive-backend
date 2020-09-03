@@ -107,13 +107,12 @@ class OtpController extends Controller
             if(OTPModel::verifyOTP('customer',$user->id,$request->type,$request->otp)){
 
                 $user->status=1;
-                $user->password=Hash::make($request->password);
                 $user->save();
 
                 return [
                     'status'=>'success',
                     'message'=>'Your password has been updated',
-                    'token'=>''
+                    'token'=>Auth::guard('customerapi')->fromUser($user)
                 ];
             }
 
