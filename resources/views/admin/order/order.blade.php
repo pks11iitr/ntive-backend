@@ -50,13 +50,13 @@
 
                                                 <option value="">Please Select Status</option>
 
-                                                <option value="confirmed" {{ request('status')=='confirmed'?'selected':''}}>Processing</option>
-                                                <option value="processing" {{ request('status')==='processing'?'selected':''}}>Dispatched</option>
-                                                <option value="confirmed,pending" {{ request('status')=='confirmed','pending'?'selected':''}}>Cancelled</option>
-                                                <option value="dispatched" {{ request('status')=='dispatched'?'selected':''}}>Delivered</option>
-                                                <option value="return-request" {{ request('status')=='return-request'?'selected':''}}>Return-accepted</option>
-                                                <option value="return-accepted" {{ request('status')=='return-accepted'?'selected':''}}>Refunded</option>
-                                                <option value="delivered" {{ request('status')=='delivered'?'selected':''}}>Completed</option>
+                                                <option value="processing" {{ request('status')=='processing'?'selected':''}}>Processing</option>
+                                                <option value="dispatched" {{ request('status')==='dispatched'?'selected':''}}>Dispatched</option>
+                                                <option value="cancelled" {{ request('status')=='cancelled'?'selected':''}}>Cancelled</option>
+                                                <option value="delivered" {{ request('status')=='delivered'?'selected':''}}>Delivered</option>
+                                                <option value="return-accepted" {{ request('status')=='return-accepted'?'selected':''}}>Return-accepted</option>
+                                                <option value="refunded" {{ request('status')=='refunded'?'selected':''}}>Refunded</option>
+                                                <option value="completed" {{ request('status')=='completed'?'selected':''}}>Completed</option>
                                             </select>
                                         </div><br><br>
 
