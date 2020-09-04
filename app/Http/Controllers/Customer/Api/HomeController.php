@@ -13,6 +13,9 @@ class HomeController extends Controller
 
         $data=[];
 
+        $user= auth()->guard('customerapi')->user();
+        $user=$user->only('name', 'image');
+
         $pincode=$request->pincode;
         if(empty($pincode)){
             $delivery='Delivery Is Not Available At your Current Location';
@@ -31,7 +34,8 @@ class HomeController extends Controller
                 'code'=>'200',
                 'data'=>$homecategory,
                 'banners'=>$banners,
-                'delivery'=>$delivery
+                'delivery'=>$delivery,
+                'user'=>$user
             ];
         }else{
             return [
