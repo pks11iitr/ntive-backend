@@ -14,7 +14,14 @@ class HomeController extends Controller
         $data=[];
 
         $user= auth()->guard('customerapi')->user();
-        $user=$user->only('name', 'image');
+        if($user)
+            $user=$user->only('name', 'image');
+        else{
+            $user=[
+                'image'=>'',
+                'name'=>'Guest'
+            ];
+        }
 
         $pincode=$request->pincode;
         if(empty($pincode)){
