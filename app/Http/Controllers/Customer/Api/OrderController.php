@@ -250,6 +250,13 @@ class OrderController extends Controller
             $delivery_text='';
         }
 
+//        $prices=[
+//            'total'=>$order->total_cost+$order->coupon_discount,
+//            'coupon'=>$order->coupon_discount,
+//            'delivery'=>
+//        ]
+
+
         return [
             'status'=>'success',
             'data'=>[

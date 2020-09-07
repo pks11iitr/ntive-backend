@@ -61,7 +61,7 @@ public function category_product(Request $request,$type,$subcatid){
 
         $user=auth()->guard('customerapi')->user();
         if($user) {
-            if($subcatid=='0'){
+            if($type=='all'){
             $products=Product::active()->where('cat_id',$subcatid)->get();
             }else{
                 $products=Product::active()->where('subcat_id',$subcatid)->get();
