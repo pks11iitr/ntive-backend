@@ -40,9 +40,9 @@ class OrderConfirmListner
 
         $message='';
         if($order->details[0]->entity_type == 'App\Models\Product'){
-            $message='Congratulations! Your purchase of Rs. '.$order->total_cost.' at Arogyapeeth.com is successfull. Order Reference ID: '.$order->refid;
+            $message='Congratulations! Your purchase of Rs. '.$order->total_cost.' at Nitve Ecommerce is successfull. Order Reference ID: '.$order->refid;
         }else{
-            $message='Congratulations! Your therapy booking of Rs. '.$order->total_cost.' at Arogyapeeth.com is successfull. Order Reference ID: '.$order->refid;
+            $message='Congratulations! Your therapy booking of Rs. '.$order->total_cost.' at Nitve Ecommerce is successfull. Order Reference ID: '.$order->refid;
 
         }
 
