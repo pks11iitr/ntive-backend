@@ -53,15 +53,18 @@ class PaymentController extends Controller
 
                 $order->total_cost=$order->total_cost+$order->coupon_discount-$discount;
                 $order->coupon_applied=$coupon->code;
+                $order->delivery_charge=$order->total_cost<200?30:0;
                 $order->save();
             }else{
                 $order->total_cost=$order->total_cost+$order->coupon_discount;
                 $order->coupon_applied=null;
+                $order->delivery_charge=$order->total_cost<200?30:0;
                 $order->save();
             }
         }else{
             $order->total_cost=$order->total_cost+$order->coupon_discount;
             $order->coupon_applied=null;
+            $order->delivery_charge=$order->total_cost<200?30:0;
             $order->save();
         }
 
@@ -142,7 +145,7 @@ class PaymentController extends Controller
 
     private function initiateGatewayPayment($order){
         $response=$this->pay->generateorderid([
-            "amount"=>($order->total_cost-$order->balance_used??0)*100,
+            "amount"=>($order->total_cost+$order->delivery_charge)*100,
             "currency"=>"INR",
             "receipt"=>$order->refid,
         ]);
@@ -158,7 +161,7 @@ class PaymentController extends Controller
                 'data'=>[
                     'payment_done'=>'no',
                     'razorpay_order_id'=> $order->order_id,
-                    'total'=>($order->total_cost-$order->balance_used)*100,
+                    'total'=>($order->total_cost+$order->delivery_charge)*100,
                     'id'=>$order->id,
                     'email'=>$order->email,
                     'mobile'=>$order->mobile,

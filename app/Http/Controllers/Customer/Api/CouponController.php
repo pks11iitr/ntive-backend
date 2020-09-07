@@ -35,8 +35,8 @@ class CouponController extends Controller
         $prices=[
             'total'=>$order->total_cost,
             'coupon'=>$discount,
-            'delivery'=>($order->status=='pending')?(($order->total_cost-$discount)<200?30:0):$order->delivery_charge,
-            'payble'=>($order->total_cost-$discount)+(($order->status=='pending')?(($order->total_cost-$discount)<200?30:0):$order->delivery_charge),
+            'delivery'=>(($order->total_cost-$discount)<200?30:0),
+            'payble'=>($order->total_cost-$discount)+(($order->total_cost-$discount)<200?30:0),
             'payble_text'=>in_array($order->status, ['pending'])?'Payble Amount':'Paid Amount'
         ];
 

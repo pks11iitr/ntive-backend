@@ -94,7 +94,8 @@ class OrderController extends Controller
             'user_id'=>auth()->guard('customerapi')->user()->id,
             'refid'=>$refid,
             'status'=>'pending',
-            'total_cost'=>$total_cost,
+            'total_cost'=>$total_cost+($total_cost<200?30:0),
+            'delivery_charge'=>$total_cost<200?30:0
         ]);
 
         OrderStatus::create([
@@ -253,8 +254,8 @@ class OrderController extends Controller
         $prices=[
             'total'=>$order->total_cost+$order->coupon_discount,
             'coupon'=>$order->coupon_discount,
-            'delivery'=>($order->status=='pending')?($order->total_cost<200?30:0):$order->delivery_charge,
-            'payble'=>$order->total_cost+(($order->status=='pending')?($order->total_cost<200?30:0):$order->delivery_charge),
+            'delivery'=>$order->delivery_charge,
+            'payble'=>$order->total_cost+$order->delivery_charge,
             'payble_text'=>in_array($order->status, ['pending'])?'Payble Amount':'Paid Amount'
         ];
 
