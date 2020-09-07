@@ -94,7 +94,7 @@ class OrderController extends Controller
             'user_id'=>auth()->guard('customerapi')->user()->id,
             'refid'=>$refid,
             'status'=>'pending',
-            'total_cost'=>$total_cost+($total_cost<200?30:0),
+            'total_cost'=>$total_cost,
             'delivery_charge'=>$total_cost<200?30:0
         ]);
 
