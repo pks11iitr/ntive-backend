@@ -24,7 +24,7 @@ class ProductController extends Controller
             }else{
                 $products=Product::active()->where('is_newarrivel',1)->get();
             }
-
+            $cart_items=Cart::getCartTotalItems($user);
         if(count($products)>0){
 
              $product_cart=Cart::getUserCart($user);
@@ -36,7 +36,8 @@ class ProductController extends Controller
             return [
                 'status'=>'success',
                 'code'=>'200',
-                'data'=>$products
+                'data'=>$products,
+                'cart_items'=>$cart_items
             ];
         }else{
             return [
