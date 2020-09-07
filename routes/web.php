@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['middle'=>['auth', 'acl'], 'is'=>'admin'], function(){
+Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function(){
     Route::get('/home', 'Admin\HomeController@index')->name('home');
 
     Route::group(['prefix'=>'banners'], function(){
