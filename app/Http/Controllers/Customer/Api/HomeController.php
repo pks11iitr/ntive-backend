@@ -15,9 +15,12 @@ class HomeController extends Controller
         $data=[];
 
         $user= auth()->guard('customerapi')->user();
-        if($user)
+        if($user){
+            $cart_items=Cart::getCartTotalItems($user);
             $user=$user->only('name', 'image');
+        }
         else{
+            $cart_items=0;
             $user=[
                 'image'=>'',
                 'name'=>'Guest'
@@ -31,7 +34,7 @@ class HomeController extends Controller
             $delivery='available';
         }
 
-        $cart_items=Cart::getCartTotalItems($user);
+
 
         $banners=Banner::active()->select('image','category_id', 'main_category_id','title')->get();
         $homecategory=HomeCategory::active()->get();
