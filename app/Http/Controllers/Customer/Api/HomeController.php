@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer\Api;
 
 use App\Models\Banner;
+use App\Models\Cart;
 use App\Models\HomeCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -30,7 +31,7 @@ class HomeController extends Controller
             $delivery='available';
         }
 
-
+        $cart_items=Cart::getCartTotalItems($user);
 
         $banners=Banner::active()->select('image','category_id', 'main_category_id','title')->get();
         $homecategory=HomeCategory::active()->get();
@@ -42,7 +43,8 @@ class HomeController extends Controller
                 'data'=>$homecategory,
                 'banners'=>$banners,
                 'delivery'=>$delivery,
-                'user'=>$user
+                'user'=>$user,
+                'cart_items'=>$cart_items
             ];
         }else{
             return [

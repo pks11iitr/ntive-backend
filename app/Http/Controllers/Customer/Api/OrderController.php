@@ -250,11 +250,13 @@ class OrderController extends Controller
             $delivery_text='';
         }
 
-//        $prices=[
-//            'total'=>$order->total_cost+$order->coupon_discount,
-//            'coupon'=>$order->coupon_discount,
-//            'delivery'=>
-//        ]
+        $prices=[
+            'total'=>$order->total_cost+$order->coupon_discount,
+            'coupon'=>$order->coupon_discount,
+            'delivery'=>($order->status=='pending')?($order->total_cost<200?30:0):$order->delivery_charge,
+            'payble'=>$order->total_cost+(($order->status=='pending')?($order->total_cost<200?30:0):$order->delivery_charge),
+            'payble_text'=>in_array($order->status, ['pending'])?'Payble Amount':'Paid Amount'
+        ];
 
 
         return [
@@ -272,7 +274,8 @@ class OrderController extends Controller
                 'display_cancel_button'=>$display_cancel_button,
                 'display_return_button'=>$display_return_button,
                 'display_pay_button'=>$display_pay_button,
-                'delivery_text'=>$delivery_text
+                'delivery_text'=>$delivery_text,
+                'prices'=>$prices
             ]
         ];
     }

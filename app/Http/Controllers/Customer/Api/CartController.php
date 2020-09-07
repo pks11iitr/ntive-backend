@@ -63,6 +63,8 @@ class CartController extends Controller
                'code'=>'401'
            ];
 
+          $cart_items=Cart::getCartTotalItems($user);
+
        $cart = Cart::with(['product'=>function($product){
            $product->where('isactive', 1);
        }])->where('user_id', $user->id??'')->get();
@@ -73,7 +75,8 @@ class CartController extends Controller
           }
           return [
               'data'=>$cart,
-              'total'=>$price_total
+              'total'=>$price_total,
+              'cart_items'=>$cart_items
           ];
 
       }

@@ -31,4 +31,10 @@ class Cart extends Model
     }
 
 
+    public static function getCartTotalItems($user){
+        $total=Cart::where('user_id', $user->id??null)->sum('quantity');
+        return $total;
+    }
+
+
 }
