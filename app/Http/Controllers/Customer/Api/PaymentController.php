@@ -127,6 +127,9 @@ class PaymentController extends Controller
         $order->status='confirmed';
         $order->save();
         event(new OrderConfirmed($order));
+
+        Cart::where('user_id', $order->user_id)->delete();
+
         return [
             'status'=>'success',
             'message'=>'success',
