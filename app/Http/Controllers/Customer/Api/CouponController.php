@@ -32,6 +32,14 @@ class CouponController extends Controller
 
         $discount=$coupon->calculateDiscount($order->total_cost);
 
+        $prices=[
+            'total'=>$order->total_cost,
+            'coupon'=>$discount,
+            'delivery'=>($order->status=='pending')?(($order->total_cost-$discount)<200?30:0):$order->delivery_charge,
+            'payble'=>($order->total_cost-$discount)+(($order->status=='pending')?(($order->total_cost-$discount)<200?30:0):$order->delivery_charge),
+            'payble_text'=>in_array($order->status, ['pending'])?'Payble Amount':'Paid Amount'
+        ];
+
         if($discount > $order->total_cost)
         {
             return [
@@ -43,8 +51,8 @@ class CouponController extends Controller
         return [
 
             'status'=>'success',
-            'message'=>'Discount of Rs. '.$discount.' Applied Successfully'
-
+            'message'=>'Discount of Rs. '.$discount.' Applied Successfully',
+            'prices'=>$prices
         ];
 
 
