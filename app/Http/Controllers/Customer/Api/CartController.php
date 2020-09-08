@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer\Api;
 
 use App\Models\Cart;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -20,6 +21,14 @@ class CartController extends Controller
   				    ]);
 
           $cart = Cart::where('product_id',$request->product_id)->where('user_id', auth()->guard('customerapi')->user()->id??'')->first();
+
+          $product=Product::active()->where('out_of_stock', 0)->find($request->product_id);
+
+          if(!$product)
+              return [
+                  'status'=>'failed',
+                  'message'=>'Product is not available'
+              ];
 
           if(count($cart)<=0){
               if($request->quantity>0){
