@@ -67,13 +67,13 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function(){
         Route::get('edit/{id}','Admin\ProductController@edit')->name('product.edit');
         Route::post('update/{id}','Admin\ProductController@update')->name('product.update');
         Route::post('upload-images/{id}','Admin\ProductController@uploadImages')->name('product.upload.image');
+        Route::get('delete/{id}','Admin\ProductController@delete')->name('product.delete');
     });
 
     Route::group(['prefix'=>'order'], function(){
         Route::get('/','Admin\OrderController@index')->name('order.list');
         Route::get('orderview/{id}','Admin\OrderController@orderview')->name('order.orderview');
         Route::get('change-status/{id}','Admin\OrderController@changeStatus')->name('order.status.change');
-
 
     });
 
