@@ -58,7 +58,7 @@ class ProfileController extends Controller
 
         $request->validate([
             'name'=>'required|string|max:25',
-            'emial'=>'email|max:25'
+            'email'=>'email|max:25'
         ]);
         //var_dump($request->all());
         //var_dump($request->image);die;
