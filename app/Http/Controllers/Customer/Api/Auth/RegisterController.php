@@ -37,7 +37,7 @@ class RegisterController extends Controller
     {
         return Customer::create([
             'name' => $data['name'],
-            'email' => $data['email'],
+            'email' => $data['email']??null,
             'password' => Hash::make($data['password']),
             'mobile'=>$data['mobile'],
         ]);
