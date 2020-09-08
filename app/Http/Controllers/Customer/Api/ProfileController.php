@@ -57,7 +57,8 @@ class ProfileController extends Controller
     public function updateinfo(Request $request){
 
         $request->validate([
-            'name'=>'required|string|max:25'
+            'name'=>'required|string|max:25',
+            'emial'=>'email|max:25'
         ]);
         //var_dump($request->all());
         //var_dump($request->image);die;
@@ -70,7 +71,7 @@ class ProfileController extends Controller
 
         if($request->image){
 
-            $user->update($request->only('name'));
+            $user->update($request->only('name', 'email'));
 
         }
 
