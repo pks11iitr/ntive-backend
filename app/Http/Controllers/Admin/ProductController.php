@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Document;
 use App\Models\HomeCategory;
 use App\Models\SubCategory;
 use App\Models\Product;
@@ -90,7 +91,8 @@ class ProductController extends Controller
             $product = Product::findOrFail($id);
             $homecategory=HomeCategory::active()->get();
             $subcategory=SubCategory::active()->get();
-              return view('admin.product.edit',['product'=>$product,'homecategory'=>$homecategory,'subcategory'=>$subcategory]);
+              $documents = $product->gallery;
+              return view('admin.product.edit',['product'=>$product,'homecategory'=>$homecategory,'subcategory'=>$subcategory,'documents'=>$documents]);
             }
 
 
@@ -149,20 +151,25 @@ class ProductController extends Controller
 
 
             $request->validate([
-                'images'=>'required|array',
-                'images.*'=>'image'
+                'file_path'=>'required|array',
+                'file_path.*'=>'image'
             ]);
 
 
             $product=Product::find($id);
 
 
-            foreach($request->images as $image)
+            foreach($request->file_path as $image)
                 $product->saveDocument($image, 'products');
 
             return redirect()->back()->with('success', 'Images has been uploaded');
 
 
+        }
+
+        public function delete(Request $request,$id){
+            Document::where('id', $id)->delete();
+            return redirect()->back()->with('success', 'Document has been deleted');
         }
 
   }

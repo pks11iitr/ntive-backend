@@ -142,7 +142,7 @@
 
                                 <div class="form-group">
                                     <label for="exampleInputimage">Product Image</label>
-                                    <input type="file" name="images[]" class="form-control" id="exampleInputimage"
+                                    <input type="file" name="file_path[]" class="form-control" id="exampleInputimage"
                                            placeholder="" multiple>
 
                                 </div>
@@ -150,14 +150,27 @@
                                 <!-- /.card-body -->
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary">Submit</button>
+                                </div><br>
+
+                                <div class="row">
+                                    <!-- /.col -->
+                                    @foreach($documents as $document)
+                                        <div class="form-group">
+                                            <img src="{{$document->file_path}}" height="100" width="200"> &nbsp; &nbsp; <a href="{{route('product.delete',['id'=>$document->id])}}">X</a>
+                                            &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;          &nbsp; &nbsp; &nbsp; &nbsp;
+                                        </div>
+                                @endforeach
+                                <!-- /.form-group -->
+                                    <!-- /.form-group -->
+                                    <!-- /.col -->
                                 </div>
+
                         </form>
                     </div>
                     <!-- /.card -->
                 </div>
-
-
               </div>
+
                 <!--/.col (left) -->
                 <!-- right column -->
                 <div class="col-md-6">
