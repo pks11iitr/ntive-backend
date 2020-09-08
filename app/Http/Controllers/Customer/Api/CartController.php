@@ -66,7 +66,7 @@ class CartController extends Controller
           $cart_items=Cart::getCartTotalItems($user);
 
        $cart = Cart::with(['product'=>function($product){
-           $product->where('isactive', 1);
+           $product->where('isactive', 1)->where('out_of_stock', 0);
        }])->where('user_id', $user->id??'')->get();
 
           $price_total=0;

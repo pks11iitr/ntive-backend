@@ -19,7 +19,12 @@ class Cart extends Model
 
     public static function getUserCart($user){
 
-        $items=Cart::where('user_id', $user->id??null)->get();
+        $items=Cart::whereHas('product',function($product){
+            $product->where('isactive', 1)
+                ->where('out_of_stock', 0);
+        })
+        ->where('user_id', $user->id??null)
+            ->get();
 
         $products=[];
 
@@ -32,7 +37,10 @@ class Cart extends Model
 
 
     public static function getCartTotalItems($user){
-        $total=Cart::where('user_id', $user->id??null)->sum('quantity');
+        $total=Cart::whereHas('product',function($product){
+            $product->where('isactive', 1)
+                ->where('out_of_stock', 0);
+        })->where('user_id', $user->id??null)->sum('quantity');
         return $total;
     }
 

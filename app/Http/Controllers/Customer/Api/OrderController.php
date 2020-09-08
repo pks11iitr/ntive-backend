@@ -75,7 +75,7 @@ class OrderController extends Controller
         $cartitems=Cart::where('user_id', auth()->guard('customerapi')->user()->id)
             ->with(['product'])
             ->whereHas('product', function($product){
-            $product->where('isactive', true);
+            $product->where('isactive', true)->where('out_of_stock', 0);
         })->get();
 
         if(!$cartitems)
