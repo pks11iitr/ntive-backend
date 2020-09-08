@@ -69,11 +69,11 @@ class ProfileController extends Controller
                 'message'=>'Please login to continue'
             ];
 
-        if($request->image){
+        //if($request->image){
 
             $user->update($request->only('name', 'email'));
 
-        }
+        //}
 
         return [
             'status'=>'success',
