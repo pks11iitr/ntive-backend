@@ -1,4 +1,5 @@
 <?php
 return [
-    'login-otp'=>'Your One Time Password For Lokpriya Is {{otp}}',
+    'register'=>'Your One Time Password For Nitve Is {{otp}}',
+    'reset'=>'Your OTP is {{otp}} For Nitve.com',
 ];

@@ -8,12 +8,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Dashboard v2</h1>
+                        <h1 class="m-0 text-dark">Dashboard</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Dashboard v2</li>
+                            <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -31,11 +31,11 @@
                             <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
 
                             <div class="info-box-content">
-                                <span class="info-box-text">Loan Applications</span>
+                                <span class="info-box-text">Total Orders</span>
                                 <span class="info-box-number">
-                  {{$applications['total']??0}}
-                  <small></small>
+                  {{$total_orders??0}}
                 </span>
+                                <small>(Rs. {{$total_amount??0}})</small>
                             </div>
                             <!-- /.info-box-content -->
                         </div>
@@ -47,8 +47,9 @@
                             <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
 
                             <div class="info-box-content">
-                                <span class="info-box-text">Loan Disbursed</span>
-                                <span class="info-box-number">{{$applications['disbursed']??0}}</span>
+                                <span class="info-box-text">Completed Orders</span>
+                                <span class="info-box-number">{{$completed_orders??0}}</span>
+                                <small>(Rs. {{$completed_amount??0}})</small>
                             </div>
                             <!-- /.info-box-content -->
                         </div>
@@ -64,8 +65,8 @@
                             <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
 
                             <div class="info-box-content">
-                                <span class="info-box-text">Loan Paid Back</span>
-                                <span class="info-box-number">{{$applications['completed']??0}}</span>
+                                <span class="info-box-text">Total Products</span>
+                                <span class="info-box-number">{{$products??0}}</span>
                             </div>
                             <!-- /.info-box-content -->
                         </div>
@@ -77,8 +78,8 @@
                             <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
 
                             <div class="info-box-content">
-                                <span class="info-box-text">Total Profit</span>
-                                <span class="info-box-number">{{($profit[0]['total_paidback']??0)-($profit[0]['total_amount']??0)}}</span>
+                                <span class="info-box-text">Total Users</span>
+                                <span class="info-box-number">{{$users??0}}</span>
                             </div>
                             <!-- /.info-box-content -->
                         </div>

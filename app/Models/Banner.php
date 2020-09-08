@@ -10,10 +10,9 @@ class Banner extends Model
 {
     use Active, DocumentUploadTrait;
     protected $table='banners';
+    //protected $appends=['category'];
 
-    protected $appends=['category'];
-
-    protected $fillable=['image','type','isactive', 'category_id'];
+    protected $fillable=['image','type','isactive', 'category_id','main_category_id', 'title'];
 
     protected $hidden = ['created_at','deleted_at','updated_at'];
 

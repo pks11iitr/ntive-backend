@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer\Api;
 
 use App\Models\Cart;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -20,6 +21,14 @@ class CartController extends Controller
   				    ]);
 
           $cart = Cart::where('product_id',$request->product_id)->where('user_id', auth()->guard('customerapi')->user()->id??'')->first();
+
+          $product=Product::active()->where('out_of_stock', 0)->find($request->product_id);
+
+          if(!$product)
+              return [
+                  'status'=>'failed',
+                  'message'=>'Product is not available'
+              ];
 
           if(count($cart)<=0){
               if($request->quantity>0){
@@ -63,17 +72,23 @@ class CartController extends Controller
                'code'=>'401'
            ];
 
+          $cart_items=Cart::getCartTotalItems($user);
+
        $cart = Cart::with(['product'=>function($product){
-           $product->where('isactive', 1);
-       }])->where('user_id', $user->id??'')->get();
+           $product->where('isactive', 1)->where('out_of_stock', 0);
+       }])->whereHas('product', function($product){
+           $product->where('isactive', true)->where('out_of_stock', 0);
+       })
+           ->where('user_id', $user->id??'')->get();
 
           $price_total=0;
           foreach($cart as $item){
-            $price_total=$price_total + $item->product->actual_price*$item->qty;
+            $price_total=$price_total + $item->product->actual_price*$item->quantity;
           }
           return [
               'data'=>$cart,
-              'total'=>$price_total
+              'total'=>$price_total,
+              'cart_items'=>$cart_items
           ];
 
       }

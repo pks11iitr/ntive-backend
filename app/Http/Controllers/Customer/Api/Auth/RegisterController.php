@@ -21,7 +21,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:100'],
+            'email' => ['email', 'max:100'],
             'password' => ['required', 'string', 'min:6'],
             'mobile'=>['required', 'string', 'max:10']
         ]);
@@ -37,7 +37,7 @@ class RegisterController extends Controller
     {
         return Customer::create([
             'name' => $data['name'],
-            'email' => $data['email'],
+            'email' => $data['email']??null,
             'password' => Hash::make($data['password']),
             'mobile'=>$data['mobile'],
         ]);
@@ -54,7 +54,10 @@ class RegisterController extends Controller
             ];
         }
 
-        event(new CustomerRegistered($user = $this->create($request->all())));
+        $user = $this->create($request->all());
+        $user->notification_token=$request->notification_token;
+        $user->save();
+        event(new CustomerRegistered($user));
 
         return [
             'status'=>'success',
