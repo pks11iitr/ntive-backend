@@ -181,9 +181,9 @@ class OrderController extends Controller
             ->first();
 
         $contact=[
-            'name'=>$order->name??'',
-            'email'=>$order->email??'',
-            'mobile'=>$order->mobile??'',
+            'name'=>$order->name??$user->name,
+            'email'=>$order->email??$user->email,
+            'mobile'=>$order->mobile??$user->mobile,
             'address'=>$order->address??'',
             'pincode'=>$order->pincode??''
         ];
