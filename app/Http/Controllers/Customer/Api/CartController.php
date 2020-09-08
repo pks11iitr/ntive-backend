@@ -67,7 +67,10 @@ class CartController extends Controller
 
        $cart = Cart::with(['product'=>function($product){
            $product->where('isactive', 1)->where('out_of_stock', 0);
-       }])->where('user_id', $user->id??'')->get();
+       }])->whereHas('product', function($product){
+           $product->where('isactive', true)->where('out_of_stock', 0);
+       })
+           ->where('user_id', $user->id??'')->get();
 
           $price_total=0;
           foreach($cart as $item){
