@@ -52,4 +52,34 @@ class ProfileController extends Controller
         ];
 
     }
+
+
+    public function updateinfo(Request $request){
+
+        $request->validate([
+            'name'=>'required|string|max:25'
+        ]);
+        //var_dump($request->all());
+        //var_dump($request->image);die;
+        $user=auth()->guard('customerapi')->user();
+        if(!$user)
+            return [
+                'status'=>'failed',
+                'message'=>'Please login to continue'
+            ];
+
+        if($request->image){
+
+            $user->update($request->only('name'));
+
+        }
+
+        return [
+            'status'=>'success',
+            'message'=>'Profile has been updated',
+        ];
+
+    }
+
+
 }
