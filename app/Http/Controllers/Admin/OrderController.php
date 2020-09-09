@@ -63,4 +63,17 @@ class OrderController extends Controller
 
     }
 
+    public function changePaymentStatus(Request $request, $id){
+
+        $status=$request->status;
+        $order=Order::find($id);
+
+        $order->payment_status=$status;
+        $order->save();
+
+        return redirect()->back()->with('success', 'Payment Status Has Been Updated');
+
+
+    }
+
 }
