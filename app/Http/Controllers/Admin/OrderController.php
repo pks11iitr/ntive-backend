@@ -81,15 +81,19 @@ class OrderController extends Controller
 
         //$user=Customer::find($order->user_id);
 
-        Notification::create([
-            'user_id'=>$order->customer->id,
-            'title'=>$title,
-            'description'=>$message,
-            'data'=>null,
-            'type'=>'individual'
-        ]);
+        if(in_array($order->status, ['dispatched', 'delivered', 'cancelled'])){
+            Notification::create([
+                'user_id'=>$order->customer->id,
+                'title'=>$title,
+                'description'=>$message,
+                'data'=>null,
+                'type'=>'individual'
+            ]);
 
-        FCMNotification::sendNotification($order->customer->notification_token, $title, $message);
+            FCMNotification::sendNotification($order->customer->notification_token, $title, $message);
+        }
+
+
 
         return redirect()->back()->with('success', 'Order has been updated');
 
