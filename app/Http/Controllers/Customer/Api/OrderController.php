@@ -256,7 +256,7 @@ class OrderController extends Controller
             'coupon'=>$order->coupon_discount,
             'delivery'=>$order->delivery_charge,
             'payble'=>$order->total_cost+$order->delivery_charge,
-            'payble_text'=>in_array($order->status, ['pending'])?'Payble Amount':'Paid Amount'
+            'payble_text'=>$order->payment_status=='payment-wait'?'Payable Amount':'Paid Amount'
         ];
 
 
@@ -325,7 +325,7 @@ class OrderController extends Controller
 
         return [
             'status'=>'success',
-            'message'=>'Order has been cancelled. Refund process will be initiated shortly'
+            'message'=>'Order has been cancelled. '.($order->payment_status=='paid'?'Refund process will be initiated shortly':'')
         ];
 
     }

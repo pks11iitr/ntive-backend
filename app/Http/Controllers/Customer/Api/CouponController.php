@@ -37,7 +37,7 @@ class CouponController extends Controller
             'coupon'=>$discount,
             'delivery'=>(($order->total_cost-$discount)<200?30:0),
             'payble'=>($order->total_cost-$discount)+(($order->total_cost-$discount)<200?30:0),
-            'payble_text'=>in_array($order->status, ['pending'])?'Payble Amount':'Paid Amount'
+            'payble_text'=>$order->payment_status=='payment-wait'?'Payable Amount':'Paid Amount'
         ];
 
         if($discount > $order->total_cost)
