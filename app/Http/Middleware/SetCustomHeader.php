@@ -19,8 +19,9 @@ class SetCustomHeader
         $response =$next($request);
         $response->header('Content-Security-Policy', "default-src 'self' 'unsafe-eval' 'unsafe-inline' *.nitve-ecommerce.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' *.nitve-ecommerce.com data:; connect-src 'self' *.nitve-ecommerce.com; font-src 'self' *.nitve-ecommerce.com report-uri *.nitve-ecommerce.com/csp_report; form-action 'self'");
         $response->header('Cache-Control', 'max-age=31536000');
-\Exception::
+
         if(!starts_with(request()->path(), 'api') && !in_array($response->getStatusCode(), ['404'])){
+
             $response->headers->setCookie(
                 new Cookie('XSRF-TOKEN',
                     $request->session()->token(),
