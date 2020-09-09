@@ -713,48 +713,52 @@
         </div>
         <!-- /.sidebar -->
     </aside>
-    <div>
-        @if ($message = Session::get('success'))
-            <div class="alert alert-success alert-block">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong>{{ $message }}</strong>
+    <div style="margin-left: 250px;">
+        <section class="content">
+            <div>
+                @if ($message = Session::get('success'))
+                    <div class="alert alert-success alert-block">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{ $message }}</strong>
+                    </div>
+                @endif
+
+
+                @if ($message = Session::get('error'))
+                    <div class="alert alert-danger alert-block">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{ $message }}</strong>
+                    </div>
+                @endif
+
+
+                @if ($message = Session::get('warning'))
+                    <div class="alert alert-warning alert-block">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{ $message }}</strong>
+                    </div>
+                @endif
+
+
+                @if ($message = Session::get('info'))
+                    <div class="alert alert-info alert-block">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{ $message }}</strong>
+                    </div>
+                @endif
+
+            <!-- this is for validation errors -->
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                            {{ implode('', $errors->all('<div>:message</div>')) }}
+                    </div>
+                @endif
             </div>
-        @endif
-
-
-        @if ($message = Session::get('error'))
-            <div class="alert alert-danger alert-block">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong>{{ $message }}</strong>
-            </div>
-        @endif
-
-
-        @if ($message = Session::get('warning'))
-            <div class="alert alert-warning alert-block">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong>{{ $message }}</strong>
-            </div>
-        @endif
-
-
-        @if ($message = Session::get('info'))
-            <div class="alert alert-info alert-block">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong>{{ $message }}</strong>
-            </div>
-        @endif
-
-    <!-- this is for validation errors -->
-        @if ($errors->any())
-            <?php var_dump($errors->all()); ?>
-            <div class="alert alert-danger">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                Please check the form below for errors
-            </div>
-        @endif
+        </section>
     </div>
-   @yield('contents')
+
+@yield('contents')
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
