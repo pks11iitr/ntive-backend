@@ -57,7 +57,9 @@
                                     <tr>
                                         <td>Payment Status</td><td>{{$order->payment_status}}</td>
                                     </tr>
-
+                                    <tr>
+                                        <td>Payment Mode</td><td>{{$order->payment_mode}}</td>
+                                    </tr>
                                     <tr>
                                         <td>Status</td>
                                         <td>{{$order->status}}<br><br>
@@ -70,13 +72,13 @@
                                             @if(in_array($order->status, ['dispatched']))
                                             <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'delivered'])}}" name='status' class="btn btn-primary">Delivered</a><br><br>
                                             @endif
-                                            @if(in_array($order->status, ['confirmed', 'pending']))
+                                            @if(in_array($order->status, ['confirmed', 'pending', 'processing']))
                                             <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'cancelled'])}}" name='status' class="btn btn-primary">Cancelled</a>
                                             @endif
                                             @if(in_array($order->status, ['return-request']))
                                             <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'return-accepted'])}}" name='status' class="btn btn-primary">Return-accepted</a>
                                             @endif
-                                            @if(in_array($order->status, ['return-accepted', 'cancelled']))
+                                            @if(in_array($order->status, ['return-accepted', 'cancelled']) && $order->payment_status=='paid')
                                             <a href="{{route('order.status.change', ['id'=>$order->id, 'status'=>'refunded'])}}" name='status' class="btn btn-primary">Refunded</a>
                                             @endif
                                             @if(in_array($order->status, ['delivered']))
