@@ -55,7 +55,9 @@
                                         <td>Coupon Applied</td><td>{{$order->coupon_applied}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Payment Status</td><td>{{$order->payment_status}}</td>
+                                        <td>Payment Status</td><td>{{$order->payment_status}} &nbsp; @if(in_array($order->payment_status, ['payment-wait']))
+                                                <a href="{{route('payment.status.change', ['id'=>$order->id,'status'=>'paid'])}}" name='status' class="btn btn-primary">Mark As Paid</a>
+                                            @endif</td>
                                     </tr>
                                     <tr>
                                         <td>Payment Mode</td><td>{{$order->payment_mode}}</td>

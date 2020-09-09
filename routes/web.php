@@ -74,6 +74,7 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function(){
         Route::get('/','Admin\OrderController@index')->name('order.list');
         Route::get('orderview/{id}','Admin\OrderController@orderview')->name('order.orderview');
         Route::get('change-status/{id}','Admin\OrderController@changeStatus')->name('order.status.change');
+        Route::get('change-payment-status/{id}','Admin\OrderController@changePaymentStatus')->name('payment.status.change');
 
     });
 
