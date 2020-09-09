@@ -43,11 +43,11 @@ class CustomerController extends Controller
     public function update(Request $request,$id){
              $request->validate([
                              'status'=>'required',
-                  			'name'=>'required',
-                  			'dob'=>'required',
-                  			'address'=>'required',
-                  			'city'=>'required',
-                  			'state'=>'required',
+//                  			'name'=>'required',
+//                  			'dob'=>'required',
+//                  			'address'=>'required',
+//                  			'city'=>'required',
+//                  			'state'=>'required',
                   			'image'=>'image'
                   			]);
 
