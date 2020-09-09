@@ -76,7 +76,7 @@
                   <thead>
                   <tr>
                     <th>Name</th>
-                    <th>DOB</th>
+{{--                    <th>DOB</th>--}}
                   <!--  <th>Address</th>
                     <th>City</th>
                     <th>State</th>-->
@@ -90,7 +90,7 @@
 				@foreach($customers as $customer)
                   <tr>
 					  <td>{{$customer->name}}<br>Mob:{{$customer->mobile}}<br>Email:{{$customer->email}}</td>
-					  <td>{{$customer->dob}}</td>
+{{--					  <td>{{$customer->dob}}</td>--}}
 					 <!-- <td>{{$customer->address}}</td>
 					  <td>{{$customer->city}}</td>
 					  <td>{{$customer->state}}</td>-->
