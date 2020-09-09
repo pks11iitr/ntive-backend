@@ -142,7 +142,7 @@ class ProductController extends Controller
                     $product->saveImage($request->image, 'products');
 
                 }
-            if($request->out_of_stock && empty($old_stock)){
+            if(empty($request->out_of_stock) && $old_stock){
                 $users=NotifyMe::with('customer')->where('product_id', $product->id)->get();
 
                 if($users){
