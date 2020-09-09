@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\Notification;
+use App\Services\Notification\FCMNotification;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
@@ -27,6 +29,12 @@ class NotificationController extends Controller
 
                       ]))
             {
+
+                $user=Customer::select('notification_token')->get();
+
+                foreach($user as $u){
+                    FCMNotification::sendNotification($user->notification_token, $request->title, $request->description);
+                }
 
              return redirect()->back()->with('success', 'Notification Send Successfully');
             }

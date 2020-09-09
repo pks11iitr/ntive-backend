@@ -39,7 +39,7 @@ class OrderController extends Controller
                 'title' => ($order->details[0]->entity->name ?? '') . ' ' . ($total > 1 ? 'and ' . ($total - 1) . ' more' : ''),
                 'booking_id' => $order->refid,
                 'datetime' => date('D d M,Y', strtotime($order->created_at)),
-                'total_price' => $order->total_cost,
+                'total_price' => $order->total_cost+$order->delivery_charge,
                 'image' => $order->details[0]->entity->image ?? ''
             ];
         }
@@ -75,7 +75,7 @@ class OrderController extends Controller
         $cartitems=Cart::where('user_id', auth()->guard('customerapi')->user()->id)
             ->with(['product'])
             ->whereHas('product', function($product){
-            $product->where('isactive', true);
+            $product->where('isactive', true)->where('out_of_stock', 0);
         })->get();
 
         if(!$cartitems)
@@ -95,6 +95,7 @@ class OrderController extends Controller
             'refid'=>$refid,
             'status'=>'pending',
             'total_cost'=>$total_cost,
+            'delivery_charge'=>$total_cost<200?30:0
         ]);
 
         OrderStatus::create([
@@ -180,9 +181,9 @@ class OrderController extends Controller
             ->first();
 
         $contact=[
-            'name'=>$order->name??'',
-            'email'=>$order->email??'',
-            'mobile'=>$order->mobile??'',
+            'name'=>$order->name??$user->name,
+            'email'=>$order->email??$user->email,
+            'mobile'=>$order->mobile??$user->mobile,
             'address'=>$order->address??'',
             'pincode'=>$order->pincode??''
         ];
@@ -250,6 +251,15 @@ class OrderController extends Controller
             $delivery_text='';
         }
 
+        $prices=[
+            'total'=>$order->total_cost+$order->coupon_discount,
+            'coupon'=>$order->coupon_discount,
+            'delivery'=>$order->delivery_charge,
+            'payble'=>$order->total_cost+$order->delivery_charge,
+            'payble_text'=>$order->payment_status=='payment-wait'?'Payable Amount':'Paid Amount'
+        ];
+
+
         return [
             'status'=>'success',
             'data'=>[
@@ -265,7 +275,8 @@ class OrderController extends Controller
                 'display_cancel_button'=>$display_cancel_button,
                 'display_return_button'=>$display_return_button,
                 'display_pay_button'=>$display_pay_button,
-                'delivery_text'=>$delivery_text
+                'delivery_text'=>$delivery_text,
+                'prices'=>$prices
             ]
         ];
     }
@@ -314,7 +325,7 @@ class OrderController extends Controller
 
         return [
             'status'=>'success',
-            'message'=>'Order has been cancelled. Refund process will be initiated shortly'
+            'message'=>'Order has been cancelled. '.($order->payment_status=='paid'?'Refund process will be initiated shortly':'')
         ];
 
     }

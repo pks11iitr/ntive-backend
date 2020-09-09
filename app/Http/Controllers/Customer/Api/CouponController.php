@@ -32,6 +32,14 @@ class CouponController extends Controller
 
         $discount=$coupon->calculateDiscount($order->total_cost);
 
+        $prices=[
+            'total'=>$order->total_cost,
+            'coupon'=>$discount,
+            'delivery'=>(($order->total_cost-$discount)<200?30:0),
+            'payble'=>($order->total_cost-$discount)+(($order->total_cost-$discount)<200?30:0),
+            'payble_text'=>$order->payment_status=='payment-wait'?'Payable Amount':'Paid Amount'
+        ];
+
         if($discount > $order->total_cost)
         {
             return [
@@ -43,8 +51,8 @@ class CouponController extends Controller
         return [
 
             'status'=>'success',
-            'message'=>'Discount of Rs. '.$discount.' Applied Successfully'
-
+            'message'=>'Discount of Rs. '.$discount.' Applied Successfully',
+            'prices'=>$prices
         ];
 
 

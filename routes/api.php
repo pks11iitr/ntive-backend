@@ -24,9 +24,10 @@ $api->group(['namespace' => 'Customer\Api\Auth'], function ($api) {
     $api->post('login', 'LoginController@login');
     $api->post('login-with-otp', 'LoginController@loginWithOtp');
     $api->post('register', 'RegisterController@register');
-    $api->post('forgot', 'ForgotPasswordController@forgot');
+    $api->post('forgot', 'ForgotPasswordController@sendResetOTP');
     $api->post('verify-otp', 'OtpController@verify');
     $api->post('resend-otp', 'OtpController@resend');
+    $api->post('update-password', 'ForgotPasswordController@updatePassword');
 });
 
 $api->group(['namespace' => 'Customer\Api'], function ($api) {
@@ -69,9 +70,13 @@ $api->get('profile', ['as'=>'user.profile', 'uses'=>'Customer\Api\ProfileControl
 
 $api->post('update-profile', ['as'=>'user.profile.update', 'uses'=>'Customer\Api\ProfileController@update']);
 
+$api->post('update-profile-info', ['as'=>'user.profile.update', 'uses'=>'Customer\Api\ProfileController@updateinfo']);
+
 $api->get('notify-me/{id}', ['as'=>'user.notify.me', 'uses'=>'Customer\Api\NotifyController@update']);
 
 $api->post('apply-coupon/{id}', ['as'=>'user.notify.me', 'uses'=>'Customer\Api\CouponController@applyCoupon']);
+
+$api->post('contact', ['as'=>'user.contact', 'uses'=>'Customer\Api\ContactController@store']);
 
 
 
