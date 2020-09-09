@@ -165,7 +165,7 @@ class PaymentController extends Controller
                     'id'=>$order->id,
                     'email'=>$order->email,
                     'mobile'=>$order->mobile,
-                    'description'=>'Product Purchase at Nitve',
+                    'description'=>'Product Purchase at Nitve Ecommerce',
                     'name'=>$order->name,
                     'currency'=>'INR',
                     'merchantid'=>$this->pay->merchantkey,
@@ -274,7 +274,7 @@ class PaymentController extends Controller
                 if ($balance < $order->balance_used) {
                     return response()->json([
                         'status' => 'failed',
-                        'message' => 'We apologize, Your order is not successful',
+                        'message' => 'We apologize, Your order is not successful at Nitve Ecommerce',
                         'errors' => [
 
                         ],
@@ -302,7 +302,7 @@ class PaymentController extends Controller
             event(new OrderConfirmed($order));
             return [
                 'status'=>'success',
-                'message'=> 'Congratulations! Your order at Nitve is successful',
+                'message'=> 'Congratulations! Your order at Nitve Ecommerce is successful',
                 'data'=>[
                     'ref_id'=>$order->refid,
                     'order_id'=>$order->id

@@ -40,7 +40,7 @@ return [
      * Available Value: 'deny', 'sameorigin', 'allow-from <uri>'
      */
 
-    'x-frame-options' => 'deny',
+    'x-frame-options' => 'DENY',
 
     /*
      * X-Permitted-Cross-Domain-Policies

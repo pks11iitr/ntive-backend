@@ -17,7 +17,7 @@ class SetCustomHeader
     {
         $response =$next($request);
         $response->header('Content-Security-Policy', "default-src 'self' 'unsafe-eval' 'unsafe-inline' *.nitve-ecommerce.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' *.nitve-ecommerce.com data:; connect-src 'self' *.nitve-ecommerce.com; font-src 'self' *.nitve-ecommerce.com report-uri *.nitve-ecommerce.com/csp_report; form-action 'self'");
-        $response->header('Cache-Control', 'no-store');
+        $response->header('Cache-Control', 'max-age=31536000');
         return $response;
     }
 }
