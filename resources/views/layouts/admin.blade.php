@@ -751,7 +751,7 @@
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                            {{ implode('', $errors->all('<div>:message</div>')) }}
+                            {{ implode('', $errors->all(':message')) }}
                     </div>
                 @endif
             </div>
