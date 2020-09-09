@@ -713,7 +713,7 @@
         </div>
         <!-- /.sidebar -->
     </aside>
-    <div style="margin-left: 250px;">
+    <div style="margin-left: 250px;margin-top: 60px;">
         <section class="content">
             <div>
                 @if ($message = Session::get('success'))
