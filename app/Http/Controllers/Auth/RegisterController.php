@@ -37,7 +37,6 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        return redirect()->back();
         $this->middleware('guest');
     }
 
@@ -76,5 +75,10 @@ class RegisterController extends Controller
     public function redirectPath()
     {
         return route('user.role.check');
+    }
+
+    public function showRegistrationForm()
+    {
+        return redirect()->back();
     }
 }
