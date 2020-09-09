@@ -53,7 +53,7 @@ class BannerController extends Controller
                             ])){
                    $banner->saveImage($request->image, 'banners');
 
-                        return redirect()->route('banners.list')->with('success', 'Banner has been created');
+                        return redirect()->back()->with('success', 'Banner has been created');
                 }
 
                 return redirect()->back()->with('error', 'Banner create failed');
