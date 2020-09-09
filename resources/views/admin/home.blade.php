@@ -103,13 +103,13 @@
                                         <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
                                             <i class="fas fa-wrench"></i>
                                         </button>
-                                        <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                            <a href="#" class="dropdown-item">Action</a>
-                                            <a href="#" class="dropdown-item">Another action</a>
-                                            <a href="#" class="dropdown-item">Something else here</a>
-                                            <a class="dropdown-divider"></a>
-                                            <a href="#" class="dropdown-item">Separated link</a>
-                                        </div>
+{{--                                        <div class="dropdown-menu dropdown-menu-right" role="menu">--}}
+{{--                                            <a href="#" class="dropdown-item">Action</a>--}}
+{{--                                            <a href="#" class="dropdown-item">Another action</a>--}}
+{{--                                            <a href="#" class="dropdown-item">Something else here</a>--}}
+{{--                                            <a class="dropdown-divider"></a>--}}
+{{--                                            <a href="#" class="dropdown-item">Separated link</a>--}}
+{{--                                        </div>--}}
                                     </div>
                                     <button type="button" class="btn btn-tool" data-card-widget="remove">
                                         <i class="fas fa-times"></i>
@@ -121,7 +121,6 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <p class="text-center">
-                                            <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
                                         </p>
 
                                         <div class="chart">
@@ -177,46 +176,46 @@
                                 <!-- /.row -->
                             </div>
                             <!-- ./card-body -->
-                            <div class="card-footer">
-                                <div class="row">
-                                    <div class="col-sm-3 col-6">
-                                        <div class="description-block border-right">
-                                            <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span>
-                                            <h5 class="description-header">Rs 35,210.43</h5>
-                                            <span class="description-text">TOTAL APPLICATION</span>
-                                        </div>
-                                        <!-- /.description-block -->
-                                    </div>
-                                    <!-- /.col -->
-                                    <div class="col-sm-3 col-6">
-                                        <div class="description-block border-right">
-                                            <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i> 0%</span>
-                                            <h5 class="description-header">$10,390.90</h5>
-                                            <span class="description-text">TOTAL DISBURSED</span>
-                                        </div>
-                                        <!-- /.description-block -->
-                                    </div>
-                                    <!-- /.col -->
-                                    <div class="col-sm-3 col-6">
-                                        <div class="description-block border-right">
-                                            <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span>
-                                            <h5 class="description-header">$24,813.53</h5>
-                                            <span class="description-text">TOTAL PAID BACK</span>
-                                        </div>
-                                        <!-- /.description-block -->
-                                    </div>
-                                    <!-- /.col -->
-                                    <div class="col-sm-3 col-6">
-                                        <div class="description-block">
-                                            <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i> 18%</span>
-                                            <h5 class="description-header">1200</h5>
-                                            <span class="description-text">TOTAL PROFIT</span>
-                                        </div>
-                                        <!-- /.description-block -->
-                                    </div>
-                                </div>
-                                <!-- /.row -->
-                            </div>
+{{--                            <div class="card-footer">--}}
+{{--                                <div class="row">--}}
+{{--                                    <div class="col-sm-3 col-6">--}}
+{{--                                        <div class="description-block border-right">--}}
+{{--                                            <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span>--}}
+{{--                                            <h5 class="description-header">Rs 35,210.43</h5>--}}
+{{--                                            <span class="description-text">TOTAL APPLICATION</span>--}}
+{{--                                        </div>--}}
+{{--                                        <!-- /.description-block -->--}}
+{{--                                    </div>--}}
+{{--                                    <!-- /.col -->--}}
+{{--                                    <div class="col-sm-3 col-6">--}}
+{{--                                        <div class="description-block border-right">--}}
+{{--                                            <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i> 0%</span>--}}
+{{--                                            <h5 class="description-header">$10,390.90</h5>--}}
+{{--                                            <span class="description-text">TOTAL DISBURSED</span>--}}
+{{--                                        </div>--}}
+{{--                                        <!-- /.description-block -->--}}
+{{--                                    </div>--}}
+{{--                                    <!-- /.col -->--}}
+{{--                                    <div class="col-sm-3 col-6">--}}
+{{--                                        <div class="description-block border-right">--}}
+{{--                                            <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span>--}}
+{{--                                            <h5 class="description-header">$24,813.53</h5>--}}
+{{--                                            <span class="description-text">TOTAL PAID BACK</span>--}}
+{{--                                        </div>--}}
+{{--                                        <!-- /.description-block -->--}}
+{{--                                    </div>--}}
+{{--                                    <!-- /.col -->--}}
+{{--                                    <div class="col-sm-3 col-6">--}}
+{{--                                        <div class="description-block">--}}
+{{--                                            <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i> 18%</span>--}}
+{{--                                            <h5 class="description-header">1200</h5>--}}
+{{--                                            <span class="description-text">TOTAL PROFIT</span>--}}
+{{--                                        </div>--}}
+{{--                                        <!-- /.description-block -->--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <!-- /.row -->--}}
+{{--                            </div>--}}
                             <!-- /.card-footer -->
                         </div>
                         <!-- /.card -->
