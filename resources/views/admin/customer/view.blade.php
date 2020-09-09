@@ -106,8 +106,7 @@
                           @endif
                       </td>
                       <td><a href="{{route('customer.edit',['id'=>$customer->id])}}" class="btn btn-success">Edit</a>
-                      <a href="{{route('customer.edit',['id'=>$customer->id])}}" class="open-AddBookDialog btn btn-success" data-toggle="modal" data-target="#exampleModal" data-id="{{$customer->id}}">Notification</a>
-                          <a class="btn btn-success" href="{{route('customer.contacts',['id'=>$customer->id])}}" >Contacts</a>
+{{--                      <a href="{{route('customer.',['id'=>$customer->id])}}" class="open-AddBookDialog btn btn-success" data-toggle="modal" data-target="#exampleModal" data-id="{{$customer->id}}">Notification</a>--}}
                       </td>
                  </tr>
                  @endforeach
