@@ -170,7 +170,7 @@ class ProductController extends Controller
 
 
             }
-                return redirect()->route('product.list')->with('success', 'Product has been updated');
+                return redirect()->back()->with('success', 'Product has been updated');
 
             }
 
