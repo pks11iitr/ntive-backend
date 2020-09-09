@@ -101,7 +101,7 @@ class BannerController extends Controller
 
                 }
 
-                return redirect()->route('banners.list')->with('success', 'Banner has been updated');
+                return redirect()->back()->with('success', 'Banner has been updated');
 
             }
 
