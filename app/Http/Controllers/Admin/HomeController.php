@@ -43,7 +43,7 @@ class HomeController extends Controller
             ->whereHas('details',function($details){
                 $details->where('entity_type', 'App\Models\Product');
             })
-            ->select(DB::raw('Month(created_at) as month'), DB::raw('SUM(total_cost) as total_cost'))
+            ->select(DB::raw('Month(created_at) as month'), DB::raw('SUM(total_cost)+SUM(delivery_charge) as total_cost'))
             ->groupBy(DB::raw('Month(created_at)'))
             ->orderBy(DB::raw('Month(created_at)'), 'asc')
             ->get();

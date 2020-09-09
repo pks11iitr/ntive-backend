@@ -793,7 +793,7 @@
 <script src="{{asset('admin-theme/plugins/chart.js/Chart.min.js')}}"></script>
 
 <!-- PAGE SCRIPTS -->
-<script src="{{asset('admin-theme/js/pages/dashboard2.js')}}"></script>
+{{--<script src="{{asset('admin-theme/js/pages/dashboard2.js')}}"></script>--}}
 @yield('scripts')
 </body>
 </html>
