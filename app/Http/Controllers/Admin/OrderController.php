@@ -89,7 +89,7 @@ class OrderController extends Controller
             'type'=>'individual'
         ]);
 
-        FCMNotification::sendNotification($order->customer->notification_token, 'Order Confirmed', $message);
+        FCMNotification::sendNotification($order->customer->notification_token, $title, $message);
 
         return redirect()->back()->with('success', 'Order has been updated');
 

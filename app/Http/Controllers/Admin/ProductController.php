@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\Document;
 use App\Models\HomeCategory;
+use App\Models\Notification;
+use App\Models\NotifyMe;
 use App\Models\SubCategory;
 use App\Models\Product;
+use App\Services\Notification\FCMNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Storage;
@@ -116,7 +120,7 @@ class ProductController extends Controller
 
                        ]);
              $product = Product::findOrFail($id);
-
+            $old_stock=$product->out_of_stock;
             if($product->update([
 
                             'cat_id'=>$request->cat_id,
@@ -130,6 +134,7 @@ class ProductController extends Controller
                             'is_discount'=>$request->is_discount,
                             'is_newarrivel'=>$request->is_newarrivel,
                             'isactive'=>$request->isactive,
+                            'out_of_stock'=>$request->out_of_stock
             ])){
 
                 if($request->image){
@@ -137,7 +142,34 @@ class ProductController extends Controller
                     $product->saveImage($request->image, 'products');
 
                 }
+            if($request->out_of_stock && empty($old_stock)){
+                $users=NotifyMe::with('customer')->where('product_id', $product->id)->get();
 
+                if($users){
+                    $message=$product->name. ' is available in stock at Nitve.com. Book your order now';
+                    $title=$product->name.' in stock';
+                }
+
+                foreach($users as $u){
+                    if($u->customer){
+                        Notification::create([
+                            'user_id'=>$u->customer->id,
+                            'title'=>$title,
+                            'description'=>$message,
+                            'data'=>null,
+                            'type'=>'individual'
+                        ]);
+
+                        FCMNotification::sendNotification($u->customer->notification_token, $title, $message);
+                    }
+
+                }
+
+
+
+
+
+            }
                 return redirect()->route('product.list')->with('success', 'Product has been updated');
 
             }
