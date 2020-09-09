@@ -82,7 +82,7 @@ class OrderController extends Controller
         //$user=Customer::find($order->user_id);
 
         Notification::create([
-            'user_id'=>$order->customer->user_id,
+            'user_id'=>$order->customer->id,
             'title'=>$title,
             'description'=>$message,
             'data'=>null,
