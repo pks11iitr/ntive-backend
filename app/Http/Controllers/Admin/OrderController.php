@@ -56,7 +56,10 @@ class OrderController extends Controller
     public function changeStatus(Request $request, $id){
 
         $status=$request->status;
+
         $order=Order::with('customer')->find($id);
+
+        $old_status=$order->status;
 
         $order->status=$status;
         $order->save();
@@ -81,7 +84,7 @@ class OrderController extends Controller
 
         //$user=Customer::find($order->user_id);
 
-        if(in_array($order->status, ['dispatched', 'delivered', 'cancelled'])){
+        if($old_status!='pending' && in_array($order->status, ['dispatched', 'delivered', 'cancelled'])){
             Notification::create([
                 'user_id'=>$order->customer->id,
                 'title'=>$title,
