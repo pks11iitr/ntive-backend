@@ -53,7 +53,7 @@
                     <i class="far fa fa-user"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                    <a class="dropdown-item dropdown-header">Settings</a>
+                    {{--<a class="dropdown-item dropdown-header">Settings</a>--}}
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('logout') }}"
                        onclick="event.preventDefault();
