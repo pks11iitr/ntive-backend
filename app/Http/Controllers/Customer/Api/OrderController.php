@@ -241,7 +241,7 @@ class OrderController extends Controller
             $dateslot=date('Y-m-d', strtotime($order->created_at)).' 15:00';
             if($date > $dateslot){
                 $delivery_date=date('d/m/Y', strtotime('+1 days', strtotime($order->created_at)));
-                $delivery_text='Your Order Will Be Delivered on '.$delivery_date.' (between 06:00-09:00)';
+                $delivery_text='Your Order Will Be Delivered on '.$delivery_date.' (between 06:00 am-09:00 am)';
             }else{
                 $delivery_text='Your Order Will Be Delivered on '.date('d/m/Y');
             }
