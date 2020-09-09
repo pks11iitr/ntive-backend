@@ -53,7 +53,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-            ->middleware('cache.headers:public;no-store')
+             //->middleware('cache.headers:public;no-store')
              ->namespace($this->namespace)
              ->group(base_path('routes/web.php'));
     }
