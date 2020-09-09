@@ -143,7 +143,7 @@ return [
      */
 
     'feature-policy' => [
-        'enable' => true,
+        'enable' => false,
 
         /*
          * Feature-Policy was renamed to Permissions-Policy.
@@ -364,7 +364,7 @@ return [
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/connect-src
         'connect-src' => [
             'self',
-            '*.nitve-ecommerce.com'
+            //'*.nitve-ecommerce.com'
         ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/default-src
@@ -399,7 +399,7 @@ return [
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/img-src
         'img-src' => [
             'self',
-            '*.nitve-ecommerce.com'
+            //'*.nitve-ecommerce.com'
         ],
 
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/manifest-src
