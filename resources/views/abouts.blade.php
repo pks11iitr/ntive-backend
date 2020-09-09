@@ -7,7 +7,8 @@
 
     Nitve (Nitve E-commerce Private limited) is India’s first of its kind online store which delivers all puja items at your doorstep. We deliver all puja items at lower price than online as well as offline market.we allows you to do hassle free puja item shopping as we delivered items on the same day.
     <br><br>
-    <div align="center">“order before 3 pm get your order on same day”</div>
+    <div align="center">“order before 3 pm get your order on same day between 04:00 pm - 08:00 pm”</div>
+    <div align="center">“order after 3 pm get your order on next day between 06:00 am - 10:00 am”</div>
     <br>
     <div align="center">Or</div><br>
     “order before 11 pm get your order by early morning 6am to 8am”<br><br>
