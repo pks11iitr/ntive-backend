@@ -178,6 +178,7 @@ return [
         //'Tymon\JWTAuth\Providers\JWTAuthServiceProvider'
         Maatwebsite\Excel\ExcelServiceProvider::class,
         LaravelFCM\FCMServiceProvider::class,
+        Bepsvpt\SecureHeaders\SecureHeadersServiceProvider::class,
 
     ],
 
