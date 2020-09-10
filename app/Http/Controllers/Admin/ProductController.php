@@ -182,10 +182,10 @@ class ProductController extends Controller
         public function uploadImages(Request $request, $id){
 
 
-//            $request->validate([
-//                'file_path'=>'required|array',
-//                'file_path.*'=>'image'
-//            ]);
+            $request->validate([
+                'file_path'=>'required|array',
+                'file_path.*'=>'image'
+            ]);
 
 
             $product=Product::find($id);
