@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Nitive Ecommerce Pvt Ltd
+                    Nitve Ecommerce Pvt Ltd
                 </div>
 
 {{--                <div class="links">--}}
