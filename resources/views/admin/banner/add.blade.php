@@ -58,7 +58,7 @@
 {{--                                            @endforeach--}}
 {{--                                                @foreach($subcategory as $c)--}}
 {{--                                                    <option value="sub_{{$c->id}}">{{$c->name}}</option>--}}
-{{--                                                @endforeach--}}
+                                                @endforeach
                                         </select>
                                     </div>
 
@@ -89,4 +89,4 @@
     </section>
     <!-- /.content -->
 </div>
-    @endsection
+@endsection
