@@ -33,7 +33,7 @@ class NotificationController extends Controller
                 $user=Customer::select('notification_token')->get();
 
                 foreach($user as $u){
-                    FCMNotification::sendNotification($user->notification_token, $request->title, $request->description);
+                    FCMNotification::sendNotification($u->notification_token, $request->title, $request->description);
                 }
 
              return redirect()->back()->with('success', 'Notification Send Successfully');
