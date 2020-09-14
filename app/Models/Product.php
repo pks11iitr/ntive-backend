@@ -11,7 +11,7 @@ class Product extends Model
     use Active, DocumentUploadTrait;
   protected $table='products';
 
-    protected $fillable=['image','name','cat_id','subcat_id','weight','unit','actual_price','cut_price','is_featured','is_discount','is_newarrivel','isactive','out_of_stock'];
+    protected $fillable=['image','name','cat_id','subcat_id','weight','unit','actual_price','cut_price','is_featured','is_discount','is_newarrivel','isactive','out_of_stock','description'];
 
     protected $hidden = ['created_at','deleted_at','updated_at'];
 

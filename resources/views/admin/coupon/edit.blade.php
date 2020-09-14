@@ -64,6 +64,14 @@
                                             <option value="0" {{$coupon->type==0?'selected':''}}>No</option>
                                         </select>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputistop">Use Type</label>
+                                        <select name="use_type" class="form-control" id="exampleInputistop" placeholder="">
+                                            <option value="">Please Select Type</option>
+                                            <option value="Single" {{$coupon->use_type=='Single'?'selected':''}}>Single</option>
+                                            <option value="Multiple" {{$coupon->use_type=='Multiple'?'selected':''}}>Multiple</option>
+                                        </select>
+                                    </div>
                                     <!-- /.card-body -->
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Submit</button>
