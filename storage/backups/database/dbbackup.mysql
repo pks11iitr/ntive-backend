@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.30, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.31, for Linux (x86_64)
 --
 -- Host: 127.0.0.1    Database: ntive
 -- ------------------------------------------------------
--- Server version	5.7.30-0ubuntu0.18.04.1
+-- Server version	5.7.31-0ubuntu0.18.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,13 +24,16 @@ DROP TABLE IF EXISTS `banners`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `banners` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `category_id` varchar(50) DEFAULT NULL,
   `image` varchar(500) NOT NULL,
   `isactive` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
+  `main_category_id` int(11) DEFAULT NULL,
+  `title` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +42,7 @@ CREATE TABLE `banners` (
 
 LOCK TABLES `banners` WRITE;
 /*!40000 ALTER TABLE `banners` DISABLE KEYS */;
-INSERT INTO `banners` VALUES (1,'banners/1/410_GROCCERY_BANNERS.jpg4.jpg',1,NULL,NULL,'2020-07-30 05:17:58'),(2,'banners/2/890_GROCCERY_BANNERS.JPG',1,NULL,NULL,'2020-07-30 05:18:13'),(3,'banners/3/600_GROCCERY_BANNERS2.jpg',1,NULL,NULL,'2020-07-30 05:18:30'),(4,'banners/4/393_WhatsApp_Image_2020-07-18_at_14.18.14.jpeg',1,'2020-07-30 04:23:52',NULL,'2020-07-30 04:23:52');
+INSERT INTO `banners` VALUES (1,'sub_2','banners/1/276_yellow-logo_256x256.png',1,NULL,NULL,'2020-09-03 06:05:36',1,'hello1'),(2,'sub_1','banners/2/890_GROCCERY_BANNERS.JPG',1,NULL,NULL,'2020-07-30 05:18:13',NULL,''),(3,'sub_1','banners/3/600_GROCCERY_BANNERS2.jpg',1,NULL,NULL,'2020-07-30 05:18:30',NULL,''),(4,'sub_1','banners/4/393_WhatsApp_Image_2020-07-18_at_14.18.14.jpeg',1,'2020-07-30 04:23:52',NULL,'2020-07-30 04:23:52',NULL,''),(5,'main_2','banners/5/575_WhatsApp_Image_2020-07-31_at_00.10.07.jpeg',1,'2020-08-31 06:38:09',NULL,'2020-08-31 06:47:29',NULL,'');
 /*!40000 ALTER TABLE `banners` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,7 +62,7 @@ CREATE TABLE `cart` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,6 +72,67 @@ CREATE TABLE `cart` (
 LOCK TABLES `cart` WRITE;
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `contacts`
+--
+
+DROP TABLE IF EXISTS `contacts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `contacts` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `mobile` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `contacts`
+--
+
+LOCK TABLES `contacts` WRITE;
+/*!40000 ALTER TABLE `contacts` DISABLE KEYS */;
+INSERT INTO `contacts` VALUES (1,'ravi','ravi@gmail.com','234567890','title','Scale Open Source Databases. Free To Try On AWS. Easily Migrate Your Existing Databases Using AWS Database Migration Service. Easy To Migrate',NULL,NULL,NULL),(2,'pankaj Sengar','pks11iitr@gmail.com','8802035788','This is TEst Title','This is test Description  This is test Description This is test Description This is test Description This is test Description','2020-09-01 13:34:14','2020-09-01 13:34:14',NULL);
+/*!40000 ALTER TABLE `contacts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `coupons`
+--
+
+DROP TABLE IF EXISTS `coupons`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `coupons` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(20) NOT NULL,
+  `description` varchar(100) DEFAULT NULL,
+  `discount` int(11) NOT NULL,
+  `type` enum('fixed','percent') NOT NULL,
+  `isactive` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `coupons`
+--
+
+LOCK TABLES `coupons` WRITE;
+/*!40000 ALTER TABLE `coupons` DISABLE KEYS */;
+/*!40000 ALTER TABLE `coupons` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -98,7 +162,7 @@ CREATE TABLE `customers` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -107,7 +171,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (1,0,0,'1122334455',NULL,'pk@pk.pk','$2y$10$QGyZ/3xpdn0SIbClpFy9..EPJcHJO.66dWuNdxruFGOOIiiUsCIDa',1,'pankaj','customers/default.png',NULL,NULL,NULL,NULL,NULL,'2020-07-27 12:11:02','2020-07-27 12:12:13',NULL),(2,0,0,'9999810674',NULL,'savej@c.m','$2y$10$E7XgrbRwWz8j9gz8Eh7Cf./ZJhtZJhyARH9eImhwKxo/cXeeoBJfi',1,'Savej','customers/default.png',NULL,NULL,NULL,NULL,NULL,'2020-07-29 04:53:49','2020-07-29 10:11:47',NULL),(3,0,0,'9027610516',NULL,'savejsaifi125@gmail.com','$2y$10$aXeCVwfWmtpNR.Tzq6BosO5AXQuqnAcXIxk5P9md8I9Uv75LepfM6',1,'Savej Saifi','customers/default.png',NULL,NULL,NULL,NULL,NULL,'2020-07-29 10:53:30','2020-07-29 11:00:42',NULL),(4,0,0,'8802035788',NULL,'pks11iitr@gmail.com','$2y$10$ioZ1lxch/FCvO8.HKPmLReVnRrJBkwNCNmZ9AHZCdzSmVzAzN5Vj.',1,'pankaj sengar','customers/default.png',NULL,NULL,NULL,NULL,NULL,'2020-07-29 14:30:11','2020-07-29 14:30:16',NULL);
+INSERT INTO `customers` VALUES (1,0,0,'1122334455',NULL,'pk@pk.pk','$2y$10$QGyZ/3xpdn0SIbClpFy9..EPJcHJO.66dWuNdxruFGOOIiiUsCIDa',1,'pankaj1','customers/1/365_bridge1.jpeg',NULL,NULL,NULL,NULL,NULL,'2020-07-27 12:11:02','2020-09-09 19:15:31',NULL),(2,0,0,'9999810674',NULL,'savej@c.m','$2y$10$E7XgrbRwWz8j9gz8Eh7Cf./ZJhtZJhyARH9eImhwKxo/cXeeoBJfi',1,'Savej','customers/default.png',NULL,NULL,NULL,NULL,NULL,'2020-07-29 04:53:49','2020-07-29 10:11:47',NULL),(3,0,0,'9027610516',NULL,'savejsaifi125@gmail.com','$2y$10$aXeCVwfWmtpNR.Tzq6BosO5AXQuqnAcXIxk5P9md8I9Uv75LepfM6',1,'Savej Saifi','customers/default.png',NULL,NULL,NULL,NULL,NULL,'2020-07-29 10:53:30','2020-07-29 11:00:42',NULL),(4,0,0,'8802035788',NULL,'pks11iitr@gmail.com','$2y$10$SuaVrNrnHOXtCogffUJPaeSPs.w6PiHXddtEDE.aelEz30hAxh76y',1,'pankaj sengar','customers/4/441_svs3.jpeg',NULL,NULL,NULL,NULL,NULL,'2020-07-29 14:30:11','2020-09-03 08:03:46',NULL),(5,0,0,'4849834344',NULL,'pkdh@ghnam.com','$2y$10$WFZ5G6T1HWVODVz1bGx4uu0cW6QpHi/rfN8tU/mvPoZFzjdncmxrS',0,'pankaj','customers/default.png',NULL,NULL,NULL,NULL,'kdfhkfjkfdkfkdhfkjd dkjdkfjdkfd djfdkjfd','2020-09-02 11:36:39','2020-09-02 11:36:39',NULL);
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -161,7 +225,7 @@ CREATE TABLE `documents` (
   `deleted_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -170,6 +234,7 @@ CREATE TABLE `documents` (
 
 LOCK TABLES `documents` WRITE;
 /*!40000 ALTER TABLE `documents` DISABLE KEYS */;
+INSERT INTO `documents` VALUES (4,'App\\Models\\Product',1,'products/1/545_nitve1.jpg','2020-09-09 19:20:50',NULL,'2020-09-09 19:20:50');
 /*!40000 ALTER TABLE `documents` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -259,6 +324,33 @@ INSERT INTO `notifications` VALUES (1,'Hello Pls chel load application','eeeeeee
 UNLOCK TABLES;
 
 --
+-- Table structure for table `notify_me`
+--
+
+DROP TABLE IF EXISTS `notify_me`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `notify_me` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notify_me`
+--
+
+LOCK TABLES `notify_me` WRITE;
+/*!40000 ALTER TABLE `notify_me` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notify_me` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `order_statuses`
 --
 
@@ -298,9 +390,9 @@ CREATE TABLE `orders` (
   `refid` varchar(50) NOT NULL,
   `user_id` int(11) NOT NULL,
   `total_cost` int(11) NOT NULL DEFAULT '0',
-  `status` varchar(50) NOT NULL DEFAULT 'pending',
+  `status` varchar(50) NOT NULL DEFAULT 'pending' COMMENT 'pending, confirmed, processing, dispatched, delivered, cancelled, return-request, return-accepted, refunded, completed',
   `payment_status` varchar(20) NOT NULL DEFAULT 'payment-wait',
-  `payment_mode` varchar(20) DEFAULT NULL,
+  `payment_mode` varchar(25) DEFAULT 'Online',
   `order_details_completed` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL,
@@ -309,6 +401,7 @@ CREATE TABLE `orders` (
   `mobile` varchar(100) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `address` varchar(500) DEFAULT NULL,
+  `pincode` varchar(10) DEFAULT NULL,
   `lat` decimal(20,12) DEFAULT NULL,
   `lang` decimal(20,12) DEFAULT NULL,
   `booking_date` varchar(20) DEFAULT NULL,
@@ -322,6 +415,9 @@ CREATE TABLE `orders` (
   `order_id_response` text,
   `payment_id_response` varchar(500) DEFAULT NULL,
   `payment_id` varchar(500) DEFAULT NULL,
+  `coupon_discount` int(11) NOT NULL DEFAULT '0',
+  `coupon_applied` varchar(50) DEFAULT NULL,
+  `delivery_charge` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -332,7 +428,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (2,'NTVA1596529778',4,220,'confirmed','paid','online',0,'2020-08-04 08:29:38','2020-08-04 18:42:16',NULL,'pankaj','8802035788','pks11iitr@gmail.com','d62 noida gautam 201001',NULL,NULL,NULL,NULL,0,0,0,0,0,'order_FMmt2C2oTbeXv8','{\"id\":\"order_FMmt2C2oTbeXv8\",\"entity\":\"order\",\"amount\":22000,\"amount_paid\":0,\"amount_due\":22000,\"currency\":\"INR\",\"receipt\":\"NTVA1596529778\",\"offer_id\":null,\"status\":\"created\",\"attempts\":0,\"notes\":[],\"created_at\":1596566344}',NULL,NULL);
+INSERT INTO `orders` VALUES (2,'NTVA1596529778',4,220,'confirmed','paid','online',0,'2020-08-04 08:29:38','2020-08-04 18:42:16',NULL,'pankaj','8802035788','pks11iitr@gmail.com','d62 noida gautam 201001',NULL,NULL,NULL,NULL,NULL,0,0,0,0,0,'order_FMmt2C2oTbeXv8','{\"id\":\"order_FMmt2C2oTbeXv8\",\"entity\":\"order\",\"amount\":22000,\"amount_paid\":0,\"amount_due\":22000,\"currency\":\"INR\",\"receipt\":\"NTVA1596529778\",\"offer_id\":null,\"status\":\"created\",\"attempts\":0,\"notes\":[],\"created_at\":1596566344}',NULL,NULL,0,'',0);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -355,7 +451,7 @@ CREATE TABLE `otps` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -364,7 +460,7 @@ CREATE TABLE `otps` (
 
 LOCK TABLES `otps` WRITE;
 /*!40000 ALTER TABLE `otps` DISABLE KEYS */;
-INSERT INTO `otps` VALUES (1,'customer',1,'111111','register','2020-07-27 12:11:02',1,'2020-07-27 12:11:02','2020-07-27 12:12:13',NULL),(2,'customer',1,'111111','login','2020-07-27 12:22:38',1,'2020-07-27 12:22:38','2020-07-27 12:24:15',NULL),(3,'customer',1,'111111','register','2020-07-27 12:22:50',0,'2020-07-27 12:22:50','2020-07-27 12:22:50',NULL),(4,'customer',2,'111111','register','2020-07-29 04:53:49',1,'2020-07-29 04:53:49','2020-07-29 10:11:47',NULL),(5,'customer',2,'111111','login','2020-07-29 09:33:47',0,'2020-07-29 09:33:47','2020-07-29 09:33:47',NULL),(6,'customer',3,'111111','register','2020-07-29 10:53:30',0,'2020-07-29 10:53:30','2020-07-29 10:53:30',NULL),(7,'customer',3,'111111','login','2020-07-29 10:57:14',1,'2020-07-29 10:57:14','2020-07-29 11:00:42',NULL),(8,'customer',4,'111111','register','2020-07-29 14:30:11',1,'2020-07-29 14:30:11','2020-07-29 14:30:16',NULL);
+INSERT INTO `otps` VALUES (1,'customer',1,'111111','register','2020-07-27 12:11:02',1,'2020-07-27 12:11:02','2020-07-27 12:12:13',NULL),(2,'customer',1,'111111','login','2020-07-27 12:22:38',1,'2020-07-27 12:22:38','2020-07-27 12:24:15',NULL),(3,'customer',1,'111111','register','2020-07-27 12:22:50',0,'2020-07-27 12:22:50','2020-07-27 12:22:50',NULL),(4,'customer',2,'111111','register','2020-07-29 04:53:49',1,'2020-07-29 04:53:49','2020-07-29 10:11:47',NULL),(5,'customer',2,'111111','login','2020-07-29 09:33:47',0,'2020-07-29 09:33:47','2020-07-29 09:33:47',NULL),(6,'customer',3,'111111','register','2020-07-29 10:53:30',0,'2020-07-29 10:53:30','2020-07-29 10:53:30',NULL),(7,'customer',3,'111111','login','2020-07-29 10:57:14',1,'2020-07-29 10:57:14','2020-07-29 11:00:42',NULL),(8,'customer',4,'111111','register','2020-07-29 14:30:11',1,'2020-07-29 14:30:11','2020-07-29 14:30:16',NULL),(9,'customer',5,'111111','register','2020-09-02 11:36:39',0,'2020-09-02 06:06:39','2020-09-02 06:06:39',NULL),(10,'customer',4,'111111','reset','2020-09-03 07:35:45',1,'2020-09-03 02:05:45','2020-09-03 02:21:02',NULL),(11,'customer',4,'111111','reset','2020-09-03 07:51:43',1,'2020-09-03 02:21:43','2020-09-03 02:22:33',NULL),(12,'customer',4,'111111','reset','2020-09-03 08:01:53',1,'2020-09-03 02:31:53','2020-09-03 02:31:58',NULL);
 /*!40000 ALTER TABLE `otps` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -483,6 +579,30 @@ LOCK TABLES `permissions` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `pin_code`
+--
+
+DROP TABLE IF EXISTS `pin_code`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pin_code` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `pin_code` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pin_code`
+--
+
+LOCK TABLES `pin_code` WRITE;
+/*!40000 ALTER TABLE `pin_code` DISABLE KEYS */;
+INSERT INTO `pin_code` VALUES (2,201301),(3,201001),(4,108203),(5,234567);
+/*!40000 ALTER TABLE `pin_code` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `products`
 --
 
@@ -504,6 +624,7 @@ CREATE TABLE `products` (
   `is_discount` tinyint(4) NOT NULL DEFAULT '0',
   `is_newarrivel` tinyint(4) NOT NULL DEFAULT '0',
   `isactive` tinyint(4) NOT NULL DEFAULT '0',
+  `out_of_stock` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
@@ -517,7 +638,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,1,1,'Yellow Diamond Plain Salted Chips','products/1/949_3.jpg',65,'Gm',20,30,'A product description is the marketing copy that explains what a product is and why it’s worth purchasing. The purpose of a product description is to supply customers with important information about the features and benefits of the product so they’re compelled to buy.\n\nHowever, entrepreneurs and marketers alike are susceptible to a common mistake that comes up when writing product descriptions. Even professional copywriters make it sometimes: writing product descriptions that simply describe your products.\n\nWhy is it wrong? Because great product descriptions need to augment your product pages by selling your products to real people, not just acting as back-of-the-box dispensers of information for search engines (though search engine optimization can\'t be an afterthought, of course).',1,1,1,1,NULL,'2020-07-30 07:33:05',NULL),(2,1,2,'Yellow Diamond Plain Salted Chips','products/2/409_8.jpg',65,'Gm',20,30,'A product description is the marketing copy that explains what a product is and why it’s worth purchasing. The purpose of a product description is to supply customers with important information about the features and benefits of the product so they’re compelled to buy.\n\nHowever, entrepreneurs and marketers alike are susceptible to a common mistake that comes up when writing product descriptions. Even professional copywriters make it sometimes: writing product descriptions that simply describe your products.\n\nWhy is it wrong? Because great product descriptions need to augment your product pages by selling your products to real people, not just acting as back-of-the-box dispensers of information for search engines (though search engine optimization can\'t be an afterthought, of course).',1,0,0,1,NULL,'2020-07-30 07:32:50',NULL),(3,1,1,'chips','products/3/799_11.jpg',100,'gm',20,30,'A product description is the marketing copy that explains what a product is and why it’s worth purchasing. The purpose of a product description is to supply customers with important information about the features and benefits of the product so they’re compelled to buy.\n\nHowever, entrepreneurs and marketers alike are susceptible to a common mistake that comes up when writing product descriptions. Even professional copywriters make it sometimes: writing product descriptions that simply describe your products.\n\nWhy is it wrong? Because great product descriptions need to augment your product pages by selling your products to real people, not just acting as back-of-the-box dispensers of information for search engines (though search engine optimization can\'t be an afterthought, of course).',1,1,1,1,'2020-07-30 07:18:39','2020-07-30 07:18:39',NULL);
+INSERT INTO `products` VALUES (1,1,1,'Yellow Diamond Plain Salted Chips','products/1/949_3.jpg',65,'Gm',20,30,'A product description is the marketing copy that explains what a product is and why it’s worth purchasing. The purpose of a product description is to supply customers with important information about the features and benefits of the product so they’re compelled to buy.\n\nHowever, entrepreneurs and marketers alike are susceptible to a common mistake that comes up when writing product descriptions. Even professional copywriters make it sometimes: writing product descriptions that simply describe your products.\n\nWhy is it wrong? Because great product descriptions need to augment your product pages by selling your products to real people, not just acting as back-of-the-box dispensers of information for search engines (though search engine optimization can\'t be an afterthought, of course).',1,1,1,0,1,NULL,'2020-09-09 19:09:09',NULL),(2,1,2,'Yellow Diamond Plain Salted Chips','products/2/409_8.jpg',65,'Gm',20,30,'A product description is the marketing copy that explains what a product is and why it’s worth purchasing. The purpose of a product description is to supply customers with important information about the features and benefits of the product so they’re compelled to buy.\n\nHowever, entrepreneurs and marketers alike are susceptible to a common mistake that comes up when writing product descriptions. Even professional copywriters make it sometimes: writing product descriptions that simply describe your products.\n\nWhy is it wrong? Because great product descriptions need to augment your product pages by selling your products to real people, not just acting as back-of-the-box dispensers of information for search engines (though search engine optimization can\'t be an afterthought, of course).',1,0,0,1,0,NULL,'2020-09-09 15:47:04',NULL),(3,1,1,'chips','products/3/799_11.jpg',100,'gm',20,30,'A product description is the marketing copy that explains what a product is and why it’s worth purchasing. The purpose of a product description is to supply customers with important information about the features and benefits of the product so they’re compelled to buy.\n\nHowever, entrepreneurs and marketers alike are susceptible to a common mistake that comes up when writing product descriptions. Even professional copywriters make it sometimes: writing product descriptions that simply describe your products.\n\nWhy is it wrong? Because great product descriptions need to augment your product pages by selling your products to real people, not just acting as back-of-the-box dispensers of information for search engines (though search engine optimization can\'t be an afterthought, of course).',1,1,1,1,0,'2020-07-30 07:18:39','2020-07-30 07:18:39',NULL);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -537,7 +658,7 @@ CREATE TABLE `role_user` (
   PRIMARY KEY (`id`),
   KEY `role_user_role_id_index` (`role_id`),
   KEY `role_user_user_id_index` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -546,6 +667,7 @@ CREATE TABLE `role_user` (
 
 LOCK TABLES `role_user` WRITE;
 /*!40000 ALTER TABLE `role_user` DISABLE KEYS */;
+INSERT INTO `role_user` VALUES (1,1,1,NULL,NULL);
 /*!40000 ALTER TABLE `role_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -566,7 +688,7 @@ CREATE TABLE `roles` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `roles_name_unique` (`name`),
   UNIQUE KEY `roles_slug_unique` (`slug`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -575,6 +697,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (1,'admin','admin',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -634,7 +757,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Lokpriya Admin','pks11iitr@gmail.com',NULL,'$2y$10$jx/yCRpEsNlhTB0ACaIajufYbTPZUMsmSX.XLZTxKVQLugOoH5UJm','shH9aplFBB51BUvfh2qN8OAejkvf5XqZy24OQp1tL6rShBf9HtQtnUJxhAIM','2020-07-09 01:56:57','2020-07-09 01:56:57');
+INSERT INTO `users` VALUES (1,'Lokpriya Admin','pks11iitr@gmail.com',NULL,'$2y$10$jx/yCRpEsNlhTB0ACaIajufYbTPZUMsmSX.XLZTxKVQLugOoH5UJm','kdosWsnZ8Do1BAQcGOfhLutknfJKswFJmCBevJyhvn94RORuA1PMymajOCR7','2020-07-09 01:56:57','2020-07-09 01:56:57');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -684,4 +807,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-08-05  0:17:56
+-- Dump completed on 2020-09-10 10:01:04

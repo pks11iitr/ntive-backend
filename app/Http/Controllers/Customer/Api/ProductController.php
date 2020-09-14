@@ -24,7 +24,7 @@ class ProductController extends Controller
             }else{
                 $products=Product::active()->where('is_newarrivel',1)->get();
             }
-
+            $cart_items=Cart::getCartTotalItems($user);
         if(count($products)>0){
 
              $product_cart=Cart::getUserCart($user);
@@ -36,7 +36,8 @@ class ProductController extends Controller
             return [
                 'status'=>'success',
                 'code'=>'200',
-                'data'=>$products
+                'data'=>$products,
+                'cart_items'=>$cart_items
             ];
         }else{
             return [
@@ -67,6 +68,9 @@ public function category_product(Request $request,$type,$subcatid){
                 $products=Product::active()->where('subcat_id',$subcatid)->get();
             }
 
+            $cart_items=Cart::getCartTotalItems($user);
+
+
         if(count($products)>0){
 
             $product_cart=Cart::getUserCart($user);
@@ -79,7 +83,8 @@ public function category_product(Request $request,$type,$subcatid){
             return [
                 'status'=>'success',
                 'code'=>'200',
-                'data'=>$products
+                'data'=>$products,
+                'cart_items'=>$cart_items
             ];
         }else{
             return [
@@ -109,7 +114,7 @@ public function category_product(Request $request,$type,$subcatid){
             ->first();
 
         $is_notified=$notify?1:0;
-
+        $cart_items=Cart::getCartTotalItems($user);
         if(!$product)
             return [
                 'status'=>'No Record Found',
@@ -118,7 +123,7 @@ public function category_product(Request $request,$type,$subcatid){
 
         return [
             'status'=>'success',
-            'data'=>compact('product', 'is_notified')
+            'data'=>compact('product', 'is_notified', 'cart_items')
         ];
 
 

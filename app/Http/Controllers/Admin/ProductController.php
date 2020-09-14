@@ -3,9 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
+use App\Models\Document;
 use App\Models\HomeCategory;
+use App\Models\Notification;
+use App\Models\NotifyMe;
 use App\Models\SubCategory;
 use App\Models\Product;
+use App\Services\Notification\FCMNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Storage;
@@ -13,9 +18,25 @@ use Storage;
 class ProductController extends Controller
 {
         public function index(Request $request){
+            $products =Product::orderBy('cat_id','asc')->orderBy('subcat_id','asc');
 
-            $products=Product::paginate(10);
-            return view('admin.product.view',['products'=>$products]);
+            if(isset($request->category))//die;
+                $products=$products->where('cat_id', $request->category);
+
+            if(isset($request->subcategory))//die;
+                $products=$products->where('subcat_id', $request->subcategory);
+
+            if($request->ordertype)
+                $products=$products->orderBy('created_at', $request->ordertype);
+
+            if(isset($request->search))
+                $products=$products->where('name', 'like', "%".$request->search."%");
+
+            $products=$products->paginate(20);
+            $homecategorys=HomeCategory::active()->get();
+            $subcategorys=SubCategory::active()->get();
+
+            return view('admin.product.view',['products'=>$products,'homecategorys'=>$homecategorys,'subcategorys'=>$subcategorys]);
 
             }
 
@@ -74,7 +95,8 @@ class ProductController extends Controller
             $product = Product::findOrFail($id);
             $homecategory=HomeCategory::active()->get();
             $subcategory=SubCategory::active()->get();
-              return view('admin.product.edit',['product'=>$product,'homecategory'=>$homecategory,'subcategory'=>$subcategory]);
+              $documents = $product->gallery;
+              return view('admin.product.edit',['product'=>$product,'homecategory'=>$homecategory,'subcategory'=>$subcategory,'documents'=>$documents]);
             }
 
 
@@ -98,7 +120,7 @@ class ProductController extends Controller
 
                        ]);
              $product = Product::findOrFail($id);
-
+            $old_stock=$product->out_of_stock;
             if($product->update([
 
                             'cat_id'=>$request->cat_id,
@@ -112,6 +134,7 @@ class ProductController extends Controller
                             'is_discount'=>$request->is_discount,
                             'is_newarrivel'=>$request->is_newarrivel,
                             'isactive'=>$request->isactive,
+                            'out_of_stock'=>$request->out_of_stock
             ])){
 
                 if($request->image){
@@ -119,8 +142,35 @@ class ProductController extends Controller
                     $product->saveImage($request->image, 'products');
 
                 }
+            if(empty($request->out_of_stock) && $old_stock){
+                $users=NotifyMe::with('customer')->where('product_id', $product->id)->get();
 
-                return redirect()->route('product.list')->with('success', 'Product has been updated');
+                if($users){
+                    $message=$product->name. ' is available in stock at Nitve Ecommerce. Book your order now';
+                    $title=$product->name.' in stock';
+                }
+
+                foreach($users as $u){
+                    if($u->customer){
+                        Notification::create([
+                            'user_id'=>$u->customer->id,
+                            'title'=>$title,
+                            'description'=>$message,
+                            'data'=>null,
+                            'type'=>'individual'
+                        ]);
+
+                        FCMNotification::sendNotification($u->customer->notification_token, $title, $message);
+                    }
+
+                }
+
+
+
+
+
+            }
+                return redirect()->back()->with('success', 'Product has been updated');
 
             }
 
@@ -133,20 +183,25 @@ class ProductController extends Controller
 
 
             $request->validate([
-                'images'=>'required|array',
-                'images.*'=>'image'
+                'file_path'=>'required|array',
+                'file_path.*'=>'image'
             ]);
 
 
             $product=Product::find($id);
 
 
-            foreach($request->images as $image)
+            foreach($request->file_path as $image)
                 $product->saveDocument($image, 'products');
 
             return redirect()->back()->with('success', 'Images has been uploaded');
 
 
+        }
+
+        public function delete(Request $request,$id){
+            Document::where('id', $id)->delete();
+            return redirect()->back()->with('success', 'Document has been deleted');
         }
 
   }

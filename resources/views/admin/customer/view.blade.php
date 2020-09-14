@@ -28,7 +28,7 @@
             <div class="card">
               <div class="card-header">
 				 <div class="row">
-                          <div class="col-12">
+                     <div class="col-12">
 
         <form class="form-validate form-horizontal"  method="get" action="" enctype="multipart/form-data">
                            <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
@@ -76,7 +76,7 @@
                   <thead>
                   <tr>
                     <th>Name</th>
-                    <th>DOB</th>
+{{--                    <th>DOB</th>--}}
                   <!--  <th>Address</th>
                     <th>City</th>
                     <th>State</th>-->
@@ -90,7 +90,7 @@
 				@foreach($customers as $customer)
                   <tr>
 					  <td>{{$customer->name}}<br>Mob:{{$customer->mobile}}<br>Email:{{$customer->email}}</td>
-					  <td>{{$customer->dob}}</td>
+{{--					  <td>{{$customer->dob}}</td>--}}
 					 <!-- <td>{{$customer->address}}</td>
 					  <td>{{$customer->city}}</td>
 					  <td>{{$customer->state}}</td>-->
@@ -106,8 +106,7 @@
                           @endif
                       </td>
                       <td><a href="{{route('customer.edit',['id'=>$customer->id])}}" class="btn btn-success">Edit</a>
-                      <a href="{{route('customer.edit',['id'=>$customer->id])}}" class="open-AddBookDialog btn btn-success" data-toggle="modal" data-target="#exampleModal" data-id="{{$customer->id}}">Notification</a>
-                          <a class="btn btn-success" href="{{route('customer.contacts',['id'=>$customer->id])}}" >Contacts</a>
+{{--                      <a href="{{route('customer.',['id'=>$customer->id])}}" class="open-AddBookDialog btn btn-success" data-toggle="modal" data-target="#exampleModal" data-id="{{$customer->id}}">Notification</a>--}}
                       </td>
                  </tr>
                  @endforeach
@@ -115,7 +114,7 @@
                   <tfoot>
                   <tr>
                     <th>Name</th>
-                    <th>DOB</th>
+{{--                    <th>DOB</th>--}}
                    <!-- <th>Address</th>
                     <th>City</th>
                     <th>State</th>-->

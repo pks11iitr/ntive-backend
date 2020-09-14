@@ -55,13 +55,19 @@
                                         <select name="category_id" class="form-control" id="exampleInputistop" placeholder="">
                                             @foreach($category as $c)
                                             <option value="main_{{$c->id}}">{{$c->title}}</option>
-                                            @endforeach
-                                                @foreach($subcategory as $c)
-                                                    <option value="sub_{{$c->id}}">{{$c->name}}</option>
+{{--                                            @endforeach--}}
+{{--                                                @foreach($subcategory as $c)--}}
+{{--                                                    <option value="sub_{{$c->id}}">{{$c->name}}</option>--}}
                                                 @endforeach
                                         </select>
                                     </div>
 
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="exampleInputimage">Title</label>
+                                            <input type="text" name="title" class="form-control" id="exampleInputimage" placeholder="">
+                                        </div>
+                                    </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -83,4 +89,4 @@
     </section>
     <!-- /.content -->
 </div>
-    @endsection
+@endsection

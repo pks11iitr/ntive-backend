@@ -53,15 +53,18 @@ class PaymentController extends Controller
 
                 $order->total_cost=$order->total_cost+$order->coupon_discount-$discount;
                 $order->coupon_applied=$coupon->code;
+                $order->delivery_charge=$order->total_cost<200?30:0;
                 $order->save();
             }else{
                 $order->total_cost=$order->total_cost+$order->coupon_discount;
                 $order->coupon_applied=null;
+                $order->delivery_charge=$order->total_cost<200?30:0;
                 $order->save();
             }
         }else{
             $order->total_cost=$order->total_cost+$order->coupon_discount;
             $order->coupon_applied=null;
+            $order->delivery_charge=$order->total_cost<200?30:0;
             $order->save();
         }
 
@@ -126,6 +129,10 @@ class PaymentController extends Controller
         $order->payment_mode='Cash On Delivery';
         $order->status='confirmed';
         $order->save();
+        event(new OrderConfirmed($order));
+
+        Cart::where('user_id', $order->user_id)->delete();
+
         return [
             'status'=>'success',
             'message'=>'success',
@@ -138,7 +145,7 @@ class PaymentController extends Controller
 
     private function initiateGatewayPayment($order){
         $response=$this->pay->generateorderid([
-            "amount"=>($order->total_cost-$order->balance_used??0)*100,
+            "amount"=>($order->total_cost+$order->delivery_charge)*100,
             "currency"=>"INR",
             "receipt"=>$order->refid,
         ]);
@@ -154,11 +161,11 @@ class PaymentController extends Controller
                 'data'=>[
                     'payment_done'=>'no',
                     'razorpay_order_id'=> $order->order_id,
-                    'total'=>($order->total_cost-$order->balance_used)*100,
+                    'total'=>($order->total_cost+$order->delivery_charge)*100,
                     'id'=>$order->id,
                     'email'=>$order->email,
                     'mobile'=>$order->mobile,
-                    'description'=>'Product Purchase at Ntive',
+                    'description'=>'Product Purchase at Nitve Ecommerce',
                     'name'=>$order->name,
                     'currency'=>'INR',
                     'merchantid'=>$this->pay->merchantkey,
@@ -267,7 +274,7 @@ class PaymentController extends Controller
                 if ($balance < $order->balance_used) {
                     return response()->json([
                         'status' => 'failed',
-                        'message' => 'We apologize, Your order is not successful',
+                        'message' => 'We apologize, Your order is not successful at Nitve Ecommerce',
                         'errors' => [
 
                         ],
@@ -295,7 +302,7 @@ class PaymentController extends Controller
             event(new OrderConfirmed($order));
             return [
                 'status'=>'success',
-                'message'=> 'Congratulations! Your order at Ntive is successful',
+                'message'=> 'Congratulations! Your order at Nitve Ecommerce is successful',
                 'data'=>[
                     'ref_id'=>$order->refid,
                     'order_id'=>$order->id

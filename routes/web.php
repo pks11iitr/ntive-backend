@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['middle'=>['auth', 'acl'], 'is'=>'admin'], function(){
+Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function(){
     Route::get('/home', 'Admin\HomeController@index')->name('home');
 
     Route::group(['prefix'=>'banners'], function(){
@@ -67,13 +67,14 @@ Route::group(['middle'=>['auth', 'acl'], 'is'=>'admin'], function(){
         Route::get('edit/{id}','Admin\ProductController@edit')->name('product.edit');
         Route::post('update/{id}','Admin\ProductController@update')->name('product.update');
         Route::post('upload-images/{id}','Admin\ProductController@uploadImages')->name('product.upload.image');
+        Route::get('delete/{id}','Admin\ProductController@delete')->name('product.delete');
     });
 
     Route::group(['prefix'=>'order'], function(){
         Route::get('/','Admin\OrderController@index')->name('order.list');
         Route::get('orderview/{id}','Admin\OrderController@orderview')->name('order.orderview');
         Route::get('change-status/{id}','Admin\OrderController@changeStatus')->name('order.status.change');
-
+        Route::get('change-payment-status/{id}','Admin\OrderController@changePaymentStatus')->name('payment.status.change');
 
     });
 
@@ -101,3 +102,6 @@ Route::group(['middle'=>['auth', 'acl'], 'is'=>'admin'], function(){
 
 
 });
+
+Route::get('abouts','Admin\AboutsController@abouts');
+Route::get('privacy','Admin\AboutsController@privacy');

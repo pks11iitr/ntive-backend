@@ -6,13 +6,14 @@ use App\Models\Coupon;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class CouponController extends Controller
 {
     public function applyCoupon(Request $request, $order_id){
 
 
-        $coupon=Coupon::where('code', $request->coupon??null)->first();
+        $coupon=Coupon::where(DB::raw('BINARY code'), $request->coupon??null)->first();
         if(!$coupon){
             return [
                 'status'=>'failed',
@@ -32,6 +33,14 @@ class CouponController extends Controller
 
         $discount=$coupon->calculateDiscount($order->total_cost);
 
+        $prices=[
+            'total'=>$order->total_cost,
+            'coupon'=>$discount,
+            'delivery'=>(($order->total_cost-$discount)<200?30:0),
+            'payble'=>($order->total_cost-$discount)+(($order->total_cost-$discount)<200?30:0),
+            'payble_text'=>$order->payment_status=='payment-wait'?'Payable Amount':'Paid Amount'
+        ];
+
         if($discount > $order->total_cost)
         {
             return [
@@ -43,8 +52,8 @@ class CouponController extends Controller
         return [
 
             'status'=>'success',
-            'message'=>'Discount of Rs. '.$discount.' Applied Successfully'
-
+            'message'=>'Discount of Rs. '.$discount.' Applied Successfully',
+            'prices'=>$prices
         ];
 
 

@@ -35,14 +35,25 @@ class BannerController extends Controller
                     'image'=>'required|image'
 
                     ]);
+
+               if(stripos($request->category_id, 'sub_')!==false){
+                   $id=str_replace('sub_', '', $request->id);
+                   $subcategory=SubCategory::find((int)$id);
+                   $main_id=$subcategory->category_id;
+               }else{
+                   $main_id=null;
+               }
+
                if($banner=Banner::create([
                             'isactive'=>$request->isactive,
                             'image'=>'a',
-                            'category_id'=>$request->category_id
+                            'category_id'=>$request->category_id,
+                            'main_category_id'=>$main_id,
+                            'title'=>$request->title
                             ])){
                    $banner->saveImage($request->image, 'banners');
 
-                        return redirect()->route('banners.list')->with('success', 'Banner has been created');
+                        return redirect()->back()->with('success', 'Banner has been created');
                 }
 
                 return redirect()->back()->with('error', 'Banner create failed');
@@ -68,9 +79,20 @@ class BannerController extends Controller
                        ]);
              $banner = Banner::findOrFail($id);
 
+            if(stripos($request->category_id, 'sub_')!==false){
+                $id=str_replace('sub_', '', $request->id);
+                $subcategory=SubCategory::find((int)$id);
+                $main_id=$subcategory->category_id;
+            }else{
+                $main_id=null;
+            }
+
+
             if($banner->update([
                 'category_id'=>$request->category_id,
                 'isactive'=>$request->isactive,
+                'main_category_id'=>$main_id,
+                'title'=>$request->title
             ])){
 
                 if($request->image){
@@ -79,7 +101,7 @@ class BannerController extends Controller
 
                 }
 
-                return redirect()->route('banners.list')->with('success', 'Banner has been updated');
+                return redirect()->back()->with('success', 'Banner has been updated');
 
             }
 

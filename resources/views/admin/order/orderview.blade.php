@@ -45,12 +45,23 @@
                                         <td>Date & Time</td><td>{{$order->created_at}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Total</td><td>{{$order->total_cost}}</td>
+                                        <td>Total</td>
+                                        <td>{{$order->total_cost+$order->coupon_discount}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Payment Status</td><td>{{$order->payment_status}}</td>
+                                        <td>Coupon Discount</td><td>{{$order->coupon_discount }}</td>
                                     </tr>
-
+                                    <tr>
+                                        <td>Coupon Applied</td><td>{{$order->coupon_applied}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Payment Status</td><td>{{$order->payment_status}} &nbsp; @if(in_array($order->payment_status, ['payment-wait']))
+                                                <a href="{{route('payment.status.change', ['id'=>$order->id,'status'=>'paid'])}}" name='status' class="btn btn-primary">Mark As Paid</a>
+                                            @endif</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Payment Mode</td><td>{{$order->payment_mode}}</td>
+                                    </tr>
                                     <tr>
                                         <td>Status</td>
                                         <td>{{$order->status}}<br><br>
@@ -63,13 +74,13 @@
                                             @if(in_array($order->status, ['dispatched']))
                                             <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'delivered'])}}" name='status' class="btn btn-primary">Delivered</a><br><br>
                                             @endif
-                                            @if(in_array($order->status, ['confirmed', 'pending']))
+                                            @if(in_array($order->status, ['confirmed', 'pending', 'processing']))
                                             <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'cancelled'])}}" name='status' class="btn btn-primary">Cancelled</a>
                                             @endif
                                             @if(in_array($order->status, ['return-request']))
                                             <a href="{{route('order.status.change', ['id'=>$order->id,'status'=>'return-accepted'])}}" name='status' class="btn btn-primary">Return-accepted</a>
                                             @endif
-                                            @if(in_array($order->status, ['return-accepted', 'cancelled']))
+                                            @if(in_array($order->status, ['return-accepted', 'cancelled']) && $order->payment_status=='paid')
                                             <a href="{{route('order.status.change', ['id'=>$order->id, 'status'=>'refunded'])}}" name='status' class="btn btn-primary">Refunded</a>
                                             @endif
                                             @if(in_array($order->status, ['delivered']))
