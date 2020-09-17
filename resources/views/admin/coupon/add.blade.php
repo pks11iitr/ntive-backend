@@ -58,6 +58,14 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
+                                        <label for="exampleInputistop">Usage Type</label>
+                                        <select name="use_type" class="form-control" id="exampleInputistop" placeholder="">
+                                            <option value="">Please Select Type</option>
+                                            <option value="Single">Single</option>
+                                            <option value="Multiple">Multiple</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="exampleInputistop">Is Active</label>
                                         <select name="isactive" class="form-control" id="exampleInputistop" placeholder="">
                                             <option value="1">Yes</option>

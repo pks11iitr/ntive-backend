@@ -22,7 +22,7 @@ class CouponController extends Controller
         }
 
 
-        if($coupon->isactive==false){
+        if($coupon->isactive==false || $coupon->is_expired==true){
             return [
                 'status'=>'failed',
                 'message'=>'Coupon Has Been Expired',

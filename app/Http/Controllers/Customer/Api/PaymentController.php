@@ -13,6 +13,7 @@ use App\Models\Wallet;
 use App\Services\Payment\RazorPayService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
@@ -129,6 +130,16 @@ class PaymentController extends Controller
         $order->payment_mode='Cash On Delivery';
         $order->status='confirmed';
         $order->save();
+
+        if(!empty($order->coupon_applied))
+        {
+            $coupon=Coupon::where(DB::raw('BINARY code'), $order->coupon_applied)->first();
+            if($coupon->use_type=='Single'){
+                $coupon->is_expired=true;
+                $coupon->save();
+            }
+        }
+
         event(new OrderConfirmed($order));
 
         Cart::where('user_id', $order->user_id)->delete();
@@ -287,6 +298,15 @@ class PaymentController extends Controller
             $order->payment_status='paid';
             $order->payment_mode='online';
             $order->save();
+
+            if(!empty($order->coupon_applied))
+            {
+                $coupon=Coupon::where(DB::raw('BINARY code'), $order->coupon_applied)->first();
+                if($coupon->use_type=='Single'){
+                    $coupon->is_expired=true;
+                    $coupon->save();
+                }
+            }
 
             OrderStatus::create([
                 'order_id'=>$order->id,
