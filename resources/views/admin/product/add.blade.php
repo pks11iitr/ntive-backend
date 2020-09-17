@@ -37,22 +37,22 @@
 
                                 <div class="card-body">
 
-                                    <div class="form-group">
-                                        <label for="exampleInputtitle">Category Name</label>
-                                        <select name="cat_id" class="form-control" id="exampleInputistop" placeholder="">
-                                            @foreach($homecategory as $category)
-                                                <option value="{{$category->id}}">{{$category->title}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputtitle">Sub Category Name</label>
-                                        <select name="subcat_id" class="form-control" id="exampleInputistop" placeholder="">
-                                            @foreach($subcategory as $subcat)
-                                                <option value="{{$subcat->id}}">{{$subcat->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="exampleInputtitle">Category Name</label>--}}
+{{--                                        <select name="cat_id" class="form-control" id="exampleInputistop" placeholder="">--}}
+{{--                                            @foreach($homecategory as $category)--}}
+{{--                                                <option value="{{$category->id}}">{{$category->title}}</option>--}}
+{{--                                            @endforeach--}}
+{{--                                        </select>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="exampleInputtitle">Sub Category Name</label>--}}
+{{--                                        <select name="subcat_id" class="form-control" id="exampleInputistop" placeholder="">--}}
+{{--                                            @foreach($subcategory as $subcat)--}}
+{{--                                                <option value="{{$subcat->id}}">{{$subcat->name}}</option>--}}
+{{--                                            @endforeach--}}
+{{--                                        </select>--}}
+{{--                                    </div>--}}
                                 <div class="form-group">
                                     <label for="exampleInputimage">Product Name</label>
                                     <input type="text" name="name" class="form-control" id="exampleInputimage" placeholder="">
@@ -115,9 +115,9 @@
                                     <div class="form-group">
 
                                         <label for="exampleInputistop">Out Of Stock</label><br>
-                                        <input type="checkbox" name="out_of_stock" value="0">
+                                        <input type="radio" name="out_of_stock" value="0">
                                         <label for="exampleInputistop">Yes</label><br>
-                                        <input type="checkbox" name="out_of_stock" value="1">
+                                        <input type="radio" name="out_of_stock" value="1">
                                         <label for="exampleInputistop">No</label>
 
                                     </div>
