@@ -55,53 +55,87 @@ class ProductController extends Controller
 
     }
 }
-
-public function category_product(Request $request,$type,$subcatid){
-
-        $data=[];
-
+//
+//public function category_product(Request $request,$type,$subcatid){
+//
+//        $data=[];
+//
+//        $user=auth()->guard('customerapi')->user();
+//        if($user) {
+//            if($type=='all'){
+//            $products=Product::active()->where('cat_id',$subcatid)->get();
+//            }else{
+//                $products=Product::active()->where('subcat_id',$subcatid)->get();
+//            }
+//
+//            $cart_items=Cart::getCartTotalItems($user);
+//
+//
+//        if(count($products)>0){
+//
+//            $product_cart=Cart::getUserCart($user);
+//             foreach($products as $i=>$r)
+//                       {
+//
+//                       //$cart=Cart::where('user_id', auth()->guard('customerapi')->user()->id??'')->where('product_id',$r['id'])->get();
+//                       $products[$i]['qty']=$product_cart[$r->id]??0;
+//                     }
+//            return [
+//                'status'=>'success',
+//                'code'=>'200',
+//                'data'=>$products,
+//                'cart_items'=>$cart_items
+//            ];
+//        }else{
+//            return [
+//                 'status'=>'No Record Found',
+//                  'code'=>'402'
+//            ];
+//       }
+//
+//    }else{
+//
+//         return [
+//            'status'=>'User is not logged in',
+//            'code'=>'401'
+//        ];
+//
+//    }
+//}
+    public function products(Request $request){
         $user=auth()->guard('customerapi')->user();
-        if($user) {
-            if($type=='all'){
-            $products=Product::active()->where('cat_id',$subcatid)->get();
-            }else{
-                $products=Product::active()->where('subcat_id',$subcatid)->get();
-            }
 
-            $cart_items=Cart::getCartTotalItems($user);
-
-
-        if(count($products)>0){
-
-            $product_cart=Cart::getUserCart($user);
-             foreach($products as $i=>$r)
-                       {
-
-                       //$cart=Cart::where('user_id', auth()->guard('customerapi')->user()->id??'')->where('product_id',$r['id'])->get();
-                       $products[$i]['qty']=$product_cart[$r->id]??0;
-                     }
+        if(!$user)
             return [
-                'status'=>'success',
-                'code'=>'200',
-                'data'=>$products,
-                'cart_items'=>$cart_items
+                'status'=>'failed',
+                'message'=>'Please login to continue'
             ];
+        if(!empty($request->sub_cat_id)){
+
+            $product=Product::active()->whereHas('subcategory', function($category) use($request){
+                $category->where('sub_category.id', $request->sub_cat_id);
+            });
         }else{
-            return [
-                 'status'=>'No Record Found',
-                  'code'=>'402'
-            ];
-       }
+            $product=Product::active()->whereHas('category', function($category) use($request){
+                $category->where('home_category.id', $request->category_id);
+            });
+        }
 
-    }else{
+//        $cart=Cart::getUserCart($user);
 
-         return [
-            'status'=>'User is not logged in',
-            'code'=>'401'
+        $products=$product->with('sizeprice')->paginate(20);
+//
+//        foreach($products as $product){
+//            foreach($product->sizeprice as $size)
+//                $size->quantity=$cart[$size->id]??0;
+//
+//        }
+
+        return [
+            'status'=>'success',
+            'data'=>$products,
         ];
-
     }
-}
 
 
     public function details(Request $request, $id){
