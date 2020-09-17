@@ -73,12 +73,12 @@
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                   <tr>
-                    <th>Category Name</th>
-                    <th>Sub CatName</th>
+{{--                    <th>Category Name</th>--}}
+{{--                    <th>Sub CatName</th>--}}
                     <th>Product Name</th>
-                    <th>Actual Price</th>
-                    <th>Cut Price</th>
-                    <th>Weight</th>
+{{--                    <th>Actual Price</th>--}}
+{{--                    <th>Cut Price</th>--}}
+{{--                    <th>Weight</th>--}}
                     <th>Image</th>
                     <th>Isactive</th>
                    <th>Action</th>
@@ -87,12 +87,12 @@
                   <tbody>
 				@foreach($products as $product)
                   <tr>
-                      <td>{{$product->category->title}}</td>
-                      <td>{{$product->subcategory->name}}</td>
+{{--                      <td>{{$product->category->title}}</td>--}}
+{{--                      <td>{{$product->subcategory->name}}</td>--}}
                       <td>{{$product->name}}</td>
-                      <td>{{$product->actual_price}}</td>
-                      <td>{{$product->cut_price}}</td>
-                      <td>{{$product->weight}} {{$product->unit}}</td>
+{{--                      <td>{{$product->actual_price}}</td>--}}
+{{--                      <td>{{$product->cut_price}}</td>--}}
+{{--                      <td>{{$product->weight}} {{$product->unit}}</td>--}}
                       <td><img src="{{$product->image}}" height="80px" width="80px"/></td>
                        <td>
                         @if($product->isactive==1){{'Yes'}}

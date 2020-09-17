@@ -51,8 +51,8 @@ class ProductController extends Controller
         public function store(Request $request){
 
               $request->validate([
-                    'cat_id'=>'required',
-                    'subcat_id'=>'required',
+                    //'cat_id'=>'required',
+                    //'subcat_id'=>'required',
                     'name'=>'required',
                     'weight'=>'required',
                     'unit'=>'required',
@@ -105,8 +105,8 @@ class ProductController extends Controller
 
             $request->validate([
 
-                    'cat_id'=>'required',
-                    'subcat_id'=>'required',
+                    //'cat_id'=>'required',
+                    //'subcat_id'=>'required',
                     'name'=>'required',
                     'weight'=>'required',
                     'unit'=>'required',

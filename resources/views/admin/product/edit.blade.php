@@ -35,22 +35,22 @@
                         <form role="form" method="post" enctype="multipart/form-data" action="{{route('product.update',['id'=>$product->id])}}">
                             @csrf
                                   <div class="card-body">
-                                 <div class="form-group">
-                                        <label for="exampleInputtitle">Category Name</label>
-                                        <select name="cat_id" class="form-control" id="exampleInputistop" placeholder="">
-                                            @foreach($homecategory as $category)
-                                                <option value="{{$category->id}}" {{$product->cat_id==$category->id?'selected':''}}>{{$category->title}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputtitle">Sub Category Name</label>
-                                        <select name="subcat_id" class="form-control" id="exampleInputistop" placeholder="">
-                                            @foreach($subcategory as $subcat)
-                                                <option value="{{$subcat->id}}" {{$product->subcat_id==$subcat->id?'selected':''}}>{{$subcat->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+{{--                                 <div class="form-group">--}}
+{{--                                        <label for="exampleInputtitle">Category Name</label>--}}
+{{--                                        <select name="cat_id" class="form-control" id="exampleInputistop" placeholder="">--}}
+{{--                                            @foreach($homecategory as $category)--}}
+{{--                                                <option value="{{$category->id}}" {{$product->cat_id==$category->id?'selected':''}}>{{$category->title}}</option>--}}
+{{--                                            @endforeach--}}
+{{--                                        </select>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="exampleInputtitle">Sub Category Name</label>--}}
+{{--                                        <select name="subcat_id" class="form-control" id="exampleInputistop" placeholder="">--}}
+{{--                                            @foreach($subcategory as $subcat)--}}
+{{--                                                <option value="{{$subcat->id}}" {{$product->subcat_id==$subcat->id?'selected':''}}>{{$subcat->name}}</option>--}}
+{{--                                            @endforeach--}}
+{{--                                        </select>--}}
+{{--                                    </div>--}}
                                 <div class="form-group">
                                     <label for="exampleInputimage">Name</label>
                                     <input type="text" name="name" class="form-control" id="exampleInputimage"
