@@ -38,7 +38,7 @@ $api->post('search', ['as'=>'api.search', 'uses'=>'Customer\Api\SearchController
 $api->get('special-product/{type}/product', ['as'=>'api.special-product', 'uses'=>'Customer\Api\ProductController@special_product']);
 $api->get('category-product/{type}/{subcatid}/product', ['as'=>'api.category-product', 'uses'=>'Customer\Api\ProductController@category_product']);
 $api->get('sub-category/{catid}/category', ['as'=>'api.sub-category', 'uses'=>'Customer\Api\SubCategoryController@subcategory']);
-
+$api->get('products', ['as'=>'products.list', 'uses'=>'Customer\Api\ProductController@products']);
 //cart apis
 $api->post('add-cart', ['as'=>'api.cart', 'uses'=>'Customer\Api\CartController@store']);
 $api->get('get-cart', ['as'=>'api.cart', 'uses'=>'Customer\Api\CartController@getCart']);

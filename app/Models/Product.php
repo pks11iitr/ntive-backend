@@ -19,11 +19,19 @@ class Product extends Model
       return Storage::url($value);
     }
 
-    public function category(){
-        return $this->belongsTo('App\Models\HomeCategory', 'cat_id');
-    }
+//    public function category(){
+//        return $this->belongsTo('App\Models\HomeCategory', 'cat_id');
+//    }
+//    public function subcategory(){
+//        return $this->belongsTo('App\Models\SubCategory', 'subcat_id');
+//    }
     public function subcategory(){
-        return $this->belongsTo('App\Models\SubCategory', 'subcat_id');
+        return $this->belongsToMany('App\Models\SubCategory', 'product_category', 'product_id', 'sub_cat_id');
     }
-
+    public function category(){
+        return $this->belongsToMany('App\Models\HomeCategory', 'product_category', 'product_id', 'category_id');
+    }
+    public function sizeprice(){
+        return $this->hasMany('App\Models\Size', 'product_id');
+    }
 }
