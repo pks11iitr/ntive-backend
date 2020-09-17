@@ -28,7 +28,7 @@ class CartController extends Controller
                     'message'=>'Invalid Size'
                 ];
             }
-          $cart = Cart::where('product_id',$request->product_id)->where('size_id',$request->size_id)->where('user_id', auth()->guard('customerapi')->user()->id??'')->first();
+          $cart = Cart::where('product_id',$request->product_id)->where('user_id', auth()->guard('customerapi')->user()->id??'')->first();
 
           $product=Product::active()->where('out_of_stock', 0)->find($request->product_id);
 
