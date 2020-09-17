@@ -31,17 +31,17 @@ class CouponController extends Controller
 
         $order=Order::find($order_id);
 
-        $discount=$coupon->calculateDiscount($order->total_cost);
+        $discount=$coupon->calculateDiscount($order->total_cost+$order->coupon_discount);
 
         $prices=[
-            'total'=>$order->total_cost,
+            'total'=>$order->total_cost+$order->coupon_discount,
             'coupon'=>$discount,
-            'delivery'=>(($order->total_cost-$discount)<200?30:0),
-            'payble'=>($order->total_cost-$discount)+(($order->total_cost-$discount)<200?30:0),
+            'delivery'=>(($order->total_cost+$order->coupon_discount-$discount)<200?30:0),
+            'payble'=>($order->total_cost+$order->coupon_discount-$discount)+(($order->total_cost+$order->coupon_discount-$discount)<200?30:0),
             'payble_text'=>$order->payment_status=='payment-wait'?'Payable Amount':'Paid Amount'
         ];
 
-        if($discount > $order->total_cost)
+        if($discount > $order->total_cost+$order->coupon_discount)
         {
             return [
                 'status'=>'failed',
