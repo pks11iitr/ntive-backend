@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 
 @section('contents')
+    <link rel="stylesheet" href="{{asset('../admin-theme/plugins/select2/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('../admin-theme/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -97,11 +99,39 @@
                                           <option value="0" {{$product->is_newarrivel==0?'selected':''}}>No</option>
                                     </select>
                                 </div>
+                                      <div class="form-group">
+                                          <label for="exampleInputtitle">Category</label>
+                                          <select name="category_id[]"  class="form-control select2" id="exampleInputistop" data-placeholder="Select a Category" multiple>
+                                              <option value="">Please Select Category</option>
+                                              @foreach($categories as $category)
+{{--                                                  <option value="{{$category->id}}">{{$category->title}}</option>--}}
+
+                                                  <option value="{{$category->id}}" @foreach($product->category as $s) @if($s->id==$category->id){{'selected'}}@endif @endforeach >{{$category->title}}</option>
+                                              @endforeach
+                                          </select>
+                                      </div>
+
+
+                                <div class="form-group">
+                                    <label for="exampleInputtitle">Sub Category</label>
+                                    {{--                            <select name="sub_cat_id" class="form-control" id="exampleInputistop" placeholder="">--}}
+                                    <select class="form-control select2" multiple data-placeholder="Select a subcategory" style="width: 100%;" name="sub_cat_id[]">
+
+                                        <option value="">Please Select Category</option>
+                                        @foreach($subcategories as $subcategory)
+
+                                            <option value="{{$subcategory->id}}" @foreach($product->subcategory as $s) @if($s->id==$subcategory->id){{'selected'}}@endif @endforeach >{{$subcategory->name}}</option>
+
+
+                                        @endforeach
+                                    </select>
+                                </div>
+
                                 <div class="form-group">
                                     <label for="exampleInputimage">Product Image</label>
                                     <input type="file" name="image" class="form-control" id="exampleInputimage"
                                     placeholder="">
-                                    <image src="{{$product->image}}" height="100" width="200">
+                                    <img src="{{$product->image}}" height="100" width="200">
                                 </div>
 
                                 <div class="form-group">
@@ -120,6 +150,7 @@
                                           <input type="radio" name="out_of_stock" value="1" {{$product->out_of_stock==1?'checked':''}}>
                                           <label for="exampleInputistop">No</label>
 
+                                      </div>
                                       </div>
 
                             <!-- /.card-body -->
@@ -168,6 +199,7 @@
                                     <!-- /.form-group -->
                                     <!-- /.col -->
                                 </div>
+                                </div>
 
                         </form>
                     </div>
@@ -183,8 +215,151 @@
                 <!--/.col (right) -->
             </div>
             <!-- /.row -->
+
+    </section>
+{{--    *********************************Size Price*******************************************--}}
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Add Size Price</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form role="form" method="post" enctype="multipart/form-data" action="{{route('product.sizeprice',['id'=>$product->id])}}">
+                            @csrf
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Product Size</label>
+                                            <input type="text" name="size" class="form-control" id="exampleInputEmail1" placeholder="Enter size" >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Price</label>
+                                            <input type="number" name="price" min="0" class="form-control" id="exampleInputEmail1" placeholder="Enter price" >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Cut Price</label>
+                                            <input type="number" min="0" name="cut_price" class="form-control" id="exampleInputEmail1" placeholder="Enter price" >
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Is Active</label>
+                                            <select name="isactive" class="form-control" id="exampleInputistop" placeholder="">
+                                                <option value="1">Yes</option>
+                                                <option value="0">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!--/.col (right) -->
+            </div>
+            <!-- /.row -->
         </div><!-- /.container-fluid -->
     </section>
+    {{--      *************************************************************************************--}}
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-3">
+                                    List Size Price</div>
+
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Size</th>
+                                    <th>Price</th>
+                                    <th>Cut Price</th>
+                                    <th>Isactive</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($sizeprice as $size)
+                                    <tr>
+                                        <td>{{$size->size}}</td>
+                                        <td>{{$size->price}}</td>
+                                        <td>{{$size->cut_price}}</td>
+
+                                        <td>
+                                            @if($size->isactive==1){{'Yes'}}
+                                            @else{{'No'}}
+                                            @endif
+                                        </td>
+                                        <td><a href="{{route('product.delete.sizeprice',['id'=>$size->id])}}" class="btn btn-danger">Delete</a></td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>Size</th>
+                                    <th>Price</th>
+                                    <th>Cut Price</th>
+                                    <th>Isactive</th>
+                                    <th>Action</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+
     <!-- /.content -->
 </div>
     @endsection
+@section('scripts')
+    <script src="{{asset('admin-theme/plugins/select2/js/select2.full.min.js')}}"></script>
+    <script src="{{asset('admin-theme/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js')}}"></script>
+    <script>
+        $(function () {
+            // Summernote
+            $('.textarea').summernote()
+        })
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+            $('#category_id_sel').select2();
+        });
+    </script>
+@endsection

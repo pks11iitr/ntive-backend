@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\CategoryProduct;
 use App\Models\Customer;
 use App\Models\Document;
 use App\Models\HomeCategory;
 use App\Models\Notification;
 use App\Models\NotifyMe;
+use App\Models\Size;
 use App\Models\SubCategory;
 use App\Models\Product;
 use App\Services\Notification\FCMNotification;
@@ -96,13 +98,14 @@ class ProductController extends Controller
             $product = Product::findOrFail($id);
             $homecategory=HomeCategory::active()->get();
             $subcategory=SubCategory::active()->get();
+            $sizeprice=Size::active()->where('product_id',$id)->get();
               $documents = $product->gallery;
-              return view('admin.product.edit',['product'=>$product,'homecategory'=>$homecategory,'subcategory'=>$subcategory,'documents'=>$documents]);
+              return view('admin.product.edit',['product'=>$product,'categories'=>$homecategory,'subcategories'=>$subcategory,'documents'=>$documents,'sizeprice'=>$sizeprice]);
             }
 
 
         public function update(Request $request,$id){
-
+            //var_dump($request->sub_cat_id);die;
             $request->validate([
 
                     //'cat_id'=>'required',
@@ -124,8 +127,8 @@ class ProductController extends Controller
             $old_stock=$product->out_of_stock;
             if($product->update([
 
-                            'cat_id'=>$request->cat_id,
-                            'subcat_id'=>$request->subcat_id,
+                            'cat_id'=>$request->cat_id??0,
+                            'subcat_id'=>$request->subcat_id??0,
                             'name'=>$request->name,
                             'weight'=>$request->weight,
                             'unit'=>$request->unit,
@@ -138,6 +141,36 @@ class ProductController extends Controller
                             'isactive'=>$request->isactive,
                             'out_of_stock'=>$request->out_of_stock
             ])){
+                $added_categories=[];
+                if(!empty($request->sub_cat_id)){
+                    $subcat=SubCategory::with('category')
+                        ->whereIn('id', $request->sub_cat_id)
+                        ->get();
+
+                    foreach($subcat as $subcategory) {
+                        CategoryProduct::create([
+                            'category_id' => $subcategory->category_id,
+                            'sub_cat_id' => $subcategory->id,
+                            'product_id' => $product->id,
+
+                        ]);
+                        $added_categories[] = $subcategory->category_id;
+                    }
+                }
+
+                if(!empty($request->category_id)){
+                    $reqcat=$request->category_id;
+                    $remaining_ids=array_diff($reqcat,$added_categories);
+                    //return $remaining_ids;
+                    foreach($remaining_ids as $catid)
+                        CategoryProduct::create([
+                            'category_id' => $catid,
+                            'sub_cat_id' =>null,
+                            'product_id' => $product->id,
+
+                        ]);
+                }
+
 
                 if($request->image){
 
@@ -205,6 +238,29 @@ class ProductController extends Controller
             Document::where('id', $id)->delete();
             return redirect()->back()->with('success', 'Document has been deleted');
         }
+    public function sizeprice(Request $request,$id){
+        $request->validate([
+            'isactive'=>'required',
+            'size'=>'required',
+            'price'=>'required',
+            'cut_price'=>'required',
+        ]);
+        if($products=Size::create([
+            'size'=>$request->size,
+            'price'=>$request->price,
+            'product_id'=>$id,
+            'cut_price'=>$request->cut_price,
+            'isactive'=>$request->isactive
+        ]))
+        {
 
+            return redirect()->back()->with('success', 'Product sizeprice has been created');
+        }
+        return redirect()->back()->with('error', 'Product sizeprice create failed');
+    }
+    public function sizeprice_delete(Request $request,$id){
+        Size::where('id', $id)->delete();
+        return redirect()->back()->with('success', 'Size Price has been deleted');
+    }
   }
 

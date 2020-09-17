@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Models;
-
-use App\Models\BaseModel as Model;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class CategoryProduct extends Model
