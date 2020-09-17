@@ -109,40 +109,40 @@ public function category_product(Request $request,$type,$subcatid){
 
     }
 }
-    public function products(Request $request){
-        $user=auth()->guard('customerapi')->user();
-
-        if(!$user)
-            return [
-                'status'=>'failed',
-                'message'=>'Please login to continue'
-            ];
-        if(!empty($request->sub_cat_id)){
-
-            $product=Product::active()->whereHas('subcategory', function($category) use($request){
-                $category->where('sub_category.id', $request->sub_cat_id);
-            });
-        }else{
-            $product=Product::active()->whereHas('category', function($category) use($request){
-                $category->where('home_category.id', $request->category_id);
-            });
-        }
-
-//        $cart=Cart::getUserCart($user);
-
-        $products=$product->with('sizeprice')->paginate(20);
+//    public function products(Request $request){
+//        $user=auth()->guard('customerapi')->user();
 //
-//        foreach($products as $product){
-//            foreach($product->sizeprice as $size)
-//                $size->quantity=$cart[$size->id]??0;
+//        if(!$user)
+//            return [
+//                'status'=>'failed',
+//                'message'=>'Please login to continue'
+//            ];
+//        if(!empty($request->sub_cat_id)){
 //
+//            $product=Product::active()->whereHas('subcategory', function($category) use($request){
+//                $category->where('sub_category.id', $request->sub_cat_id);
+//            });
+//        }else{
+//            $product=Product::active()->whereHas('category', function($category) use($request){
+//                $category->where('home_category.id', $request->category_id);
+//            });
 //        }
-
-        return [
-            'status'=>'success',
-            'data'=>$products,
-        ];
-    }
+//
+////        $cart=Cart::getUserCart($user);
+//
+//        $products=$product->with('sizeprice')->paginate(20);
+////
+////        foreach($products as $product){
+////            foreach($product->sizeprice as $size)
+////                $size->quantity=$cart[$size->id]??0;
+////
+////        }
+//
+//        return [
+//            'status'=>'success',
+//            'data'=>$products,
+//        ];
+//    }
 
 
     public function details(Request $request, $id){
