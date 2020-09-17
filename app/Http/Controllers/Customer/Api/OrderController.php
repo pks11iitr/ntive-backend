@@ -109,6 +109,7 @@ class OrderController extends Controller
                 'entity_type'=>'App\Models\Product',
                 'entity_id'=>$item->product_id,
                 'clinic_id'=>null,
+                'size_id'=>$item->size_id,
                 'cost'=>$item->product->actual_price??0,
                 'quantity'=>$item->quantity
             ]);
