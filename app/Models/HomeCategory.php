@@ -11,7 +11,7 @@ class HomeCategory extends Model
     use Active, DocumentUploadTrait;
   protected $table='home_category';
 
-    protected $fillable=['image','title','isactive'];
+    protected $fillable=['image','title','isactive', 'sequence_no'];
 
     protected $hidden = ['created_at','deleted_at','updated_at'];
 

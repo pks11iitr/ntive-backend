@@ -35,6 +35,7 @@ class HomeCategoryController extends Controller
                             'title'=>$request->title,
                             'isactive'=>$request->isactive,
                             'image'=>'a',
+                            'sequence_no'=>$request->sequence_no
 
                             ])){
                    $homecategory->saveImage($request->image, 'home-category');
@@ -68,6 +69,7 @@ class HomeCategoryController extends Controller
 
                 'title'=>$request->title,
                 'isactive'=>$request->isactive,
+                'sequence_no'=>$request->sequence_no
             ])){
 
                 if($request->image){

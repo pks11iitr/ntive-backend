@@ -22,7 +22,7 @@ class NotificationController extends Controller
             $notifications->where('user_id', $user->id)
                 ->orWhere('type', 'all');
         })
-            ->where(DB::raw('TIMESTAMPDIFF(HOUR, created_at, NOW())'), '<=', 48)
+            ->where(DB::raw('TIMESTAMPDIFF(HOUR, created_at, NOW())'), '<=', 24)
             ->select('title', 'description', 'created_at')
             ->orderBy('created_at', 'desc')
             ->get();

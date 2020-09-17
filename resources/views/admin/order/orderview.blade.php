@@ -46,7 +46,11 @@
                                     </tr>
                                     <tr>
                                         <td>Total</td>
-                                        <td>{{$order->total_cost+$order->coupon_discount}}</td>
+                                        <td>{{$order->total_cost+$order->coupon_discount+$order->delivery_charge}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Delivery Charge</td>
+                                        <td>{{$order->delivery_charge}}</td>
                                     </tr>
                                     <tr>
                                         <td>Coupon Discount</td><td>{{$order->coupon_discount }}</td>

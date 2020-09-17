@@ -42,13 +42,18 @@
                                     <input type="text" name="title" class="form-control" id="exampleInputimage"
                                     placeholder="" value="{{$homecategory->title}}">
                                 </div>
+
+
                                 <div class="form-group">
                                     <label for="exampleInputimage">Category Image</label>
                                     <input type="file" name="image" class="form-control" id="exampleInputimage"
                                     placeholder="">
                                     <image src="{{$homecategory->image}}" height="100" width="200">
                                 </div>
-
+                                    <div class="form-group">
+                                        <label for="exampleInputimage">Sequence No</label>
+                                        <input type="text" name="sequence_no" class="form-control" id="exampleInputimage" placeholder="" value="{{$homecategory->sequence_no}}">
+                                    </div>
                                 <div class="form-group">
                                     <label for="exampleInputistop">Is Active</label>
                                     <select name="isactive" class="form-control" id="exampleInputistop" placeholder="">

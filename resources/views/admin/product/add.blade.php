@@ -65,6 +65,11 @@
                                     <label for="exampleInputimage">Cut Price</label>
                                     <input type="number" min="0" name="cut_price" class="form-control" id="exampleInputimage" placeholder="">
                                 </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Description</label>
+                                        <textarea id="w3review" name="description"  class="form-control" rows="4" cols="120"> </textarea>
+                                    </div>
+
                                 <div class="form-group">
                                     <label for="exampleInputimage">Weight</label>
                                     <input type="number" min="0" name="weight" class="form-control" id="exampleInputimage" placeholder="">

@@ -38,6 +38,7 @@
                                         <th>Description</th>
                                         <th>Discount</th>
                                         <th>Type</th>
+                                        <th>Usage Type</th>
                                         <th>Isactive</th>
                                         <th>Action</th>
                                     </tr>
@@ -49,6 +50,7 @@
                                             <td>{{$coupon->description}}</td>
                                             <td>{{$coupon->discount}}</td>
                                             <td>{{$coupon->type}}</td>
+                                            <td>{{$coupon->use_type}}</td>
                                             <td>
                                                 @if($coupon->isactive==1){{'Yes'}}
                                                 @else{{'No'}}

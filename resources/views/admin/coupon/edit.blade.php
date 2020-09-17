@@ -58,10 +58,19 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
+                                        <label for="exampleInputistop">Usage Type</label>
+                                        <select name="use_type" class="form-control" id="exampleInputistop" placeholder="">
+                                            <option value="">Please Select Type</option>
+                                            <option value="Single" {{$coupon->use_type=='Single'?'selected':''}}>Single</option>
+                                            <option value="Multiple" {{$coupon->use_type=='Multiple'?'selected':''}}>Multiple</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="exampleInputistop">Is Active</label>
                                         <select name="isactive" class="form-control" id="exampleInputistop" placeholder="">
-                                            <option value="1" {{$coupon->type==1?'selected':''}}>Yes</option>
-                                            <option value="0" {{$coupon->type==0?'selected':''}}>No</option>
+                                            <option value="1" {{$coupon->isactive==1?'selected':''}}>Yes</option>
+                                            <option value="0" {{$coupon->isactive==0?'selected':''}}>No</option>
                                         </select>
                                     </div>
                                     <!-- /.card-body -->

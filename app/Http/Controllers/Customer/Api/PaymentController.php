@@ -13,6 +13,7 @@ use App\Models\Wallet;
 use App\Services\Payment\RazorPayService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
@@ -40,7 +41,7 @@ class PaymentController extends Controller
 
         $coupon=$request->coupon;
         if(!empty($coupon)){
-            $coupon=Coupon::active()->where('code', $coupon)->first();
+            $coupon=Coupon::active()->where('is_expired', false)->where('code', $coupon)->first();
             if($coupon){
                 $discount=$coupon->calculateDiscount($order->total_cost+$order->coupon_discount);
 
@@ -53,6 +54,7 @@ class PaymentController extends Controller
 
                 $order->total_cost=$order->total_cost+$order->coupon_discount-$discount;
                 $order->coupon_applied=$coupon->code;
+                $order->coupon_discount=$discount;
                 $order->delivery_charge=$order->total_cost<200?30:0;
                 $order->save();
             }else{
@@ -64,6 +66,7 @@ class PaymentController extends Controller
         }else{
             $order->total_cost=$order->total_cost+$order->coupon_discount;
             $order->coupon_applied=null;
+            $order->coupon_discount=0;
             $order->delivery_charge=$order->total_cost<200?30:0;
             $order->save();
         }
@@ -129,6 +132,16 @@ class PaymentController extends Controller
         $order->payment_mode='Cash On Delivery';
         $order->status='confirmed';
         $order->save();
+
+        if(!empty($order->coupon_applied))
+        {
+            $coupon=Coupon::where(DB::raw('BINARY code'), $order->coupon_applied)->first();
+            if($coupon->use_type=='Single'){
+                $coupon->is_expired=true;
+                $coupon->save();
+            }
+        }
+
         event(new OrderConfirmed($order));
 
         Cart::where('user_id', $order->user_id)->delete();
@@ -287,6 +300,15 @@ class PaymentController extends Controller
             $order->payment_status='paid';
             $order->payment_mode='online';
             $order->save();
+
+            if(!empty($order->coupon_applied))
+            {
+                $coupon=Coupon::where(DB::raw('BINARY code'), $order->coupon_applied)->first();
+                if($coupon->use_type=='Single'){
+                    $coupon->is_expired=true;
+                    $coupon->save();
+                }
+            }
 
             OrderStatus::create([
                 'order_id'=>$order->id,
