@@ -45,6 +45,11 @@
                                     <input type="file" name="image" class="form-control" id="exampleInputimage" placeholder="">
                                 </div>
 
+                                        <div class="form-group">
+                                            <label for="exampleInputimage">Sequence No</label>
+                                            <input type="text" name="sequence_no" class="form-control" id="exampleInputimage" placeholder="">
+                                        </div>
+
                                 <div class="form-group">
                                     <label for="exampleInputistop">Is Active</label>
                                     <select name="isactive" class="form-control" id="exampleInputistop" placeholder="">

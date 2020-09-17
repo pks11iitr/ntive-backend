@@ -36,6 +36,7 @@
                   <tr>
                     <th>Title</th>
                     <th>Image</th>
+                    <th>Sequence</th>
                     <th>Isactive</th>
                    <th>Action</th>
                   </tr>
@@ -45,7 +46,9 @@
                   <tr>
                       <td>{{$category->title}}</td>
                       <td><img src="{{$category->image}}" height="80px" width="80px"/></td>
+                      <td>{{$category->sequence_no}}</td>
                        <td>
+
                         @if($category->isactive==1){{'Yes'}}
                              @else{{'No'}}
                              @endif
