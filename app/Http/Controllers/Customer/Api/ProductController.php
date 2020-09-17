@@ -18,11 +18,11 @@ class ProductController extends Controller
         $user=auth()->guard('customerapi')->user();
         if($user) {
             if($type=='featured'){
-            $products=Product::with('sizeprice')->active()->where('is_featured',1)->get();
+            $products=Product::active()->with('sizeprice')->where('is_featured',1)->get();
             }elseif($type=='discount'){
-                $products=Product::with('sizeprice')->active()->where('is_discount',1)->get();
+                $products=Product::active()->with('sizeprice')->where('is_discount',1)->get();
             }else{
-                $products=Product::with('sizeprice')->active()->where('is_newarrivel',1)->get();
+                $products=Product::active()->with('sizeprice')->where('is_newarrivel',1)->get();
             }
             $cart_items=Cart::getCartTotalItems($user);
         if(count($products)>0){
