@@ -12,7 +12,7 @@ class Coupon extends Model
     protected $table='coupons';
 
 
-    protected $fillable=['code','description','type', 'discount', 'isactive', 'is_expired', 'use_type'];
+    protected $fillable=['code','description','type', 'discount', 'isactive','use_type'];
 
 
     public function calculateDiscount($amount){

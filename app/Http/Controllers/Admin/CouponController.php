@@ -32,7 +32,7 @@ class CouponController extends Controller
 
     public function update(Request $request,$id){
         $coupon=Coupon::findOrFail($id);
-        $coupon->update($request->only(['code','description','type', 'discount', 'isactive', 'use_type']));
+        $coupon->update($request->only(['code','description','type', 'discount', 'isactive','use_type']));
         return redirect()->route('coupon.list')->with('success', 'Coupon has been updated');
     }
 }

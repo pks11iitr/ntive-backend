@@ -39,9 +39,8 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                     <label for="exampleInputimage">Banner Image</label>
-                                    <input type="file" name="image" class="form-control" id="exampleInputimage"
-                                    placeholder="">
-                                    <image src="{{$banner->image}}" height="100" width="200">
+                                    <input type="file" name="image" class="form-control" id="exampleInputimage" placeholder="">
+                                    <img src="{{$banner->image}}" height="100" width="200">
                                 </div>
 
                                 <div class="form-group">

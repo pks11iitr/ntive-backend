@@ -72,6 +72,14 @@
                                             <option value="0">No</option>
                                         </select>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputistop">Use Type</label>
+                                        <select name="use_type" class="form-control" id="exampleInputistop" placeholder="">
+                                            <option value="">Please Select Use Type</option>
+                                            <option value="Single">Single</option>
+                                            <option value="Multiple">Multiple</option>
+                                        </select>
+                                    </div>
                                     <!-- /.card-body -->
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary">Submit</button>
