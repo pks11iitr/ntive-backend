@@ -87,7 +87,7 @@ class OrderController extends Controller
         $refid=env('MACHINE_ID').time();
         $total_cost=0;
         foreach($cartitems as $item) {
-            $total_cost=$total_cost+($item->product->actual_price??0)*$item->quantity;
+            $total_cost=$total_cost+($item->product->sizeprice->price??0)*$item->quantity;
         }
 
         $order=Order::create([
