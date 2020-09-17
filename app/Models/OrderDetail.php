@@ -17,4 +17,9 @@ class OrderDetail extends Model
     public function clinic(){
         return $this->belongsTo('App\Models\Clinic', 'clinic_id');
     }
+
+    public function size(){
+        return $this->belongsTo('App\Models\Size', 'size_id');
+    }
+
 }
