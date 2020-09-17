@@ -18,11 +18,11 @@ class ProductController extends Controller
         $user=auth()->guard('customerapi')->user();
         if($user) {
             if($type=='featured'){
-            $products=Product::active()->where('is_featured',1)->get();
+            $products=Product::with('sizeprice')->active()->where('is_featured',1)->get();
             }elseif($type=='discount'){
-                $products=Product::active()->where('is_discount',1)->get();
+                $products=Product::with('sizeprice')->active()->where('is_discount',1)->get();
             }else{
-                $products=Product::active()->where('is_newarrivel',1)->get();
+                $products=Product::with('sizeprice')->active()->where('is_newarrivel',1)->get();
             }
             $cart_items=Cart::getCartTotalItems($user);
         if(count($products)>0){
@@ -62,18 +62,19 @@ public function category_product(Request $request,$type,$subcatid){
 
         $user=auth()->guard('customerapi')->user();
         if($user) {
+            $products=Product::active()->with('sizeprice');
             if($type=='all'){
             //$products=Product::active()->where('cat_id',$subcatid)->get();
-                $product=Product::active()->whereHas('category', function($category) use($subcatid){
+                $products=$products->whereHas('category', function($category) use($subcatid){
                     $category->where('home_category.id', $subcatid);
                 });
             }else{
                 //$products=Product::active()->where('subcat_id',$subcatid)->get();
-                $product=Product::active()->whereHas('subcategory', function($category) use($subcatid){
+                $products=$products->whereHas('subcategory', function($category) use($subcatid){
                     $category->where('sub_category.id', $subcatid);
                 });
             }
-
+            $products=$products->get();
             $cart_items=Cart::getCartTotalItems($user);
 
 
