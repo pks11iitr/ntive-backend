@@ -267,16 +267,18 @@ class ProductController extends Controller
     }
 
     public function updatesizeprice(Request $request){
-        //var_dump($request->size_id);die();
+       // var_dump($request->size);die();
         $request->validate([
             'isactive'=>'required',
             'price'=>'required',
             'cut_price'=>'required',
+            'size'=>'required',
         ]);
 
         $product = Size::findOrFail($request->size_id);
 
         $product->update([
+            'size'=>$request->size,
             'price'=>$request->price,
             'cut_price'=>$request->cut_price,
             'isactive'=>$request->isactive,

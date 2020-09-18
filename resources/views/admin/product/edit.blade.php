@@ -389,7 +389,7 @@
             }
 
 
-            size.innerHTML="<input type='text' style='width:80px;' id='size_text"+no+"' value='"+size_data+"' disabled>";
+            size.innerHTML="<input type='text' style='width:80px;' id='size_text"+no+"' value='"+size_data+"' >";
             price.innerHTML="<input type='text' style='width:80px;' id='price_text"+no+"' value='"+price_data+"'>";
             cut_price.innerHTML="<input type='text' style='width:80px;' id='cut_price_text"+no+"' value='"+cut_price_data+"'>";
 
@@ -398,10 +398,11 @@
 
         function save_row(no)
         {
+            var size_val=document.getElementById("size_text"+no).value;
             var price_val=document.getElementById("price_text"+no).value;
             var cut_price_val=document.getElementById("cut_price_text"+no).value;
             var isactive_val=document.getElementById("isactive_text"+no).value;
-            var data = 'price=' + price_val + '&cut_price=' + cut_price_val + '&isactive=' + isactive_val + '&size_id=' + no;
+            var data = 'price=' + price_val+ '&size=' + size_val + '&cut_price=' + cut_price_val + '&isactive=' + isactive_val + '&size_id=' + no;
           //  alert(data);
             $.ajax({
                 url: "../size-update",
