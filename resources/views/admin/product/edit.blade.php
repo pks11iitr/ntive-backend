@@ -306,17 +306,21 @@
                                 </thead>
                                 <tbody>
                                 @foreach($sizeprice as $size)
-                                    <tr>
-                                        <td>{{$size->size}}</td>
-                                        <td>{{$size->price}}</td>
-                                        <td>{{$size->cut_price}}</td>
+                                    <tr  id="row{{$size->id}}">
+                                        <td id="size{{$size->id}}">{{$size->size}}</td>
+                                        <td id="price{{$size->id}}">{{$size->price}}</td>
+                                        <td id="cut_price{{$size->id}}">{{$size->cut_price}}</td>
 
-                                        <td>
+                                        <td id="isactive{{$size->id}}">
                                             @if($size->isactive==1){{'Yes'}}
                                             @else{{'No'}}
                                             @endif
                                         </td>
-                                        <td><a href="{{route('product.delete.sizeprice',['id'=>$size->id])}}" class="btn btn-danger">Delete</a></td>
+                                        <td>
+                                            {{--                                          <td><a href="{{route('product.delete',['id'=>$size->id])}}" class="btn btn-danger">Delete</a>--}}
+                                            <input type="button" id="edit_button{{$size->id}}" value="Edit" class="btn btn-success" onclick="edit_row({{$size->id}})">
+                                            <input type="button" id="save_button{{$size->id}}" value="Save" class="btn btn-success" onclick="save_row({{$size->id}})">
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -361,5 +365,55 @@
             $('.select2').select2();
             $('#category_id_sel').select2();
         });
+    </script>
+    <script>
+        function edit_row(no)
+        {
+            document.getElementById("edit_button"+no).style.display="none";
+            document.getElementById("save_button"+no).style.display="block";
+
+            var size=document.getElementById("size"+no);
+            var price=document.getElementById("price"+no);
+            var cut_price=document.getElementById("cut_price"+no);
+            var isactive=document.getElementById("isactive"+no);
+
+            var size_data=size.innerHTML;
+            var price_data=price.innerHTML;
+            var cut_price_data=cut_price.innerHTML;
+            var isactive_data1=isactive.innerHTML
+
+            if(isactive_data1.trim()==="Yes"){
+                var isactive_data='1';
+            }else{
+                var isactive_data='0';
+            }
+
+
+            size.innerHTML="<input type='text' style='width:80px;' id='size_text"+no+"' value='"+size_data+"' disabled>";
+            price.innerHTML="<input type='text' style='width:80px;' id='price_text"+no+"' value='"+price_data+"'>";
+            cut_price.innerHTML="<input type='text' style='width:80px;' id='cut_price_text"+no+"' value='"+cut_price_data+"'>";
+
+            isactive.innerHTML="<input type='text' style='width:80px;' id='isactive_text"+no+"' value='"+isactive_data+"'>";
+        }
+
+        function save_row(no)
+        {
+            var price_val=document.getElementById("price_text"+no).value;
+            var cut_price_val=document.getElementById("cut_price_text"+no).value;
+            var isactive_val=document.getElementById("isactive_text"+no).value;
+            var data = 'price=' + price_val + '&cut_price=' + cut_price_val + '&isactive=' + isactive_val + '&size_id=' + no;
+          //  alert(data);
+            $.ajax({
+                url: "../size-update",
+                type: "GET",
+                data: data,
+                cache: false,
+                success: function() {
+                    location.reload();
+                    $('#message').html("<h2>Current balance has been updated!</h2>")
+                }
+
+            });
+        }
     </script>
 @endsection
