@@ -15,8 +15,7 @@ class OrderController extends Controller
     public function index(Request $request){
 
         if(isset($request->search)){
-            $orders=Order::where('staus', '!=', 'pending')
-            ->where(function($orders) use ($request){
+            $orders=Order::where(function($orders) use ($request){
 
                 $orders->where('name', 'like', "%".$request->search."%")
                     ->orWhere('email', 'like', "%".$request->search."%")
@@ -44,7 +43,7 @@ class OrderController extends Controller
         if(isset($request->dateto))
             $orders = $orders->where('created_at', '<=', $request->dateto.' 23:59:59');
 
-        $orders =$orders->orderBy('id', 'desc')->paginate(20);
+        $orders =$orders->where('staus', '!=', 'pending')->orderBy('id', 'desc')->paginate(20);
 
         return view('admin.order.order',['orders'=>$orders]);
     }
