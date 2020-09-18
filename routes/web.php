@@ -69,6 +69,7 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function(){
         Route::post('upload-images/{id}','Admin\ProductController@uploadImages')->name('product.upload.image');
         Route::get('delete/{id}','Admin\ProductController@delete')->name('product.delete');
         Route::post('product-sizeprice/{id}','Admin\ProductController@sizeprice')->name('product.sizeprice');
+        Route::get('size-update','Admin\ProductController@updatesizeprice')->name('product.size.update');
         Route::get('sizeprice-delete/{id}','Admin\ProductController@sizeprice_delete')->name('product.delete.sizeprice');
     });
 

@@ -98,7 +98,7 @@ class ProductController extends Controller
             $product = Product::findOrFail($id);
             $homecategory=HomeCategory::active()->get();
             $subcategory=SubCategory::active()->get();
-            $sizeprice=Size::active()->where('product_id',$id)->get();
+            $sizeprice=Size::where('product_id',$id)->get();
               $documents = $product->gallery;
               return view('admin.product.edit',['product'=>$product,'categories'=>$homecategory,'subcategories'=>$subcategory,'documents'=>$documents,'sizeprice'=>$sizeprice]);
             }
@@ -265,5 +265,30 @@ class ProductController extends Controller
         Size::where('id', $id)->delete();
         return redirect()->back()->with('success', 'Size Price has been deleted');
     }
+
+    public function updatesizeprice(Request $request){
+       // var_dump($request->size);die();
+        $request->validate([
+            'isactive'=>'required',
+            'price'=>'required',
+            'cut_price'=>'required',
+            'size'=>'required',
+        ]);
+
+        $product = Size::findOrFail($request->size_id);
+
+        $product->update([
+            'size'=>$request->size,
+            'price'=>$request->price,
+            'cut_price'=>$request->cut_price,
+            'isactive'=>$request->isactive,
+        ]);
+        {
+
+            return redirect()->back()->with('success', 'Product sizeprice has been created');
+        }
+        return redirect()->back()->with('error', 'Product sizeprice create failed');
+    }
+
   }
 
