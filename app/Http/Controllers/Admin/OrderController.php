@@ -15,7 +15,8 @@ class OrderController extends Controller
     public function index(Request $request){
 
         if(isset($request->search)){
-            $orders=Order::where(function($orders) use ($request){
+            $orders=Order::where('staus', '!=', 'pending')
+            ->where(function($orders) use ($request){
 
                 $orders->where('name', 'like', "%".$request->search."%")
                     ->orWhere('email', 'like', "%".$request->search."%")

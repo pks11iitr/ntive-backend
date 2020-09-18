@@ -72,7 +72,15 @@ class OrderController extends Controller
 
     public function initiateProductPurchase(Request $request){
 
-        $cartitems=Cart::where('user_id', auth()->guard('customerapi')->user()->id)
+        $user=auth()->guard('customerapi')->user();
+        if($user->status==2){
+            return [
+                'status'=>'failed',
+                'message'=>'Your Account Has Been Blocked'
+            ];
+        }
+
+        $cartitems=Cart::where('user_id', $user->id)
             ->with(['product'])
             ->whereHas('product', function($product){
             $product->where('isactive', true)->where('out_of_stock', 0);

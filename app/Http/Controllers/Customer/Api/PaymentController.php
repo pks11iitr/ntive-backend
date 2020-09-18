@@ -130,6 +130,13 @@ class PaymentController extends Controller
     }
 
     private function initiateCodPayment($order){
+        $user=auth()->guard('customerapi')->user();
+        if($user->status==2){
+            return [
+                'status'=>'failed',
+                'message'=>'Your Account Has Been Blocked'
+            ];
+        }
         $order->payment_mode='Cash On Delivery';
         $order->status='confirmed';
         $order->save();
