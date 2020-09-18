@@ -222,6 +222,12 @@ class OrderController extends Controller
 
         $itemdetails=[];
         foreach($order->details as $detail){
+                if($order->status=='pending' && $detail->entity->out_of_stock==1){
+                    return [
+                        'status'=>'failed',
+                        'message'=>'Some of the items are out of Stock'
+                    ];
+                }
                 $itemdetails[]=[
                     'name'=>$detail->entity->name??'',
                     'small'=>$detail->entity->company??'',
@@ -231,6 +237,8 @@ class OrderController extends Controller
                     'booking_date'=>$order->booking_date,
                     'booking_time'=>$order->booking_time
                 ];
+
+
         }
 
         // options to be displayed
