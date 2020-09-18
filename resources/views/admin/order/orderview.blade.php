@@ -147,6 +147,9 @@
                                 <tr>
                                     <td>Adress</td><td>{{$order->address}}</td>
                                 </tr>
+                                <tr>
+                                    <td>Pincode</td><td>{{$order->pincode}}</td>
+                                </tr>
                                 </tbody>
 
                             </table>
