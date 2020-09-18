@@ -225,7 +225,7 @@ class OrderController extends Controller
                 if($order->status=='pending' && $detail->entity->out_of_stock==1){
                     return [
                         'status'=>'failed',
-                        'message'=>'Some of the items are out of Stock'
+                        'message'=>'Some of the items are out of Stock. Please review you cart.'
                     ];
                 }
                 $itemdetails[]=[
