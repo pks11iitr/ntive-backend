@@ -43,7 +43,7 @@ class OrderController extends Controller
         if(isset($request->dateto))
             $orders = $orders->where('created_at', '<=', $request->dateto.' 23:59:59');
 
-        $orders =$orders->where('staus', '!=', 'pending')->orderBy('id', 'desc')->paginate(20);
+        $orders =$orders->where('status', '!=', 'pending')->orderBy('id', 'desc')->paginate(20);
 
         return view('admin.order.order',['orders'=>$orders]);
     }
