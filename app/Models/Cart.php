@@ -37,6 +37,24 @@ class Cart extends Model
         return $products;
     }
 
+    public static function getUserCartSizes($user){
+
+        $items=Cart::whereHas('product',function($product){
+            $product->where('isactive', 1)
+                ->where('out_of_stock', 0);
+        })
+            ->where('user_id', $user->id??null)
+            ->get();
+
+        $products=[];
+
+        foreach($items as $item){
+            $products[$item->product_id]=$item->size_id;
+        }
+
+        return $products;
+    }
+
 
     public static function getCartTotalItems($user){
         $total=Cart::whereHas('product',function($product){

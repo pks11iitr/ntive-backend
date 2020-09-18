@@ -25,6 +25,7 @@ class ProductController extends Controller
                 $products=Product::active()->with('sizeprice')->where('is_newarrivel',1)->get();
             }
             $cart_items=Cart::getCartTotalItems($user);
+            $sizes_cart=Cart::getUserCartSizes($user);
         if(count($products)>0){
 
              $product_cart=Cart::getUserCart($user);
@@ -32,6 +33,7 @@ class ProductController extends Controller
              foreach($products as $i=>$r)
                        {
                        $products[$i]['qty']=$product_cart[$r->id]??0;
+                       $products[$i]['selected_size_id']=$sizes_cart[$r->id]??'';
                      }
             return [
                 'status'=>'success',
@@ -81,11 +83,13 @@ public function category_product(Request $request,$type,$subcatid){
         if(count($products)>0){
 
             $product_cart=Cart::getUserCart($user);
+            $sizes_cart=Cart::getUserCartSizes($user);
              foreach($products as $i=>$r)
                        {
 
                        //$cart=Cart::where('user_id', auth()->guard('customerapi')->user()->id??'')->where('product_id',$r['id'])->get();
                        $products[$i]['qty']=$product_cart[$r->id]??0;
+                       $products[$i]['selected_size_id']=$sizes_cart[$r->id]??'';
                      }
             return [
                 'status'=>'success',
@@ -156,6 +160,9 @@ public function category_product(Request $request,$type,$subcatid){
 
         $is_notified=$notify?1:0;
         $cart_items=Cart::getCartTotalItems($user);
+        $sizes_cart=Cart::getUserCartSizes($user);
+        $product->quantity=$sizes_cart[$product->id]??0;
+        $product->selected_size_id=$sizes_cart[$product->id]??'';
         if(!$product)
             return [
                 'status'=>'No Record Found',

@@ -146,9 +146,9 @@
 
                                           <label for="exampleInputistop">Out Of Stock</label><br>
                                           <input type="radio" name="out_of_stock" value="0"   {{$product->out_of_stock==0?'checked':''}}>
-                                          <label for="exampleInputistop">Yes</label><br>
+                                          <label for="exampleInputistop">No</label><br>
                                           <input type="radio" name="out_of_stock" value="1" {{$product->out_of_stock==1?'checked':''}}>
-                                          <label for="exampleInputistop">No</label>
+                                          <label for="exampleInputistop">Yes</label>
 
                                       </div>
                                       </div>

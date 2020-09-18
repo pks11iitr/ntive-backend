@@ -41,7 +41,7 @@ class PaymentController extends Controller
 
         $coupon=$request->coupon;
         if(!empty($coupon)){
-            $coupon=Coupon::active()->where('is_expired', false)->where('code', $coupon)->first();
+            $coupon=Coupon::active()->where('is_expired', false)->where(DB::raw('BINARY code'), $coupon)->first();
             if($coupon){
                 $discount=$coupon->calculateDiscount($order->total_cost+$order->coupon_discount);
 
@@ -60,6 +60,7 @@ class PaymentController extends Controller
             }else{
                 $order->total_cost=$order->total_cost+$order->coupon_discount;
                 $order->coupon_applied=null;
+                $order->coupon_discount=0;
                 $order->delivery_charge=$order->total_cost<200?30:0;
                 $order->save();
             }
@@ -129,6 +130,13 @@ class PaymentController extends Controller
     }
 
     private function initiateCodPayment($order){
+        $user=auth()->guard('customerapi')->user();
+        if($user->status==2){
+            return [
+                'status'=>'failed',
+                'message'=>'Your Account Has Been Blocked'
+            ];
+        }
         $order->payment_mode='Cash On Delivery';
         $order->status='confirmed';
         $order->save();

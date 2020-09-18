@@ -141,6 +141,9 @@ class ProductController extends Controller
                             'isactive'=>$request->isactive,
                             'out_of_stock'=>$request->out_of_stock
             ])){
+
+                CategoryProduct::where('product_id', $product->id)->delete();
+
                 $added_categories=[];
                 if(!empty($request->sub_cat_id)){
                     $subcat=SubCategory::with('category')

@@ -116,9 +116,9 @@
 
                                         <label for="exampleInputistop">Out Of Stock</label><br>
                                         <input type="radio" name="out_of_stock" value="0">
-                                        <label for="exampleInputistop">Yes</label><br>
+                                        <label for="exampleInputistop">No</label><br>
                                         <input type="radio" name="out_of_stock" value="1">
-                                        <label for="exampleInputistop">No</label>
+                                        <label for="exampleInputistop">Yes</label>
 
                                     </div>
 

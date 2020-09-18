@@ -72,7 +72,15 @@ class OrderController extends Controller
 
     public function initiateProductPurchase(Request $request){
 
-        $cartitems=Cart::where('user_id', auth()->guard('customerapi')->user()->id)
+        $user=auth()->guard('customerapi')->user();
+        if($user->status==2){
+            return [
+                'status'=>'failed',
+                'message'=>'Your Account Has Been Blocked'
+            ];
+        }
+
+        $cartitems=Cart::where('user_id', $user->id)
             ->with(['product'])
             ->whereHas('product', function($product){
             $product->where('isactive', true)->where('out_of_stock', 0);
@@ -214,6 +222,12 @@ class OrderController extends Controller
 
         $itemdetails=[];
         foreach($order->details as $detail){
+                if($order->status=='pending' && $detail->entity->out_of_stock==1){
+                    return [
+                        'status'=>'failed',
+                        'message'=>'Some of the items are out of Stock. Please review you cart.'
+                    ];
+                }
                 $itemdetails[]=[
                     'name'=>$detail->entity->name??'',
                     'small'=>$detail->entity->company??'',
@@ -223,6 +237,8 @@ class OrderController extends Controller
                     'booking_date'=>$order->booking_date,
                     'booking_time'=>$order->booking_time
                 ];
+
+
         }
 
         // options to be displayed

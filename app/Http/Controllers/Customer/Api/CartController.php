@@ -88,11 +88,12 @@ class CartController extends Controller
        }])->whereHas('product', function($product){
            $product->where('isactive', true)->where('out_of_stock', 0);
        })
-           ->where('user_id', $user->id??'')->with('sizeprice')->get();
+           ->where('user_id', $user->id??'')
+           ->with('sizeprice')->get();
 
           $price_total=0;
           foreach($cart as $item){
-            $price_total=$price_total + $item->product->actual_price*$item->quantity;
+            $price_total=$price_total + ($item->sizeprice->price??0)*$item->quantity;
           }
           return [
               'data'=>$cart,
