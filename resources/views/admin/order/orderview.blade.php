@@ -117,7 +117,7 @@
                                             <td>{{$detail->entity->name??''}}</td>
                                             <td>{{$detail->size->name??''}}</td>
                                             <td>Quantity: {{$detail->quantity}}</td>
-                                            <td>Size: {{$detail->size->size}}</td>
+                                            <td>Size: {{$detail->size->size??''}}</td>
                                             <td>Rs. {{$detail->cost}}/Item</td>
                                             <td>Rs. {{$detail->cost*$detail->quantity}} Total</td>
 
