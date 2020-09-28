@@ -49,7 +49,7 @@ class OrderController extends Controller
     }
 
     public function orderview(Request $request,$id){
-        $order =Order::with(['details.entity'])->where('id',$id)->first();
+        $order =Order::with(['details.entity', 'details.size'])->where('id',$id)->first();
         return view('admin.order.orderview',['order'=>$order]);
     }
 

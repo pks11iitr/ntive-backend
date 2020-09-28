@@ -18,11 +18,20 @@ class ProductController extends Controller
         $user=auth()->guard('customerapi')->user();
         if($user) {
             if($type=='featured'){
-            $products=Product::active()->with('sizeprice')->where('is_featured',1)->get();
+            $products=Product::active()->with(['sizeprice'=>function($sizeprice){
+                $sizeprice->where('product_prices.isactive', 1);
+
+            }])->where('is_featured',1)->get();
             }elseif($type=='discount'){
-                $products=Product::active()->with('sizeprice')->where('is_discount',1)->get();
+                $products=Product::active()->with(['sizeprice'=>function($sizeprice){
+                    $sizeprice->where('product_prices.isactive', 1);
+
+                }])->where('is_discount',1)->get();
             }else{
-                $products=Product::active()->with('sizeprice')->where('is_newarrivel',1)->get();
+                $products=Product::active()->with(['sizeprice'=>function($sizeprice){
+                    $sizeprice->where('product_prices.isactive', 1);
+
+                }])->where('is_newarrivel',1)->get();
             }
             $cart_items=Cart::getCartTotalItems($user);
             $sizes_cart=Cart::getUserCartSizes($user);
@@ -64,7 +73,10 @@ public function category_product(Request $request,$type,$subcatid){
 
         $user=auth()->guard('customerapi')->user();
         if($user) {
-            $products=Product::active()->with('sizeprice');
+            $products=Product::active()->with(['sizeprice'=>function($sizeprice){
+                $sizeprice->where('product_prices.isactive', 1);
+
+            }]);
             if($type=='all'){
             //$products=Product::active()->where('cat_id',$subcatid)->get();
                 $products=$products->whereHas('category', function($category) use($subcatid){
@@ -152,7 +164,10 @@ public function category_product(Request $request,$type,$subcatid){
     public function details(Request $request, $id){
 
         $user=auth()->guard('customerapi')->user();
-        $product=Product::active()->with('sizeprice')->with('gallery')->find($id);
+        $product=Product::active()->with(['sizeprice'=>function($sizeprice){
+            $sizeprice->where('product_prices.isactive', 1);
+
+        }])->with('gallery')->find($id);
 
         $notify=NotifyMe::where('user_id', $user->id)
             ->where('product_id', $product->id)

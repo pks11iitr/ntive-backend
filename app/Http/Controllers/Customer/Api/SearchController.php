@@ -14,7 +14,10 @@ class SearchController extends Controller
 
         $user=auth()->guard('customerapi')->user();
 
-        $products=Product::active()
+        $products=Product::active()->with(['sizeprice'=>function($sizeprice){
+            $sizeprice->where('product_prices.isactive', 1);
+
+        }])
             ->where('name', 'like', '%'.$search.'%')
             ->get();
 
