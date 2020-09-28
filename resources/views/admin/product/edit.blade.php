@@ -58,26 +58,26 @@
                                     <input type="text" name="name" class="form-control" id="exampleInputimage"
                                     placeholder="" value="{{$product->name}}">
                                 </div>
-                                <div class="form-group">
-                                    <label for="exampleInputimage">Actual Price</label>
-                                    <input type="number" min="0" name="actual_price" class="form-control" id="exampleInputimage" placeholder="" value="{{$product->actual_price}}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputimage">Cut Price</label>
-                                    <input type="number" min="0" name="cut_price" class="form-control" id="exampleInputimage" placeholder="" value="{{$product->cut_price}}">
-                                </div>
-                                      <div class="form-group">
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="exampleInputimage">Actual Price</label>--}}
+{{--                                    <input type="number" min="0" name="actual_price" class="form-control" id="exampleInputimage" placeholder="" value="{{$product->actual_price}}">--}}
+{{--                                </div>--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="exampleInputimage">Cut Price</label>--}}
+{{--                                    <input type="number" min="0" name="cut_price" class="form-control" id="exampleInputimage" placeholder="" value="{{$product->cut_price}}">--}}
+{{--                                </div>--}}
+{{--                                      <div class="form-group">--}}
                                           <label for="exampleInputEmail1">Description</label>
                                           <textarea id="w3review" name="description"  class="form-control" rows="4" cols="120">{{$product->description}}</textarea>
                                       </div>
-                                <div class="form-group">
-                                    <label for="exampleInputimage">Weight</label>
-                                    <input type="number" min="0" name="weight" class="form-control" id="exampleInputimage" placeholder="" value="{{$product->weight}}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputimage">Unit</label>
-                                    <input type="text" name="unit" class="form-control" id="exampleInputimage" placeholder=""  value="{{$product->unit}}">
-                                </div>
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="exampleInputimage">Weight</label>--}}
+{{--                                    <input type="number" min="0" name="weight" class="form-control" id="exampleInputimage" placeholder="" value="{{$product->weight}}">--}}
+{{--                                </div>--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="exampleInputimage">Unit</label>--}}
+{{--                                    <input type="text" name="unit" class="form-control" id="exampleInputimage" placeholder=""  value="{{$product->unit}}">--}}
+{{--                                </div>--}}
                                 <div class="form-group">
                                     <label for="exampleInputistop">Is Featured</label>
                                     <select name="is_featured" class="form-control" id="exampleInputistop" placeholder="">
