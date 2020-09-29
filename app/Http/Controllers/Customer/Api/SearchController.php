@@ -22,11 +22,13 @@ class SearchController extends Controller
             ->get();
 
         $product_cart=Cart::getUserCart($user);
+        $sizes_cart=Cart::getUserCartSizes($user);
         foreach($products as $i=>$r)
         {
 
             //$cart=Cart::where('user_id', auth()->guard('customerapi')->user()->id??'')->where('product_id',$r['id'])->get();
             $products[$i]['qty']=$product_cart[$r->id]??0;
+            $product[$i]['selected_size_id']=$sizes_cart[$r->id]??'';
         }
 
         return [
