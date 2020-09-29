@@ -35,7 +35,7 @@
                                         <th>Title</th>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        <th>Modile</th>
+                                        <th>Mobile</th>
                                         <th>Description</th>
                                     </tr>
                                     </thead>
@@ -45,7 +45,7 @@
                                             <td>{{$contact->title}}</td>
                                             <td>{{$contact->name}}</td>
                                             <td>{{$contact->email}}</td>
-                                            <td>{{$contact->modile}}</td>
+                                            <td>{{$contact->mobile}}</td>
                                             <td>{{$contact->description}}</td>
                                         </tr>
                                     @endforeach
