@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 class ContactController extends Controller
 {
     public function index(Request $request){
-        $contacts =Contact::get();
+        $contacts =Contact::orderBy('id', 'desc')->get();
         return view('admin.contact.view',['contacts'=>$contacts]);
     }
 }
