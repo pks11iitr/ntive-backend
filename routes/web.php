@@ -108,3 +108,6 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function(){
 
 Route::get('abouts','Admin\AboutsController@abouts');
 Route::get('privacy','Admin\AboutsController@privacy');
+
+Route::get('privacy-policy','Admin\AboutsController@privacy');
+
