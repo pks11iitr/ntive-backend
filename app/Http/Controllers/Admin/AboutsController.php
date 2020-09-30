@@ -13,4 +13,20 @@ class AboutsController extends Controller
     public function privacy(Request $request){
         return view('privacy');
     }
+
+    public function privacyweb(Request $request){
+        return view('privacy');
+    }
+
+    public function termsweb(Request $request){
+        return view('terms-and-conditions');
+    }
+
+    public function aboutweb(Request $request){
+        return view('about-web');
+    }
+
+    public function contactweb(Request $request){
+        return view('contact-us');
+    }
 }
