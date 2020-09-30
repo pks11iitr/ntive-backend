@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('website.home');
 
 Auth::routes();
 
@@ -109,8 +109,8 @@ Route::group(['middleware'=>['auth', 'acl'], 'is'=>'admin'], function(){
 Route::get('abouts','Admin\AboutsController@abouts');
 Route::get('privacy','Admin\AboutsController@privacy');
 
-Route::get('privacy-policy','Admin\AboutsController@privacyweb');
-Route::get('terms-and-conditions','Admin\AboutsController@privacyweb');
-Route::get('about-us','Admin\AboutsController@aboutweb');
-Route::get('contact-us','Admin\AboutsController@contactweb');
+Route::get('privacy-policy','Admin\AboutsController@privacyweb')->name('privacy.web');
+Route::get('terms-and-conditions','Admin\AboutsController@termsweb')->name('terms.web');
+Route::get('about-us','Admin\AboutsController@aboutweb')->name('about.us.web');
+Route::get('contact-us','Admin\AboutsController@contactweb')->name('contact.us.web');
 

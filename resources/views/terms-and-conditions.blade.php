@@ -143,4 +143,4 @@ $meta_desc = "“Nitve” is a trademark of Nitve Ecommerce Private Limited (“
         <p class="text-justify">You agree to defend, indemnify and hold harmless the Company, its employees, directors, officers, agents and their successors and assigns from and against any and all claims, liabilities, damages, losses, costs and expenses, including attorney’s fees, caused by or arising out of claims based upon a breach of any warranty, representation or undertaking in this User Agreement, or arising out of a violation of any applicable law (including but not limited in relation to intellectual property rights, payment of statutory dues and taxes, claims of libel, defamation, violation of rights of privacy or publicity, loss of service by other subscribers and infringement of intellectual property or other rights). This clause shall survive the expiry or termination of this User Agreement.</p>
     </div>
 </section>
-@include( "footer.php")
+@include( "footer")

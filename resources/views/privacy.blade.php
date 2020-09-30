@@ -2,9 +2,8 @@
 $meta_title = "Privacy Policy - Nitve";
 $meta_desc = "The term ‘You’ &‘User’ shall mean any legal person or entity accessing or using the services provided on this Website, who is competent to enter into binding contracts, as per the provisions of the Indian Contract Act, 1872.";
 ?>
-
-@include( 'head');
-@include('menu');
+@include( 'head')
+@include('menu')
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">

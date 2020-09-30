@@ -26,19 +26,19 @@
 		  <div class="collapse navbar-collapse" id="navbarNavDropdown">
 		    <ul class="navbar-nav py-3">
 		      <li class="nav-item active">
-		        <a class="nav-link menu-item" href="index.php">HOME <span class="sr-only">(current)</span></a>
+		        <a class="nav-link menu-item" href="{{route('website.home')}}">HOME <span class="sr-only">(current)</span></a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link menu-item" href="about-us.php">ABOUT</a>
+		        <a class="nav-link menu-item" href="{{route('about.us.web')}}">ABOUT</a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link menu-item" href="privacy-policy.php">PRIVACY POLICY</a>
+		        <a class="nav-link menu-item" href="{{route('privacy.web')}}">PRIVACY POLICY</a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link menu-item" href="terms-and-conditions.php">TERMS AND CONDITIONS</a>
+		        <a class="nav-link menu-item" href="{{route('terms.web')}}">TERMS AND CONDITIONS</a>
 		      </li>
 		      <li class="nav-item">
-		        <a class="nav-link menu-item skew-button" href="contact-us.php">CONTACT</a>
+		        <a class="nav-link menu-item skew-button" href="{{route('contact.us.web')}}">CONTACT</a>
 		      </li>
 		    </ul>
 		  </div>
