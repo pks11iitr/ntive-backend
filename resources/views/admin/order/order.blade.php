@@ -87,7 +87,7 @@
                                         <tr>
                                             <td>{{$order->refid}}</td>
                                             <td>{{$order->customer->name??''}}</td>
-                                            <td>{{$order->total_cost}}</td>
+                                            <td>{{$order->total_cost+$order->coupon_discount+$order->delivery_charge}}</td>
                                             <td>{{$order->status}}</td>
                                             <td>{{$order->created_at}}</td>
                                             <td><a href="{{route('order.orderview',['id'=>$order->id])}}" class="btn btn-primary">View</a></td>
