@@ -21,18 +21,19 @@ class ProductController extends Controller
             $products=Product::active()->with(['sizeprice'=>function($sizeprice){
                 $sizeprice->where('product_prices.isactive', 1);
 
-            }])->where('is_featured',1)->get();
+            }])->where('is_featured',1)->paginate(20);
             }elseif($type=='discount'){
                 $products=Product::active()->with(['sizeprice'=>function($sizeprice){
                     $sizeprice->where('product_prices.isactive', 1);
 
-                }])->where('is_discount',1)->get();
+                }])->where('is_discount',1)->paginate(20);
             }else{
                 $products=Product::active()->with(['sizeprice'=>function($sizeprice){
                     $sizeprice->where('product_prices.isactive', 1);
 
-                }])->where('is_newarrivel',1)->get();
+                }])->where('is_newarrivel',1)->paginate(20);
             }
+
             $cart_items=Cart::getCartTotalItems($user);
             $sizes_cart=Cart::getUserCartSizes($user);
         if(count($products)>0){
