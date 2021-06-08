@@ -89,7 +89,7 @@ public function category_product(Request $request,$type,$subcatid){
                     $category->where('sub_category.id', $subcatid);
                 });
             }
-            $products=$products->get();
+            $products=$products->paginate(20);
             $cart_items=Cart::getCartTotalItems($user);
 
 
