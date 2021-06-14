@@ -67,16 +67,16 @@ class OrderController extends Controller
         switch($order->status){
             case 'dispatched':
 
-                $message='Your order at Nitve Ecommerce with  ID:'.$order->refid.' has been dispatched. You will receive your order shortly';
+                $message='Your order at KPG Wholesale Bazzar with  ID:'.$order->refid.' has been dispatched. You will receive your order shortly';
                 $title='Order Dispatched';
 
                 break;
             case 'delivered':
-                $message='Your order at Nitve Ecommerce with  ID:'.$order->refid.' has been delivered.';
+                $message='Your order at KPG Wholesale Bazzar with  ID:'.$order->refid.' has been delivered.';
                 $title='Order Delivered';
                 break;
             case 'cancelled':
-                $message='Your order at Nitve Ecommerce with  ID:'.$order->refid.' has been cancelled.';
+                $message='Your order at KPG Wholesale Bazzar with  ID:'.$order->refid.' has been cancelled.';
                 $title='Order Cancelled';
                 break;
         }

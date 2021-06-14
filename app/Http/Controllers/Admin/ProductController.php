@@ -184,7 +184,7 @@ class ProductController extends Controller
                 $users=NotifyMe::with('customer')->where('product_id', $product->id)->get();
 
                 if($users){
-                    $message=$product->name. ' is available in stock at Nitve Ecommerce. Book your order now';
+                    $message=$product->name. ' is available in stock at KPG Wholesale Bazzar. Book your order now';
                     $title=$product->name.' in stock';
                 }
 

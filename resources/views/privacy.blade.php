@@ -1,5 +1,5 @@
 <?php
-$meta_title = "Privacy Policy - Nitve";
+$meta_title = "Privacy Policy - KPG Wholesale Bazzar";
 $meta_desc = "The term ‘You’ &‘User’ shall mean any legal person or entity accessing or using the services provided on this Website, who is competent to enter into binding contracts, as per the provisions of the Indian Contract Act, 1872.";
 ?>
 @include( 'head')

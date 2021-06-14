@@ -1,6 +1,6 @@
 <?php
-$meta_title = "About Us - Nitve";
-$meta_desc = "Nitve (Nitve E-commerce Private limited) is India’s first of its kind online store which delivers all puja items at your doorstep. We deliver all puja items at lower price than online as well as offline market. we allow you to do hassle free puja item shopping as we delivered items on the same day.";
+$meta_title = "About Us - KPG Wholesale Bazzar";
+$meta_desc = "KPG Wholesale Bazzar (KPG Wholesale Bazzar) is India’s first of its kind online store which delivers all puja items at your doorstep. We deliver all puja items at lower price than online as well as offline market. we allow you to do hassle free puja item shopping as we delivered items on the same day.";
 ?>
 
 @include('head')
@@ -39,11 +39,11 @@ $meta_desc = "Nitve (Nitve E-commerce Private limited) is India’s first of its
 <section class="pt-5">
     <div class="container">
         <h1 class="section-title">About Us</h1>
-        <p class="text-justify">Nitve (Nitve E-commerce Private limited) is India’s first of its kind online store which delivers all puja items at your doorstep. We deliver all puja items at lower price than online as well as offline market. we allow you to do hassle free puja item shopping as we delivered items on the same day.</p>
+        <p class="text-justify">KPG Wholesale Bazzar (KPG Wholesale Bazzar) is India’s first of its kind online store which delivers all puja items at your doorstep. We deliver all puja items at lower price than online as well as offline market. we allow you to do hassle free puja item shopping as we delivered items on the same day.</p>
         <h4 class="quote pb-2">"Order before 3 pm, get your order on same day between 4 PM to 8 PM”</h4>
         <h3 class="quote pb-2" style="color: black;">Or</h3>
         <h4 class="quote pb-2">"Order before 11 pm, get your order by early morning 6 AM to 10 AM”</h4>
-        <p class="text-justify">Nitve E-commerce allows you to walk away from the toil of puja shopping and welcome an easy relaxed way of browsing and shopping for puja items. Discover new products and shop for all your puja needs from the comfort of your home or office. No more getting stuck in traffic jams, paying for parking, standing in long queues and carrying heavy bags – get everything you need, when you need, right at your doorstep. Puja shopping online is now easy as every product on your shopping list, is now available online at Nitve app, India’s best online puja samagri store.</p>
+        <p class="text-justify">KPG Wholesale Bazzar allows you to walk away from the toil of puja shopping and welcome an easy relaxed way of browsing and shopping for puja items. Discover new products and shop for all your puja needs from the comfort of your home or office. No more getting stuck in traffic jams, paying for parking, standing in long queues and carrying heavy bags – get everything you need, when you need, right at your doorstep. Puja shopping online is now easy as every product on your shopping list, is now available online at Nitve app, India’s best online puja samagri store.</p>
     </div>
 </section>
 @include ("footer")

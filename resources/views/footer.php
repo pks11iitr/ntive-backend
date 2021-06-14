@@ -20,7 +20,7 @@
 			<div class="row py-5">
 				<div class="col-md-5">
 					<h3 class="footer-title pb-2">About Us</h3>
-					<p class="text-secondary">Nitve (Nitve E-commerce Private limited) is India’s first of its kind online store which delivers all puja items at your doorstep.<br><a href="about-us.php"><b>Read more..</b></a></p>
+					<p class="text-secondary">KPG Wholesale Bazzar (KPG Wholesale Bazzar) is India’s first of its kind online store which delivers all puja items at your doorstep.<br><a href="about-us.php"><b>Read more..</b></a></p>
 				</div>
 				<div class="col-md-7">
 					<div class="row">

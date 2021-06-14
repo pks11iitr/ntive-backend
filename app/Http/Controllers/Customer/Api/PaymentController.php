@@ -186,7 +186,7 @@ class PaymentController extends Controller
                     'id'=>$order->id,
                     'email'=>$order->email,
                     'mobile'=>$order->mobile,
-                    'description'=>'Product Purchase at Nitve Ecommerce',
+                    'description'=>'Product Purchase at KPG Wholesale Bazzar',
                     'name'=>$order->name,
                     'currency'=>'INR',
                     'merchantid'=>$this->pay->merchantkey,
@@ -295,7 +295,7 @@ class PaymentController extends Controller
                 if ($balance < $order->balance_used) {
                     return response()->json([
                         'status' => 'failed',
-                        'message' => 'We apologize, Your order is not successful at Nitve Ecommerce',
+                        'message' => 'We apologize, Your order is not successful at KPG Wholesale Bazzar',
                         'errors' => [
 
                         ],
@@ -332,7 +332,7 @@ class PaymentController extends Controller
             event(new OrderConfirmed($order));
             return [
                 'status'=>'success',
-                'message'=> 'Congratulations! Your order at Nitve Ecommerce is successful',
+                'message'=> 'Congratulations! Your order at KPG Wholesale Bazzar is successful',
                 'data'=>[
                     'ref_id'=>$order->refid,
                     'order_id'=>$order->id

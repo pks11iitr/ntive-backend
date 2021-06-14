@@ -1,6 +1,6 @@
 <?php
 
-$meta_title = "Contact Us - Nitve";
+$meta_title = "Contact Us - KPG Wholesale Bazzar";
 $meta_desc = "Our contact address is 905-Tower C , Ajnara Integrity, Rajnagar Extension , Ghaziabad - 201017.";
 
 
@@ -111,7 +111,7 @@ $meta_desc = "Our contact address is 905-Tower C , Ajnara Integrity, Rajnagar Ex
         </div>
         <div class="col-md-6 bg-dark px-0">
             <div class="container py-5">
-                <h3 class="footer-title mt-5 pb-1">Nitve E-Commerce Pvt. Ltd</h3>
+                <h3 class="footer-title mt-5 pb-1">KPG Wholesale Bazzar</h3>
                 <table>
                     <tr>
                         <td class="pr-4 pt-2" style="vertical-align: top;"><i class="fa fa-phone-alt" style="color: #e86337;"></i></td>
